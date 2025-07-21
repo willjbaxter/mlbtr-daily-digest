@@ -13,7 +13,9 @@ A Python-powered tool that automatically generates clean, insightful summaries f
 
 ## 📱 Live Demo
 
-Check out the live version: [MLBTR Daily Digest](https://your-domain.com) *(coming soon)*
+Check out the live version: [MLBTR Daily Digest](https://mlbtr-daily-digest.netlify.app) *(coming soon)*
+
+![MLBTR Daily Digest Screenshot](screenshot.png)
 
 ## 🛠 How It Works
 
