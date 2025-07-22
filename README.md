@@ -13,7 +13,7 @@ A Python-powered tool that automatically generates clean, insightful summaries f
 
 ## 📱 Live Demo
 
-Check out the live version: [MLBTR Daily Digest](https://willjbaxter.github.io/mlbtr-daily-digest/)
+Check out the live version: [MLBTR Daily Digest](https://mlbtr.willbaxter.info)
 
 ![MLBTR Daily Digest Screenshot](screenshot.png)
 
