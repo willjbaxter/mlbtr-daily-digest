@@ -13,7 +13,7 @@ A Python-powered tool that automatically generates clean, insightful summaries f
 
 ## 📱 Live Demo
 
-Check out the live version: [MLBTR Daily Digest](https://mlbtr-daily-digest.netlify.app) *(coming soon)*
+Check out the live version: [MLBTR Daily Digest](https://willjbaxter.github.io/mlbtr-daily-digest/)
 
 ![MLBTR Daily Digest Screenshot](screenshot.png)
 
@@ -44,7 +44,7 @@ Instead of generic bullets like "Trade deadline activity discussed", you get spe
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/mlbtr-daily-digest.git
+git clone https://github.com/willjbaxter/mlbtr-daily-digest.git
 cd mlbtr-daily-digest
 ```
 
