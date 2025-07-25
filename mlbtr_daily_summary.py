@@ -46,6 +46,12 @@ try:
 except ImportError:
     genai = None
 
+# New optional Claude support
+try:
+    import anthropic
+except ImportError:
+    anthropic = None
+
 
 # --------------------------------------------------
 # CONFIGURATION
@@ -395,6 +401,41 @@ def gemini_summarise(pairs: List[Tuple[str, str]], post_type: str) -> List[str]:
     return [b for b in bullets if b.strip()]
 
 
+def claude_summarise(pairs: List[Tuple[str, str]], post_type: str) -> List[str]:
+    """Summarise using Anthropic's Claude if available."""
+    assert anthropic, "anthropic package missing. Install it or use fallback summariser."
+    api_key = os.getenv("CLAUDE_API_KEY")
+    if not api_key:
+        raise RuntimeError("CLAUDE_API_KEY environment variable not set.")
+
+    client = anthropic.Anthropic(api_key=api_key)
+    concatenated = "\n".join(f"{s}: {t}" for s, t in pairs)
+    prompt_template = POST_TYPES[post_type].prompt
+
+    if post_type == "mailbag":
+        system_prompt = prompt_template
+        user_message = "Please summarise this mailbag content:\n\n" + concatenated
+    else:
+        system_prompt = prompt_template.format(max=SUMMARY_MAX_BULLETS)
+        user_message = "Please summarise this transcript:\n\n" + concatenated
+
+    message = client.messages.create(
+        model="claude-3-5-sonnet-20240620",
+        max_tokens=1024,
+        system=system_prompt,
+        messages=[
+            {
+                "role": "user",
+                "content": user_message,
+            }
+        ],
+        temperature=0.2,
+    )
+    
+    bullets = message.content[0].text.split("\n")
+    return [b for b in bullets if b.strip()]
+
+
 def simple_summarise(pairs: List[Tuple[str, str, bool]]) -> List[str]:
     """Create meaningful insights by extracting specific content from Q&A pairs."""
     insights: List[str] = []
@@ -484,6 +525,11 @@ def _extract_meaningful_insight(speaker: str, text: str, is_priority: bool) -> s
 
 
 def build_summary(pairs: List[Tuple[str, str, bool]], post_type: str) -> List[str]:
+    if os.getenv("CLAUDE_API_KEY") and anthropic:
+        try:
+            return claude_summarise([(s, t) for s, t, _ in pairs], post_type)
+        except Exception as exc:
+            print(f"Claude summarisation failed → {exc}. Falling back to keyword summary.")
     if os.getenv("OPENAI_API_KEY") and openai:
         try:
             return llm_summarise([(s, t) for s, t, _ in pairs], post_type)
@@ -722,11 +768,10 @@ body {
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Daily MLBTR chat summariser")
-    parser.add_argument("--out", help="Output base directory", default=str(OUT_DIR))
     parser.add_argument("--force", action="store_true", help="Re-process today's articles even if output exists")
     parser.add_argument("--regenerate-all", action="store_true", help="Regenerate all articles with updated prompts")
     args = parser.parse_args()
-    out_base_dir = Path(args.out)
+    out_base_dir = OUT_DIR
 
     if args.regenerate_all:
         print("--regenerate-all specified, will re-process ALL articles with updated prompts.")

@@ -1,0 +1,39 @@
+name: Update MLBTR Daily Digest
+
+on:
+  workflow_dispatch: # Allows manual runs from the Actions tab
+  schedule:
+    - cron: '0 22 * * *' # Runs daily at 10 PM UTC (6 PM ET / 3 PM PT)
+
+jobs:
+  update-digest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to commit changes back to the repo
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run summarizer script
+        env:
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+        run: python mlbtr_daily_summary.py --force
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "📰 Automated Daily Digest Update"
+          # This file pattern commits any new or updated files within the 'out' directory
+          file_pattern: out/
+          commit_user_name: "GitHub Actions Bot"
+          commit_user_email: "actions@github.com"
+          commit_author: "GitHub Actions Bot <actions@github.com>" 
