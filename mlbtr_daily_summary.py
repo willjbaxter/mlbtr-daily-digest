@@ -70,15 +70,19 @@ POST_TYPES: Dict[str, PostType] = {
         prompt=(
             "Distill this MLB chat transcript into comprehensive topic bullets, capturing all substantive Q&A content with faithful clarity. "
             "One bullet per distinct topic. Use 🔴 for Red Sox/Yankees/AL East/Cubs topics, • for others. "
-            "No invention—exclude only small talk."
+            "No invention—exclude only small talk. Format as structured bullets."
         ),
     ),
     "mailbag": PostType(
         name="Mailbag",
         match_keywords=["mailbag"],
         prompt=(
-            "Archive this MLB mailbag into detailed topic bullets capturing complete question-answer content with enhanced readability. "
-            "Preserve all statistics, names, and reasoning. Use 🔴 for Red Sox/Yankees/AL East/Cubs topics, • for others."
+            "Transform this MLB mailbag into detailed, actionable topic bullets that preserve all key insights, statistics, player analysis, and expert reasoning. "
+            "Each bullet should be substantive and capture complete thoughts with specific details (stats, comparisons, projections). "
+            "Use 🔴 for Red Sox/Yankees/AL East/Cubs topics, • for others. "
+            "Prioritize prospect analysis, trade speculation, contract details, and performance metrics. "
+            "Maintain all player names, statistics (wRC+, ERA, etc.), and analytical context. "
+            "Create 5-8 comprehensive bullets that someone could use to understand the full content without reading the original."
         ),
     ),
 }
@@ -219,17 +223,23 @@ class Article:
     post_type: str  # "chat" or "mailbag"
 
 
-def fetch_new_articles(out_base_dir: Path, force: bool = False, regenerate_all: bool = False) -> List[Article]:
+def fetch_new_articles(out_base_dir: Path, force: bool = False, regenerate_all: bool = False, since_date: dt.date = None) -> List[Article]:
     """Returns a list of all new, unprocessed articles matching our keywords."""
     feed = feedparser.parse(RSS_FEED)
     new_articles = []
     today = dt.date.today()
+    cutoff_date = since_date or dt.date(2000, 1, 1)  # Default to very old date if not specified
+    
     for entry in feed.entries:
         title_lower = entry.title.lower()
         for type_key, post_type in POST_TYPES.items():
             if any(kw in title_lower for kw in post_type.match_keywords):
                 published_date = dt.datetime.strptime(entry.published[:16], "%a, %d %b %Y").date()
                 expected_dir = out_base_dir / type_key / str(published_date)
+
+                # Skip articles older than cutoff date
+                if published_date < cutoff_date:
+                    continue
 
                 # Process if the output doesn't exist, OR if --force is used for today's articles, OR if regenerate_all is True
                 should_process = (not expected_dir.exists() or 
@@ -371,8 +381,18 @@ def llm_summarise(pairs: List[Tuple[str, str]], post_type: str) -> List[str]:
         messages=[{"role": "system", "content": prompt}],
         temperature=0.2,
     )
-    bullets = resp.choices[0].message.content.split("\n")[:SUMMARY_MAX_BULLETS]
-    return [b for b in bullets if b.strip()]
+    
+    content = resp.choices[0].message.content
+    bullets = []
+    for line in content.split("\n"):
+        line = line.strip()
+        if line and (line.startswith("•") or line.startswith("🔴") or line.startswith("-") or line.startswith("*")):
+            bullets.append(line)
+        elif line and not line.startswith("Here") and not line.startswith("[") and len(line) > 20:
+            if not line.endswith(":") and not line.lower().startswith("summary"):
+                bullets.append("• " + line)
+    
+    return bullets[:8 if post_type == "mailbag" else SUMMARY_MAX_BULLETS]
 
 
 def gemini_summarise(pairs: List[Tuple[str, str]], post_type: str) -> List[str]:
@@ -396,9 +416,18 @@ def gemini_summarise(pairs: List[Tuple[str, str]], post_type: str) -> List[str]:
 
     model = genai.GenerativeModel("gemini-1.5-flash")
     resp = model.generate_content(prompt, generation_config={"temperature": 0.2})
-    text_out = resp.text if hasattr(resp, "text") else str(resp)
-    bullets = text_out.split("\n")[:SUMMARY_MAX_BULLETS]
-    return [b for b in bullets if b.strip()]
+    content = resp.text if hasattr(resp, "text") else str(resp)
+    
+    bullets = []
+    for line in content.split("\n"):
+        line = line.strip()
+        if line and (line.startswith("•") or line.startswith("🔴") or line.startswith("-") or line.startswith("*")):
+            bullets.append(line)
+        elif line and not line.startswith("Here") and not line.startswith("[") and len(line) > 20:
+            if not line.endswith(":") and not line.lower().startswith("summary"):
+                bullets.append("• " + line)
+    
+    return bullets[:8 if post_type == "mailbag" else SUMMARY_MAX_BULLETS]
 
 
 def claude_summarise(pairs: List[Tuple[str, str]], post_type: str) -> List[str]:
@@ -419,9 +448,12 @@ def claude_summarise(pairs: List[Tuple[str, str]], post_type: str) -> List[str]:
         system_prompt = prompt_template.format(max=SUMMARY_MAX_BULLETS)
         user_message = "Please summarise this transcript:\n\n" + concatenated
 
+    # Use different token limits based on content type
+    max_tokens = 2048 if post_type == "mailbag" else 1024
+    
     message = client.messages.create(
-        model="claude-3-5-sonnet-20240620",
-        max_tokens=1024,
+        model="claude-3-haiku-20240307",
+        max_tokens=max_tokens,
         system=system_prompt,
         messages=[
             {
@@ -432,8 +464,20 @@ def claude_summarise(pairs: List[Tuple[str, str]], post_type: str) -> List[str]:
         temperature=0.2,
     )
     
-    bullets = message.content[0].text.split("\n")
-    return [b for b in bullets if b.strip()]
+    content = message.content[0].text
+    
+    # Extract bullets more intelligently
+    bullets = []
+    for line in content.split("\n"):
+        line = line.strip()
+        if line and (line.startswith("•") or line.startswith("🔴") or line.startswith("-") or line.startswith("*")):
+            bullets.append(line)
+        elif line and not line.startswith("Here") and not line.startswith("[") and len(line) > 20:
+            # Handle cases where bullets don't have prefixes
+            if not line.endswith(":") and not line.lower().startswith("summary"):
+                bullets.append("• " + line)
+    
+    return bullets[:8 if post_type == "mailbag" else SUMMARY_MAX_BULLETS]
 
 
 def simple_summarise(pairs: List[Tuple[str, str, bool]]) -> List[str]:
@@ -615,105 +659,218 @@ def build_main_index(out_base_dir: Path):
 
     with index_path.open("w", encoding="utf-8") as f:
         f.write("""<!doctype html><html lang='en'><head><meta charset='utf-8'>
-<title>MLBTR Daily Digest</title><style>
+<title>MLBTR Daily Digest</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { 
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     line-height: 1.6; 
-    color: #1a1a1a; 
-    background: #fafafa;
+    color: #0f172a; 
+    background: #f8fafc;
     min-height: 100vh;
 }
 .container { 
-    max-width: 800px; 
+    max-width: 900px; 
     margin: 0 auto; 
     background: white; 
     min-height: 100vh;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
 }
+.navbar {
+    background: #1e293b;
+    color: white;
+    padding: 0.75rem 2rem;
+    font-size: 0.875rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav-brand { font-weight: 600; }
+.nav-links { color: #94a3b8; }
 .header { 
-    background: white;
-    padding: 3rem 2rem;
-    border-bottom: 1px solid #e5e5e5;
+    background: linear-gradient(135deg, #0f766e 0%, #059669 100%);
+    color: white;
+    padding: 4rem 2rem 3rem;
     text-align: center;
+    position: relative;
+}
+.header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
 }
 .header h1 { 
-    font-size: 2.5rem; 
+    font-size: 2.75rem; 
     font-weight: 700; 
-    margin-bottom: 0.5rem;
-    color: #1a1a1a;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .header .subtitle { 
-    font-size: 1.1rem; 
-    color: #666;
+    font-size: 1.125rem; 
+    color: rgba(255,255,255,0.9);
     font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
 }
 .content { 
-    padding: 2rem;
+    padding: 3rem 2rem;
+}
+.intro {
+    background: #f1f5f9;
+    border-left: 4px solid #059669;
+    padding: 1.5rem 2rem;
+    margin-bottom: 3rem;
+    border-radius: 0 8px 8px 0;
+}
+.intro p {
+    color: #475569;
+    font-size: 1rem;
+    margin: 0;
 }
 .section { 
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
+}
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e2e8f0;
 }
 .section-title { 
     font-size: 1.5rem; 
     font-weight: 600; 
-    margin-bottom: 1.5rem; 
-    color: #1a1a1a;
+    color: #1e293b;
+    margin: 0;
 }
-.summaries-list { 
-    list-style: none;
+.section-count {
+    background: #059669;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    margin-left: 1rem;
 }
-.summary-item { 
-    border-bottom: 1px solid #f0f0f0;
-    padding: 1rem 0;
+.summaries-grid { 
+    display: grid;
+    gap: 1.5rem;
 }
-.summary-item:last-child {
-    border-bottom: none;
+.summary-card { 
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.summary-card:hover { 
+    border-color: #059669;
+    box-shadow: 0 4px 12px rgba(5,150,105,0.15);
+    transform: translateY(-2px);
 }
 .summary-link { 
     display: block;
     text-decoration: none;
     color: inherit;
-    transition: color 0.2s ease;
 }
-.summary-link:hover { 
-    color: #d73527;
+.summary-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
 }
 .summary-date { 
-    font-size: 1.1rem; 
+    font-size: 1.125rem; 
     font-weight: 600; 
-    color: #1a1a1a; 
-    margin-bottom: 0.25rem;
+    color: #1e293b; 
 }
 .summary-type { 
-    font-size: 0.9rem; 
-    color: #666; 
-    text-transform: uppercase; 
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    text-transform: uppercase;
     letter-spacing: 0.5px;
+}
+.summary-type.chat { background: #dbeafe; color: #1e40af; }
+.summary-type.mailbag { background: #fce7f3; color: #be185d; }
+.summary-preview {
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.5;
 }
 .empty-state { 
     text-align: center; 
-    padding: 2rem; 
-    color: #999; 
-    font-style: italic;
+    padding: 4rem 2rem; 
+    color: #64748b;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 2px dashed #cbd5e1;
+}
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
 }
 .stats { 
-    background: #f8f8f8;
-    padding: 1rem 2rem;
+    background: #1e293b;
+    color: white;
+    padding: 2rem;
     text-align: center;
     font-size: 0.9rem;
-    color: #666;
-    border-top: 1px solid #e5e5e5;
+}
+.stats-grid {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+.stat-item {
+    text-align: center;
+}
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #10b981;
+    margin-bottom: 0.25rem;
+}
+.stat-label {
+    color: #94a3b8;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 @media (max-width: 768px) {
-    .header { padding: 2rem 1rem; }
-    .header h1 { font-size: 2rem; }
-    .content { padding: 1.5rem; }
+    .navbar { padding: 0.75rem 1rem; }
+    .header { padding: 3rem 1rem 2rem; }
+    .header h1 { font-size: 2.25rem; }
+    .content { padding: 2rem 1rem; }
+    .intro { padding: 1rem 1.5rem; }
+    .stats-grid { gap: 2rem; }
 }
 </style></head><body><div class='container'>""")
 
+        f.write('<div class="navbar">')
+        f.write('<div class="nav-brand">MLBTR Daily Digest</div>')
+        f.write('<div class="nav-links">Trade Rumors & Analysis</div>')
+        f.write('</div>')
+
         f.write('<div class="header">')
-        f.write('<h1>MLBTR Daily Digest</h1>')
-        f.write('<div class="subtitle">Your daily source for MLB trade rumors and insights</div>')
+        f.write('<h1>MLB Trade Rumors Daily Digest</h1>')
+        f.write('<div class="subtitle">Curated insights from MLB Trade Rumors chats and mailbags</div>')
         f.write('</div>')
 
         # Count summaries for stats
@@ -721,6 +878,10 @@ body {
         total_mailbags = 0
         
         f.write('<div class="content">')
+        
+        f.write('<div class="intro">')
+        f.write('<p>Stay up-to-date with the latest MLB trade rumors, expert analysis, and insider insights. Our digest compiles the most important information from MLB Trade Rumors\' live chats and weekly mailbags.</p>')
+        f.write('</div>')
         
         for type_key, post_type in POST_TYPES.items():
             scan_dir = out_base_dir / type_key
@@ -734,29 +895,63 @@ body {
                 total_mailbags = len(dated_dirs)
             
             f.write('<div class="section">')
+            f.write('<div class="section-header">')
             f.write(f'<h2 class="section-title">{post_type.name} Summaries</h2>')
+            f.write(f'<span class="section-count">{len(dated_dirs)}</span>')
+            f.write('</div>')
 
             if not dated_dirs:
-                f.write('<div class="empty-state">No summaries available yet.</div>')
+                f.write('<div class="empty-state">')
+                f.write('<div class="empty-state-icon">📊</div>')
+                f.write(f'<p>No {post_type.name.lower()} summaries available yet.<br><small>Check back soon for the latest updates.</small></p>')
+                f.write('</div>')
             else:
-                f.write('<ul class="summaries-list">')
+                f.write('<div class="summaries-grid">')
                 for day_dir in dated_dirs:
                     relative_path = f"{type_key}/{day_dir.name}/summary.html"
-                    f.write('<li class="summary-item">')
+                    
+                    # Try to get a preview from the summary file
+                    preview_text = "Click to read the full summary and analysis."
+                    try:
+                        summary_file = day_dir / "summary.html"
+                        if summary_file.exists():
+                            with summary_file.open('r', encoding='utf-8') as preview_f:
+                                content = preview_f.read()
+                                # Extract first insight as preview
+                                import re
+                                insights = re.findall(r'<div class="text">(.*?)</div>', content)
+                                if insights:
+                                    preview_text = insights[0][:100] + "..." if len(insights[0]) > 100 else insights[0]
+                    except:
+                        pass
+                    
+                    f.write('<div class="summary-card">')
                     f.write(f'<a href="{relative_path}" class="summary-link">')
+                    f.write('<div class="summary-meta">')
                     f.write(f'<div class="summary-date">{day_dir.name}</div>')
-                    f.write(f'<div class="summary-type">{post_type.name}</div>')
+                    f.write(f'<div class="summary-type {type_key}">{post_type.name}</div>')
+                    f.write('</div>')
+                    f.write(f'<div class="summary-preview">{preview_text}</div>')
                     f.write('</a>')
-                    f.write('</li>')
-                f.write('</ul>')
+                    f.write('</div>')
+                f.write('</div>')
             
             f.write('</div>')
 
         f.write('</div>')
         
-        # Stats footer
+        # Enhanced stats footer
         f.write('<div class="stats">')
-        f.write(f'{total_chats} chat summaries • {total_mailbags} mailbag summaries')
+        f.write('<div class="stats-grid">')
+        f.write('<div class="stat-item">')
+        f.write(f'<span class="stat-number">{total_chats}</span>')
+        f.write('<span class="stat-label">Chat Summaries</span>')
+        f.write('</div>')
+        f.write('<div class="stat-item">')
+        f.write(f'<span class="stat-number">{total_mailbags}</span>')
+        f.write('<span class="stat-label">Mailbag Summaries</span>')
+        f.write('</div>')
+        f.write('</div>')
         f.write('</div>')
         
         f.write('</div></body></html>')
@@ -770,15 +965,25 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Daily MLBTR chat summariser")
     parser.add_argument("--force", action="store_true", help="Re-process today's articles even if output exists")
     parser.add_argument("--regenerate-all", action="store_true", help="Regenerate all articles with updated prompts")
+    parser.add_argument("--since", type=str, help="Process articles since this date (YYYY-MM-DD)")
     args = parser.parse_args()
     out_base_dir = OUT_DIR
+
+    since_date = None
+    if args.since:
+        try:
+            since_date = dt.datetime.strptime(args.since, "%Y-%m-%d").date()
+            print(f"Processing articles since {since_date}")
+        except ValueError:
+            print(f"Invalid date format: {args.since}. Use YYYY-MM-DD format.")
+            return
 
     if args.regenerate_all:
         print("--regenerate-all specified, will re-process ALL articles with updated prompts.")
     elif args.force:
         print("--force specified, will re-process today's articles and regenerate full index.")
 
-    new_articles = fetch_new_articles(out_base_dir, force=args.force, regenerate_all=args.regenerate_all)
+    new_articles = fetch_new_articles(out_base_dir, force=args.force, regenerate_all=args.regenerate_all, since_date=since_date)
     if not new_articles:
         print("No new articles to process.")
         # If forcing or regenerating all, still rebuild index. Otherwise, we can exit.
