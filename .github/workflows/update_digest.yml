@@ -28,12 +28,34 @@ jobs:
           CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
         run: python mlbtr_daily_summary.py --force
 
+      - name: Sync files from out/ to root for GitHub Pages
+        run: |
+          # Copy index.html from out/ to root
+          if [ -f "out/index.html" ]; then
+            cp out/index.html index.html
+            echo "Copied out/index.html to root"
+          fi
+          
+          # Copy chat directories from out/ to root
+          if [ -d "out/chat" ]; then
+            mkdir -p chat
+            cp -r out/chat/* chat/ 2>/dev/null || true
+            echo "Synced chat files to root"
+          fi
+          
+          # Copy mailbag directories from out/ to root
+          if [ -d "out/mailbag" ]; then
+            mkdir -p mailbag
+            cp -r out/mailbag/* mailbag/ 2>/dev/null || true
+            echo "Synced mailbag files to root"
+          fi
+
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "📰 Automated Daily Digest Update"
-          # This file pattern commits any new or updated files within the 'out' directory
-          file_pattern: out/
+          # Commit both out/ directory and synced root files
+          file_pattern: out/ index.html chat/ mailbag/
           commit_user_name: "GitHub Actions Bot"
           commit_user_email: "actions@github.com"
           commit_author: "GitHub Actions Bot <actions@github.com>" 
