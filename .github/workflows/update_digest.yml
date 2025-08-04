@@ -23,10 +23,14 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run summarizer script
+      - name: Run summarizer script with logging
         env:
           CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
-        run: python mlbtr_daily_summary.py --force
+        run: |
+          echo "Starting MLBTR daily summary at $(date)"
+          python mlbtr_daily_summary.py --force 2>&1 | tee summary_run.log
+          echo "Summary script completed at $(date)"
+          echo "Exit code: ${PIPESTATUS[0]}"
 
       - name: Sync files from out/ to root for GitHub Pages
         run: |
@@ -49,6 +53,14 @@ jobs:
             cp -r out/mailbag/* mailbag/ 2>/dev/null || true
             echo "Synced mailbag files to root"
           fi
+
+      - name: Upload run log as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: summary-run-log
+          path: summary_run.log
+          retention-days: 30
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5

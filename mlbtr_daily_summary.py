@@ -966,6 +966,9 @@ def main() -> None:
     parser.add_argument("--force", action="store_true", help="Re-process today's articles even if output exists")
     parser.add_argument("--regenerate-all", action="store_true", help="Regenerate all articles with updated prompts")
     parser.add_argument("--since", type=str, help="Process articles since this date (YYYY-MM-DD)")
+    parser.add_argument("--manual-url", type=str, help="Manually process a specific URL")
+    parser.add_argument("--manual-type", type=str, choices=["chat", "mailbag"], help="Type for manual URL processing")
+    parser.add_argument("--manual-date", type=str, help="Date for manual URL processing (YYYY-MM-DD)")
     args = parser.parse_args()
     out_base_dir = OUT_DIR
 
@@ -976,6 +979,50 @@ def main() -> None:
             print(f"Processing articles since {since_date}")
         except ValueError:
             print(f"Invalid date format: {args.since}. Use YYYY-MM-DD format.")
+            return
+
+    # Handle manual URL processing
+    if args.manual_url:
+        if not args.manual_type or not args.manual_date:
+            print("Error: --manual-url requires both --manual-type and --manual-date")
+            return
+        
+        try:
+            manual_date = dt.datetime.strptime(args.manual_date, "%Y-%m-%d").date()
+            print(f"Processing manual URL: {args.manual_url}")
+            
+            # Create a fake article object for manual processing
+            manual_article = Article(
+                title=f"Manual {args.manual_type.title()} Processing",
+                url=args.manual_url,
+                date=manual_date,
+                post_type=args.manual_type
+            )
+            
+            out_dir = out_base_dir / manual_article.post_type / str(manual_article.date)
+            pairs_raw = extract_content_by_type(manual_article.url, manual_article.post_type)
+            
+            # Save raw data
+            out_dir.mkdir(parents=True, exist_ok=True)
+            raw_data_path = out_dir / "raw_extracted_data.txt"
+            with raw_data_path.open("w", encoding="utf-8") as f_raw:
+                for speaker, text in pairs_raw:
+                    f_raw.write(f"SPEAKER: {speaker}\n---\n{text}\n\n{'='*20}\n\n")
+            print(f"  -> Raw data saved to: {raw_data_path}")
+            
+            pairs_priority = prioritise_pairs(pairs_raw)
+            summary = build_summary(pairs_priority, manual_article.post_type)
+            write_html(summary, pairs_raw, manual_article.title, out_dir)
+            
+            # Rebuild index
+            build_main_index(out_base_dir)
+            return
+            
+        except ValueError:
+            print(f"Invalid date format: {args.manual_date}. Use YYYY-MM-DD format.")
+            return
+        except Exception as e:
+            print(f"Error processing manual URL: {e}")
             return
 
     if args.regenerate_all:
