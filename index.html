@@ -1,4 +1,7 @@
-<!doctype html><html lang='en'><head><meta charset='utf-8'>
+<!doctype html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
 <title>MLBTR Daily Digest</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -8,197 +11,243 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { 
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    line-height: 1.6; 
-    color: #0f172a; 
-    background: #f8fafc;
-    min-height: 100vh;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
 }
 .container { 
-    max-width: 900px; 
+    max-width: 720px; 
     margin: 0 auto; 
-    background: white; 
-    min-height: 100vh;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+    padding: 0 1.5rem;
 }
-.navbar {
-    background: #1e293b;
-    color: white;
-    padding: 0.75rem 2rem;
-    font-size: 0.875rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.nav-brand { font-weight: 600; }
-.nav-links { color: #94a3b8; }
 .header { 
-    background: linear-gradient(135deg, #0f766e 0%, #059669 100%);
-    color: white;
-    padding: 4rem 2rem 3rem;
-    text-align: center;
-    position: relative;
-}
-.header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
 }
 .header h1 { 
-    font-size: 2.75rem; 
+    font-size: 2rem; 
     font-weight: 700; 
-    margin-bottom: 0.75rem;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
 }
 .header .subtitle { 
-    font-size: 1.125rem; 
-    color: rgba(255,255,255,0.9);
-    font-weight: 400;
-    max-width: 600px;
-    margin: 0 auto;
-}
-.content { 
-    padding: 3rem 2rem;
-}
-.intro {
-    background: #f1f5f9;
-    border-left: 4px solid #059669;
-    padding: 1.5rem 2rem;
-    margin-bottom: 3rem;
-    border-radius: 0 8px 8px 0;
-}
-.intro p {
-    color: #475569;
-    font-size: 1rem;
-    margin: 0;
-}
-.section { 
-    margin-bottom: 4rem;
-}
-.section-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid #e2e8f0;
-}
-.section-title { 
-    font-size: 1.5rem; 
-    font-weight: 600; 
-    color: #1e293b;
-    margin: 0;
-}
-.section-count {
-    background: #059669;
-    color: white;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    margin-left: 1rem;
-}
-.summaries-grid { 
-    display: grid;
-    gap: 1.5rem;
-}
-.summary-card { 
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 1.5rem;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-.summary-card:hover { 
-    border-color: #059669;
-    box-shadow: 0 4px 12px rgba(5,150,105,0.15);
-    transform: translateY(-2px);
-}
-.summary-link { 
-    display: block;
-    text-decoration: none;
-    color: inherit;
-}
-.summary-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.75rem;
-}
-.summary-date { 
-    font-size: 1.125rem; 
-    font-weight: 600; 
-    color: #1e293b; 
-}
-.summary-type { 
-    background: #fef3c7;
-    color: #92400e;
-    font-size: 0.75rem;
-    font-weight: 500;
-    padding: 0.25rem 0.75rem;
-    border-radius: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.summary-type.chat { background: #dbeafe; color: #1e40af; }
-.summary-type.mailbag { background: #fce7f3; color: #be185d; }
-.summary-preview {
-    color: #64748b;
-    font-size: 0.9rem;
+    font-size: 1rem; 
+    color: #666;
     line-height: 1.5;
 }
-.empty-state { 
-    text-align: center; 
-    padding: 4rem 2rem; 
-    color: #64748b;
-    background: #f8fafc;
-    border-radius: 12px;
-    border: 2px dashed #cbd5e1;
+.nav-tabs {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 0;
 }
-.empty-state-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    opacity: 0.5;
+.nav-tab {
+    padding: 0.75rem 0;
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.2s;
 }
-.stats { 
-    background: #1e293b;
-    color: white;
-    padding: 2rem;
+.nav-tab:hover {
+    color: #1a1a1a;
+}
+.nav-tab.active {
+    color: #059669;
+    border-bottom-color: #059669;
+}
+.posts-list {
+    margin-bottom: 4rem;
+}
+.post-item {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.post-item:hover {
+    background: #fafafa;
+    margin: 0 -1.5rem;
+    padding: 1.5rem;
+}
+.post-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.post-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+.post-date {
+    font-size: 0.875rem;
+    color: #666;
+    font-weight: 500;
+}
+.post-type {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+}
+.post-type.chat {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.post-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+.post-preview {
+    font-size: 0.9375rem;
+    color: #666;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.footer {
+    padding: 2rem 0;
+    margin-top: 4rem;
+    border-top: 1px solid #e5e5e5;
     text-align: center;
-    font-size: 0.9rem;
+    color: #666;
+    font-size: 0.875rem;
 }
-.stats-grid {
+.footer-stats {
     display: flex;
     justify-content: center;
     gap: 3rem;
-    max-width: 400px;
-    margin: 0 auto;
+    margin-bottom: 1rem;
 }
-.stat-item {
+.stat {
     text-align: center;
 }
 .stat-number {
-    display: block;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #10b981;
-    margin-bottom: 0.25rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a1a1a;
 }
 .stat-label {
-    color: #94a3b8;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
+    color: #999;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 @media (max-width: 768px) {
-    .navbar { padding: 0.75rem 1rem; }
-    .header { padding: 3rem 1rem 2rem; }
-    .header h1 { font-size: 2.25rem; }
-    .content { padding: 2rem 1rem; }
-    .intro { padding: 1rem 1.5rem; }
-    .stats-grid { gap: 2rem; }
+    .container { padding: 0 1rem; }
+    .header { padding: 2rem 0 1.5rem; }
+    .header h1 { font-size: 1.75rem; }
+    .post-item { padding: 1.25rem 0; }
+    .post-item:hover { 
+        margin: 0 -1rem;
+        padding: 1.25rem 1rem;
+    }
 }
-</style></head><body><div class='container'><div class="navbar"><div class="nav-brand">MLBTR Daily Digest</div><div class="nav-links">Trade Rumors & Analysis</div></div><div class="header"><h1>MLB Trade Rumors Daily Digest</h1><div class="subtitle">Curated insights from MLB Trade Rumors chats and mailbags</div></div><div class="content"><div class="intro"><p>Stay up-to-date with the latest MLB trade rumors, expert analysis, and insider insights. Our digest compiles the most important information from MLB Trade Rumors' live chats and weekly mailbags.</p></div><div class="section"><div class="section-header"><h2 class="section-title">Chat Summaries</h2><span class="section-count">4</span></div><div class="summaries-grid"><div class="summary-card"><a href="chat/2025-07-28/summary.html" class="summary-link"><div class="summary-meta"><div class="summary-date">2025-07-28</div><div class="summary-type chat">Chat</div></div><div class="summary-preview">Here&#x27;s a summary of the key points from the transcript:</div></a></div><div class="summary-card"><a href="chat/2025-07-25/summary.html" class="summary-link"><div class="summary-meta"><div class="summary-date">2025-07-25</div><div class="summary-type chat">Chat</div></div><div class="summary-preview">Here&#x27;s a summary of the key points from the transcript:</div></a></div><div class="summary-card"><a href="chat/2025-07-22/summary.html" class="summary-link"><div class="summary-meta"><div class="summary-date">2025-07-22</div><div class="summary-type chat">Chat</div></div><div class="summary-preview">Good morning! Just over a week until the deadline, and probably days away from the trade market real...</div></a></div><div class="summary-card"><a href="chat/2025-07-21/summary.html" class="summary-link"><div class="summary-meta"><div class="summary-date">2025-07-21</div><div class="summary-type chat">Chat</div></div><div class="summary-preview">Dodgers expected to add notable reliever; Bednar and Helsley both likely to be traded, though Clase ...</div></a></div></div></div><div class="section"><div class="section-header"><h2 class="section-title">Mailbag Summaries</h2><span class="section-count">2</span></div><div class="summaries-grid"><div class="summary-card"><a href="mailbag/2025-07-30/summary.html" class="summary-link"><div class="summary-meta"><div class="summary-date">2025-07-30</div><div class="summary-type mailbag">Mailbag</div></div><div class="summary-preview">The Cleveland Guardians face tough decisions with their top players:</div></a></div><div class="summary-card"><a href="mailbag/2025-07-23/summary.html" class="summary-link"><div class="summary-meta"><div class="summary-date">2025-07-23</div><div class="summary-type mailbag">Mailbag</div></div><div class="summary-preview">This week&#x27;s mailbag covers Yankees prospect Spencer Jones , comps for a Mason Miller trade, and...</div></a></div></div></div></div><div class="stats"><div class="stats-grid"><div class="stat-item"><span class="stat-number">4</span><span class="stat-label">Chat Summaries</span></div><div class="stat-item"><span class="stat-number">2</span><span class="stat-label">Mailbag Summaries</span></div></div></div></div></body></html>
+</style>
+</head>
+<body>
+<div class='container'>
+<div class="header">
+<h1>MLB Trade Rumors Daily Digest</h1>
+<div class="subtitle">Curated insights from MLB Trade Rumors chats and mailbags, updated daily</div>
+</div>
+
+<div class="nav-tabs">
+<a href="#all" class="nav-tab active" onclick="filterPosts('all', event)">All Posts</a>
+<a href="#chat" class="nav-tab" onclick="filterPosts('chat', event)">Chats</a>
+<a href="#mailbag" class="nav-tab" onclick="filterPosts('mailbag', event)">Mailbags</a>
+</div>
+
+<div class="posts-list" id="posts-list">
+<!-- Posts will be inserted here by JavaScript -->
+</div>
+
+<div class="footer">
+<div class="footer-stats">
+<div class="stat">
+<div class="stat-number" id="chat-count">0</div>
+<div class="stat-label">Chats</div>
+</div>
+<div class="stat">
+<div class="stat-number" id="mailbag-count">0</div>
+<div class="stat-label">Mailbags</div>
+</div>
+</div>
+<div>MLB Trade Rumors Daily Digest &middot; Auto-updated</div>
+</div>
+</div>
+
+<script>
+// Data structure for all posts
+const posts = [
+];
+
+// Function to render posts
+function renderPosts(filter = 'all') {
+    const container = document.getElementById('posts-list');
+    const filteredPosts = filter === 'all' ? posts : posts.filter(p => p.type === filter);
+    
+    container.innerHTML = filteredPosts.map(post => `
+        <div class="post-item">
+            <a href="${post.url}" class="post-link">
+                <div class="post-header">
+                    <span class="post-date">${formatDate(post.date)}</span>
+                    <span class="post-type ${post.type}">${post.type}</span>
+                </div>
+                <div class="post-title">${post.title}</div>
+                <div class="post-preview">${post.preview}</div>
+            </a>
+        </div>
+    `).join('');
+}
+
+// Format date nicely
+function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    const options = { month: 'short', day: 'numeric', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+}
+
+// Filter posts by type
+function filterPosts(type, event) {
+    event.preventDefault();
+    
+    // Update active tab
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    // Render filtered posts
+    renderPosts(type);
+}
+
+// Update stats
+function updateStats() {
+    const chatCount = posts.filter(p => p.type === 'chat').length;
+    const mailbagCount = posts.filter(p => p.type === 'mailbag').length;
+    
+    document.getElementById('chat-count').textContent = chatCount;
+    document.getElementById('mailbag-count').textContent = mailbagCount;
+}
+
+// Initialize
+renderPosts();
+updateStats();
+</script>
+</body>
+</html>

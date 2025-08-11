@@ -1,4 +1,4 @@
-# MLBTR Daily Digest
+ca# MLBTR Daily Digest
 
 A Python-powered tool that automatically generates clean, insightful summaries from MLB Trade Rumors chat transcripts and mailbag columns. Transform lengthy Q&A sessions into digestible insights perfect for staying up-to-date with baseball's trade deadline buzz.
 

@@ -70,6 +70,7 @@ POST_TYPES: Dict[str, PostType] = {
         prompt=(
             "Distill this MLB chat transcript into comprehensive topic bullets, capturing all substantive Q&A content with faithful clarity. "
             "One bullet per distinct topic. Use 🔴 for Red Sox/Yankees/AL East/Cubs topics, • for others. "
+            "CRITICAL: Preserve exact dates and years mentioned in the text. Do not change 2025 to 2023 or make any date substitutions. "
             "No invention—exclude only small talk. Format as structured bullets."
         ),
     ),
@@ -82,6 +83,7 @@ POST_TYPES: Dict[str, PostType] = {
             "Use 🔴 for Red Sox/Yankees/AL East/Cubs topics, • for others. "
             "Prioritize prospect analysis, trade speculation, contract details, and performance metrics. "
             "Maintain all player names, statistics (wRC+, ERA, etc.), and analytical context. "
+            "CRITICAL: Preserve exact dates and years mentioned in the text. Do not change 2025 to 2023 or make any date substitutions. "
             "Create 5-8 comprehensive bullets that someone could use to understand the full content without reading the original."
         ),
     ),
@@ -261,7 +263,9 @@ def fetch_new_articles(out_base_dir: Path, force: bool = False, regenerate_all: 
 
 def extract_transcript(url: str) -> List[Tuple[str, str]]:
     """Returns list of (speaker, raw_text) preserving original order."""
-    html_doc = requests.get(url, timeout=20).text
+    response = requests.get(url, timeout=20)
+    response.encoding = 'utf-8'  # Force UTF-8 encoding
+    html_doc = response.text
     soup = BeautifulSoup(html_doc, "html.parser")
     
     # Look for the live chat archive div first
@@ -302,7 +306,11 @@ def extract_transcript(url: str) -> List[Tuple[str, str]]:
                         # Extract text from all li elements in this ul
                         li_texts = []
                         for li in ul_element.find_all('li'):
+                            # Clean up non-breaking spaces and other HTML entities
                             li_text = li.get_text(strip=True)
+                            # Replace common HTML entities
+                            li_text = li_text.replace('\xa0', ' ')  # non-breaking space
+                            li_text = li_text.replace('\u00c2', '')  # Remove mojibake
                             if li_text:
                                 li_texts.append(li_text)
                         
@@ -321,7 +329,9 @@ def extract_transcript(url: str) -> List[Tuple[str, str]]:
 
 def extract_mailbag_content(url: str) -> List[Tuple[str, str]]:
     """Extract mailbag content as question/answer pairs."""
-    html_doc = requests.get(url, timeout=20).text
+    response = requests.get(url, timeout=20)
+    response.encoding = 'utf-8'  # Force UTF-8 encoding
+    html_doc = response.text
     soup = BeautifulSoup(html_doc, "html.parser")
     
     # Look for the live chat archive div first (some mailbags might use this structure)
@@ -340,6 +350,10 @@ def extract_mailbag_content(url: str) -> List[Tuple[str, str]]:
 
     # For mailbags, extract the full text and create a single entry
     full_text = content_div.get_text(" ", strip=True)
+    
+    # Clean up encoding issues
+    full_text = full_text.replace('\xa0', ' ')  # non-breaking space
+    full_text = full_text.replace('\u00c2', '')  # Remove mojibake
     
     # Remove any promotional text at the end that might not be in a standard div
     if "Access weekly subscriber-only articles" in full_text:
@@ -452,7 +466,7 @@ def claude_summarise(pairs: List[Tuple[str, str]], post_type: str) -> List[str]:
     max_tokens = 2048 if post_type == "mailbag" else 1024
     
     message = client.messages.create(
-        model="claude-3-haiku-20240307",
+        model="claude-3-5-sonnet-20241022",  # Use Sonnet for better accuracy
         max_tokens=max_tokens,
         system=system_prompt,
         messages=[
@@ -656,262 +670,19 @@ def build_main_index(out_base_dir: Path):
     """Generates the root index.html that links to all summaries."""
     index_path = out_base_dir / "index.html"
     print(f"Generating main index: {index_path}")
-
-    with index_path.open("w", encoding="utf-8") as f:
-        f.write("""<!doctype html><html lang='en'><head><meta charset='utf-8'>
-<title>MLBTR Daily Digest</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { 
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    line-height: 1.6; 
-    color: #0f172a; 
-    background: #f8fafc;
-    min-height: 100vh;
-}
-.container { 
-    max-width: 900px; 
-    margin: 0 auto; 
-    background: white; 
-    min-height: 100vh;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
-}
-.navbar {
-    background: #1e293b;
-    color: white;
-    padding: 0.75rem 2rem;
-    font-size: 0.875rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.nav-brand { font-weight: 600; }
-.nav-links { color: #94a3b8; }
-.header { 
-    background: linear-gradient(135deg, #0f766e 0%, #059669 100%);
-    color: white;
-    padding: 4rem 2rem 3rem;
-    text-align: center;
-    position: relative;
-}
-.header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-}
-.header h1 { 
-    font-size: 2.75rem; 
-    font-weight: 700; 
-    margin-bottom: 0.75rem;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-.header .subtitle { 
-    font-size: 1.125rem; 
-    color: rgba(255,255,255,0.9);
-    font-weight: 400;
-    max-width: 600px;
-    margin: 0 auto;
-}
-.content { 
-    padding: 3rem 2rem;
-}
-.intro {
-    background: #f1f5f9;
-    border-left: 4px solid #059669;
-    padding: 1.5rem 2rem;
-    margin-bottom: 3rem;
-    border-radius: 0 8px 8px 0;
-}
-.intro p {
-    color: #475569;
-    font-size: 1rem;
-    margin: 0;
-}
-.section { 
-    margin-bottom: 4rem;
-}
-.section-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid #e2e8f0;
-}
-.section-title { 
-    font-size: 1.5rem; 
-    font-weight: 600; 
-    color: #1e293b;
-    margin: 0;
-}
-.section-count {
-    background: #059669;
-    color: white;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    margin-left: 1rem;
-}
-.summaries-grid { 
-    display: grid;
-    gap: 1.5rem;
-}
-.summary-card { 
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 1.5rem;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-.summary-card:hover { 
-    border-color: #059669;
-    box-shadow: 0 4px 12px rgba(5,150,105,0.15);
-    transform: translateY(-2px);
-}
-.summary-link { 
-    display: block;
-    text-decoration: none;
-    color: inherit;
-}
-.summary-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.75rem;
-}
-.summary-date { 
-    font-size: 1.125rem; 
-    font-weight: 600; 
-    color: #1e293b; 
-}
-.summary-type { 
-    background: #fef3c7;
-    color: #92400e;
-    font-size: 0.75rem;
-    font-weight: 500;
-    padding: 0.25rem 0.75rem;
-    border-radius: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.summary-type.chat { background: #dbeafe; color: #1e40af; }
-.summary-type.mailbag { background: #fce7f3; color: #be185d; }
-.summary-preview {
-    color: #64748b;
-    font-size: 0.9rem;
-    line-height: 1.5;
-}
-.empty-state { 
-    text-align: center; 
-    padding: 4rem 2rem; 
-    color: #64748b;
-    background: #f8fafc;
-    border-radius: 12px;
-    border: 2px dashed #cbd5e1;
-}
-.empty-state-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    opacity: 0.5;
-}
-.stats { 
-    background: #1e293b;
-    color: white;
-    padding: 2rem;
-    text-align: center;
-    font-size: 0.9rem;
-}
-.stats-grid {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-    max-width: 400px;
-    margin: 0 auto;
-}
-.stat-item {
-    text-align: center;
-}
-.stat-number {
-    display: block;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #10b981;
-    margin-bottom: 0.25rem;
-}
-.stat-label {
-    color: #94a3b8;
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-@media (max-width: 768px) {
-    .navbar { padding: 0.75rem 1rem; }
-    .header { padding: 3rem 1rem 2rem; }
-    .header h1 { font-size: 2.25rem; }
-    .content { padding: 2rem 1rem; }
-    .intro { padding: 1rem 1.5rem; }
-    .stats-grid { gap: 2rem; }
-}
-</style></head><body><div class='container'>""")
-
-        f.write('<div class="navbar">')
-        f.write('<div class="nav-brand">MLBTR Daily Digest</div>')
-        f.write('<div class="nav-links">Trade Rumors & Analysis</div>')
-        f.write('</div>')
-
-        f.write('<div class="header">')
-        f.write('<h1>MLB Trade Rumors Daily Digest</h1>')
-        f.write('<div class="subtitle">Curated insights from MLB Trade Rumors chats and mailbags</div>')
-        f.write('</div>')
-
-        # Count summaries for stats
-        total_chats = 0
-        total_mailbags = 0
-        
-        f.write('<div class="content">')
-        
-        f.write('<div class="intro">')
-        f.write('<p>Stay up-to-date with the latest MLB trade rumors, expert analysis, and insider insights. Our digest compiles the most important information from MLB Trade Rumors\' live chats and weekly mailbags.</p>')
-        f.write('</div>')
-        
-        for type_key, post_type in POST_TYPES.items():
-            scan_dir = out_base_dir / type_key
-            dated_dirs = []
-            if scan_dir.is_dir():
-                dated_dirs = sorted([d for d in scan_dir.iterdir() if d.is_dir()], reverse=True)
-            
-            if type_key == "chat":
-                total_chats = len(dated_dirs)
-            else:
-                total_mailbags = len(dated_dirs)
-            
-            f.write('<div class="section">')
-            f.write('<div class="section-header">')
-            f.write(f'<h2 class="section-title">{post_type.name} Summaries</h2>')
-            f.write(f'<span class="section-count">{len(dated_dirs)}</span>')
-            f.write('</div>')
-
-            if not dated_dirs:
-                f.write('<div class="empty-state">')
-                f.write('<div class="empty-state-icon">📊</div>')
-                f.write(f'<p>No {post_type.name.lower()} summaries available yet.<br><small>Check back soon for the latest updates.</small></p>')
-                f.write('</div>')
-            else:
-                f.write('<div class="summaries-grid">')
-                for day_dir in dated_dirs:
-                    relative_path = f"{type_key}/{day_dir.name}/summary.html"
-                    
+    
+    # Collect all posts data
+    all_posts = []
+    
+    for type_key, post_type in POST_TYPES.items():
+        scan_dir = out_base_dir / type_key
+        if scan_dir.is_dir():
+            for day_dir in sorted(scan_dir.iterdir(), reverse=True):
+                if day_dir.is_dir():
                     # Try to get a preview from the summary file
                     preview_text = "Click to read the full summary and analysis."
+                    title = f"{post_type.name} Summary"
+                    
                     try:
                         summary_file = day_dir / "summary.html"
                         if summary_file.exists():
@@ -921,40 +692,289 @@ body {
                                 import re
                                 insights = re.findall(r'<div class="text">(.*?)</div>', content)
                                 if insights:
-                                    preview_text = insights[0][:100] + "..." if len(insights[0]) > 100 else insights[0]
+                                    # Clean HTML entities
+                                    preview_text = insights[0]
+                                    preview_text = html.unescape(preview_text)
+                                    preview_text = preview_text[:150] + "..." if len(preview_text) > 150 else preview_text
+                                
+                                # Try to extract title from the HTML
+                                title_match = re.search(r'<h1>(.*?)</h1>', content)
+                                if title_match:
+                                    raw_title = title_match.group(1)
+                                    # Clean up the title
+                                    raw_title = html.unescape(raw_title)
+                                    raw_title = raw_title.replace("Trade Rumors Front Office Subscriber ", "")
+                                    if raw_title and raw_title != "":
+                                        title = raw_title
                     except:
                         pass
                     
-                    f.write('<div class="summary-card">')
-                    f.write(f'<a href="{relative_path}" class="summary-link">')
-                    f.write('<div class="summary-meta">')
-                    f.write(f'<div class="summary-date">{day_dir.name}</div>')
-                    f.write(f'<div class="summary-type {type_key}">{post_type.name}</div>')
-                    f.write('</div>')
-                    f.write(f'<div class="summary-preview">{preview_text}</div>')
-                    f.write('</a>')
-                    f.write('</div>')
-                f.write('</div>')
-            
-            f.write('</div>')
+                    all_posts.append({
+                        'date': day_dir.name,
+                        'type': type_key,
+                        'title': title,
+                        'preview': preview_text,
+                        'url': f"{type_key}/{day_dir.name}/summary.html"
+                    })
 
-        f.write('</div>')
-        
-        # Enhanced stats footer
-        f.write('<div class="stats">')
-        f.write('<div class="stats-grid">')
-        f.write('<div class="stat-item">')
-        f.write(f'<span class="stat-number">{total_chats}</span>')
-        f.write('<span class="stat-label">Chat Summaries</span>')
-        f.write('</div>')
-        f.write('<div class="stat-item">')
-        f.write(f'<span class="stat-number">{total_mailbags}</span>')
-        f.write('<span class="stat-label">Mailbag Summaries</span>')
-        f.write('</div>')
-        f.write('</div>')
-        f.write('</div>')
-        
-        f.write('</div></body></html>')
+    with index_path.open("w", encoding="utf-8") as f:
+        f.write("""<!doctype html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<title>MLBTR Daily Digest</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 720px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.header { 
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.header h1 { 
+    font-size: 2rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+.header .subtitle { 
+    font-size: 1rem; 
+    color: #666;
+    line-height: 1.5;
+}
+.nav-tabs {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 0;
+}
+.nav-tab {
+    padding: 0.75rem 0;
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.2s;
+}
+.nav-tab:hover {
+    color: #1a1a1a;
+}
+.nav-tab.active {
+    color: #059669;
+    border-bottom-color: #059669;
+}
+.posts-list {
+    margin-bottom: 4rem;
+}
+.post-item {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.post-item:hover {
+    background: #fafafa;
+    margin: 0 -1.5rem;
+    padding: 1.5rem;
+}
+.post-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.post-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+.post-date {
+    font-size: 0.875rem;
+    color: #666;
+    font-weight: 500;
+}
+.post-type {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+}
+.post-type.chat {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.post-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+.post-preview {
+    font-size: 0.9375rem;
+    color: #666;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.footer {
+    padding: 2rem 0;
+    margin-top: 4rem;
+    border-top: 1px solid #e5e5e5;
+    text-align: center;
+    color: #666;
+    font-size: 0.875rem;
+}
+.footer-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 1rem;
+}
+.stat {
+    text-align: center;
+}
+.stat-number {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+.stat-label {
+    font-size: 0.75rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .header { padding: 2rem 0 1.5rem; }
+    .header h1 { font-size: 1.75rem; }
+    .post-item { padding: 1.25rem 0; }
+    .post-item:hover { 
+        margin: 0 -1rem;
+        padding: 1.25rem 1rem;
+    }
+}
+</style>
+</head>
+<body>
+<div class='container'>
+<div class="header">
+<h1>MLB Trade Rumors Daily Digest</h1>
+<div class="subtitle">Curated insights from MLB Trade Rumors chats and mailbags, updated daily</div>
+</div>
+
+<div class="nav-tabs">
+<a href="#all" class="nav-tab active" onclick="filterPosts('all', event)">All Posts</a>
+<a href="#chat" class="nav-tab" onclick="filterPosts('chat', event)">Chats</a>
+<a href="#mailbag" class="nav-tab" onclick="filterPosts('mailbag', event)">Mailbags</a>
+</div>
+
+<div class="posts-list" id="posts-list">
+<!-- Posts will be inserted here by JavaScript -->
+</div>
+
+<div class="footer">
+<div class="footer-stats">
+<div class="stat">
+<div class="stat-number" id="chat-count">0</div>
+<div class="stat-label">Chats</div>
+</div>
+<div class="stat">
+<div class="stat-number" id="mailbag-count">0</div>
+<div class="stat-label">Mailbags</div>
+</div>
+</div>
+<div>MLB Trade Rumors Daily Digest &middot; Auto-updated</div>
+</div>
+</div>
+
+<script>
+// Data structure for all posts
+const posts = """)
+
+        # Write posts as JSON
+        import json
+        f.write(json.dumps(all_posts, indent=2))
+        f.write(""";
+
+// Function to render posts
+function renderPosts(filter = 'all') {
+    const container = document.getElementById('posts-list');
+    const filteredPosts = filter === 'all' ? posts : posts.filter(p => p.type === filter);
+    
+    container.innerHTML = filteredPosts.map(post => `
+        <div class="post-item">
+            <a href="${post.url}" class="post-link">
+                <div class="post-header">
+                    <span class="post-date">${formatDate(post.date)}</span>
+                    <span class="post-type ${post.type}">${post.type}</span>
+                </div>
+                <div class="post-title">${post.title}</div>
+                <div class="post-preview">${post.preview}</div>
+            </a>
+        </div>
+    `).join('');
+}
+
+// Format date nicely
+function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    const options = { month: 'short', day: 'numeric', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+}
+
+// Filter posts by type
+function filterPosts(type, event) {
+    event.preventDefault();
+    
+    // Update active tab
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    // Render filtered posts
+    renderPosts(type);
+}
+
+// Update stats
+function updateStats() {
+    const chatCount = posts.filter(p => p.type === 'chat').length;
+    const mailbagCount = posts.filter(p => p.type === 'mailbag').length;
+    
+    document.getElementById('chat-count').textContent = chatCount;
+    document.getElementById('mailbag-count').textContent = mailbagCount;
+}
+
+// Initialize
+renderPosts();
+updateStats();
+</script>
+</body>
+</html>""")
 
 
 # --------------------------------------------------
