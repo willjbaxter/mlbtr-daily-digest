@@ -108,100 +108,163 @@ SUMMARY_MAX_BULLETS = 10  # keep it tight
 OUT_DIR = Path(__file__).with_suffix("").parent / "out"
 
 
-HEAD_TEMPLATE = """<!doctype html><html lang='en'><head><meta charset='utf-8'><title>{title}</title><style>
+HEAD_TEMPLATE = """<!doctype html><html lang='en'><head><meta charset='utf-8'><title>{title}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
 * {{ margin: 0; padding: 0; box-sizing: border-box; }}
 body {{ 
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    line-height: 1.6; 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
     color: #1a1a1a; 
-    background: #fafafa;
-    min-height: 100vh;
+    background: #fff;
 }}
 .container {{ 
-    max-width: 800px; 
+    max-width: 1200px; 
     margin: 0 auto; 
-    background: white; 
-    min-height: 100vh;
+    padding: 0 1.5rem;
+}}
+.nav-bar {{
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}}
+.nav-bar a {{
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}}
+.nav-bar a:hover {{
+    text-decoration: underline;
 }}
 .header {{ 
-    background: white;
-    padding: 2rem;
-    border-bottom: 1px solid #e5e5e5;
+    padding: 1.5rem 0 2rem;
+}}
+.post-meta {{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}}
+.post-date {{
+    font-weight: 500;
+}}
+.post-type {{
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}}
+.post-type.mailbag {{
+    background: #fce7f3;
+    color: #be185d;
 }}
 .header h1 {{ 
-    font-size: 2rem; 
+    font-size: 2.25rem; 
     font-weight: 700; 
     margin-bottom: 0.5rem;
     color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
 }}
-.header .subtitle {{ 
-    font-size: 1rem; 
-    color: #666;
-    font-weight: 400;
+.main-content {{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
 }}
-.content {{ 
+.insights-panel {{
+    background: #f8f9fa;
     padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
 }}
-.section-title {{ 
-    font-size: 1.5rem; 
-    font-weight: 600; 
-    margin-bottom: 2rem; 
-    color: #1a1a1a;
+.section-label {{
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
 }}
 .insights-list {{ 
     list-style: none;
-    margin-bottom: 3rem;
 }}
 .insight {{ 
-    margin-bottom: 2rem; 
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #f0f0f0;
-}}
-.insight:last-child {{
-    border-bottom: none;
-    margin-bottom: 0;
-}}
-.insight.priority {{ 
-    border-left: 3px solid #d73527;
-    padding-left: 1rem;
-    margin-left: -1rem;
-}}
-
-.text {{ 
-    color: #333; 
-    font-size: 1rem; 
-    line-height: 1.7;
-}}
-.transcript-section {{ 
-    margin-top: 3rem;
-    border-top: 1px solid #e5e5e5;
-    padding-top: 2rem;
-}}
-details {{ 
-    margin-top: 1rem;
-}}
-summary {{ 
-    background: #f8f8f8; 
-    padding: 1rem; 
-    font-weight: 600; 
-    cursor: pointer; 
-    border-radius: 4px;
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
     color: #333;
 }}
-summary:hover {{ 
-    background: #f0f0f0; 
+.insight:before {{
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
 }}
-iframe {{ 
-    width: 100%; 
-    height: 70vh; 
+.insight.priority:before {{ 
+    content: "→";
+    color: #dc2626;
+}}
+.transcript-panel {{
+    background: white;
+}}
+.transcript-content {{
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
     border: 1px solid #e5e5e5;
-    border-radius: 4px;
-    margin-top: 1rem;
+}}
+.transcript-content p {{
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}}
+.transcript-content p:last-child {{
+    margin-bottom: 0;
+}}
+.transcript-content strong {{
+    color: #059669;
+    font-weight: 600;
+}}
+.footer-nav {{
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}}
+.footer-nav a {{
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}}
+.footer-nav a:hover {{
+    text-decoration: underline;
 }}
 @media (max-width: 768px) {{
-    .header {{ padding: 1.5rem; }}
+    .container {{ padding: 0 1rem; }}
     .header h1 {{ font-size: 1.75rem; }}
-    .content {{ padding: 1.5rem; }}
+    .main-content {{
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }}
+    .insights-panel {{
+        padding: 1.5rem;
+    }}
 }}
 </style></head><body><div class='container'>"""
 TAIL_TEMPLATE = "</div></body></html>"
@@ -605,23 +668,40 @@ def build_summary(pairs: List[Tuple[str, str, bool]], post_type: str) -> List[st
 def write_html(summary: List[str], pairs: List[Tuple[str, str]], title: str, out_dir: Path) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Summary page with expandable transcript.
+    # Summary page with transcript.
     summary_html_path = out_dir / "summary.html"
-    transcript_html_path = out_dir / "transcript.html"
+    
+    # Determine post type from directory structure
+    post_type = "mailbag" if "mailbag" in str(out_dir) else "chat"
+    post_date = out_dir.name  # Directory name is the date
+    
+    # Clean up title
+    clean_title = title.replace("Trade Rumors Front Office Subscriber ", "").replace("Manual Mailbag Processing", "MLB Mailbag")
 
     # summary.html
     with summary_html_path.open("w", encoding="utf-8") as f:
-        f.write(HEAD_TEMPLATE.format(title=title))
+        f.write(HEAD_TEMPLATE.format(title=clean_title))
+        
+        # Navigation bar
+        f.write('<div class="nav-bar">')
+        f.write('<a href="../../index.html">← Back to All Posts</a>')
+        f.write('</div>')
         
         # Header section
         f.write('<div class="header">')
-        f.write(f'<h1>{html.escape(title.replace("Trade Rumors Front Office Subscriber ", ""))}</h1>')
-        f.write('<div class="subtitle">MLB Trade Rumors Daily Digest</div>')
+        f.write('<div class="post-meta">')
+        f.write(f'<span class="post-date">{post_date}</span>')
+        f.write(f'<span class="post-type {post_type}">{post_type}</span>')
+        f.write('</div>')
+        f.write(f'<h1>{html.escape(clean_title)}</h1>')
         f.write('</div>')
         
-        # Content section
-        f.write('<div class="content">')
-        f.write('<h2 class="section-title">Key Insights</h2>')
+        # Main content with two columns
+        f.write('<div class="main-content">')
+        
+        # Left column - Insights
+        f.write('<div class="insights-panel">')
+        f.write('<div class="section-label">Key Insights</div>')
         f.write('<ul class="insights-list">')
         
         for bullet in summary:
@@ -636,31 +716,43 @@ def write_html(summary: List[str], pairs: List[Tuple[str, str]], title: str, out
                 is_priority = False
                 content = bullet
             
-            # Write the insight (no speaker needed for topic summaries)
+            # Write the insight
             insight_class = "insight priority" if is_priority else "insight"
             
             f.write(f'<li class="{insight_class}">')
-            f.write(f'<div class="text">{html.escape(content)}</div>')
+            f.write(html.escape(content))
             f.write('</li>')
         
-        f.write('</ul>')  # End insights-list
+        if not summary:
+            f.write('<li class="insight">Summary generation in progress...</li>')
         
-        # Transcript section
-        f.write('<div class="transcript-section">')
-        f.write('<details>')
-        f.write('<summary>View Full Transcript</summary>')
-        f.write(f'<iframe src="transcript.html"></iframe>')
-        f.write('</details>')
+        f.write('</ul>')
+        f.write('</div>')  # End insights-panel
+        
+        # Right column - Transcript
+        f.write('<div class="transcript-panel">')
+        f.write('<div class="section-label">Full Transcript</div>')
+        f.write('<div class="transcript-content">')
+        
+        # Show first 10 Q&A pairs or all if less
+        display_pairs = pairs[:20] if len(pairs) > 20 else pairs
+        for speaker, text in display_pairs:
+            f.write(f"<p><strong>{html.escape(speaker)}:</strong> {html.escape(text)}</p>\n")
+        
+        if len(pairs) > 20:
+            f.write(f'<p style="text-align: center; color: #999; font-style: italic;">... and {len(pairs) - 20} more exchanges</p>')
+        
+        f.write('</div>')
+        f.write('</div>')  # End transcript-panel
+        
+        f.write('</div>')  # End main-content
+        
+        # Footer navigation
+        f.write('<div class="footer-nav">')
+        f.write('<a href="../../index.html">← Back to All Posts</a>')
+        f.write('<a href="#">Top ↑</a>')
         f.write('</div>')
         
-        f.write('</div>')  # End content
-        f.write(TAIL_TEMPLATE)
-
-    # transcript.html (raw but cleaned)
-    with transcript_html_path.open("w", encoding="utf-8") as f:
-        f.write(HEAD_TEMPLATE.format(title=title + " – Full Transcript"))
-        for speaker, text in pairs:
-            f.write(f"<p><strong>{html.escape(speaker)}:</strong> {html.escape(text)}</p>\n")
         f.write(TAIL_TEMPLATE)
 
     print(f"Wrote {summary_html_path}")
