@@ -109,6 +109,7 @@ OUT_DIR = Path(__file__).with_suffix("").parent / "out"
 
 
 HEAD_TEMPLATE = """<!doctype html><html lang='en'><head><meta charset='utf-8'><title>{title}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -257,13 +258,64 @@ body {{
 }}
 @media (max-width: 768px) {{
     .container {{ padding: 0 1rem; }}
-    .header h1 {{ font-size: 1.75rem; }}
+    .nav-bar {{
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }}
+    .nav-bar a {{
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }}
+    .header {{ 
+        padding: 1rem 0 1.5rem;
+    }}
+    .header h1 {{ 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }}
+    .post-meta {{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }}
     .main-content {{
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
     }}
     .insights-panel {{
-        padding: 1.5rem;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }}
+    .section-label {{
+        margin-bottom: 1rem;
+    }}
+    .insight {{
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }}
+    .transcript-content {{
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }}
+    .transcript-content p {{
+        margin-bottom: 1rem;
+    }}
+    .footer-nav {{
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }}
+    .footer-nav a {{
+        font-size: 1rem;
+        padding: 0.5rem;
     }}
 }}
 </style></head><body><div class='container'>"""
@@ -961,12 +1013,50 @@ body {
 }
 @media (max-width: 768px) {
     .container { padding: 0 1rem; }
-    .header { padding: 2rem 0 1.5rem; }
-    .header h1 { font-size: 1.75rem; }
-    .post-item { padding: 1.25rem 0; }
+    .header { 
+        padding: 1.5rem 0 1rem; 
+        margin-bottom: 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+    .header .subtitle {
+        font-size: 0.9375rem;
+        margin-top: 0.5rem;
+    }
+    .nav-tabs {
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+    }
+    .nav-tab {
+        padding: 0.5rem 0;
+        font-size: 0.9375rem;
+    }
+    .post-item { 
+        padding: 1rem 0; 
+    }
     .post-item:hover { 
         margin: 0 -1rem;
-        padding: 1.25rem 1rem;
+        padding: 1rem;
+        border-radius: 8px;
+    }
+    .post-meta {
+        font-size: 0.8125rem;
+        margin-bottom: 0.5rem;
+    }
+    .post-title {
+        font-size: 1.125rem;
+        line-height: 1.4;
+        margin-bottom: 0.5rem;
+    }
+    .post-preview {
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .posts-list {
+        margin-bottom: 2rem;
     }
 }
 </style>
