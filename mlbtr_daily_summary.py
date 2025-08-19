@@ -727,8 +727,14 @@ def write_html(summary: List[str], pairs: List[Tuple[str, str]], title: str, out
     post_type = "mailbag" if "mailbag" in str(out_dir) else "chat"
     post_date = out_dir.name  # Directory name is the date
     
-    # Clean up title
-    clean_title = title.replace("Trade Rumors Front Office Subscriber ", "").replace("Manual Mailbag Processing", "MLB Mailbag")
+    # Standardize title format with date
+    date_obj = dt.datetime.strptime(post_date, "%Y-%m-%d").date()
+    formatted_date = date_obj.strftime("%b %d")  # e.g., "Aug 18"
+    
+    if post_type == "chat":
+        clean_title = f"Chat: {formatted_date}"
+    else:  # mailbag
+        clean_title = f"Mailbag: {formatted_date}"
 
     # summary.html
     with summary_html_path.open("w", encoding="utf-8") as f:
@@ -832,26 +838,48 @@ def build_main_index(out_base_dir: Path):
                         if summary_file.exists():
                             with summary_file.open('r', encoding='utf-8') as preview_f:
                                 content = preview_f.read()
-                                # Extract first insight as preview
+                                # Extract insights for preview
                                 import re
-                                insights = re.findall(r'<div class="text">(.*?)</div>', content)
+                                insights = re.findall(r'<li class="insight[^"]*">(.*?)</li>', content)
                                 if insights:
-                                    # Clean HTML entities
-                                    preview_text = insights[0]
-                                    preview_text = html.unescape(preview_text)
-                                    preview_text = preview_text[:150] + "..." if len(preview_text) > 150 else preview_text
+                                    # Extract key topics/players from insights
+                                    topics = []
+                                    for insight in insights[:3]:  # First 3 insights
+                                        # Clean HTML entities and tags
+                                        clean_insight = html.unescape(re.sub(r'<[^>]+>', '', insight))
+                                        # Extract player names, teams, topics
+                                        if len(clean_insight) > 20:
+                                            # Look for player names (capitalized words)
+                                            import re
+                                            names = re.findall(r'\b[A-Z][a-z]+ [A-Z][a-z]+\b', clean_insight)
+                                            teams = re.findall(r'\b(?:Red Sox|Yankees|Cubs|Dodgers|Astros|Giants|Padres|Braves|Mets|Pirates|Tigers|Brewers|Phillies|Rangers|Angels|Orioles|Blue Jays|Rays|Guardians|Twins|White Sox|Royals|Athletics|Mariners|Cardinals|Reds|Marlins|Nationals|Rockies|Diamondbacks)\b', clean_insight)
+                                            
+                                            if names:
+                                                topics.extend(names[:2])  # Max 2 names per insight
+                                            if teams:
+                                                topics.extend(teams[:1])  # Max 1 team per insight
+                                    
+                                    if topics:
+                                        preview_text = ", ".join(list(dict.fromkeys(topics)))  # Remove duplicates, preserve order
+                                        if len(preview_text) > 80:
+                                            preview_text = preview_text[:80] + "..."
+                                    else:
+                                        # Fallback to first insight text
+                                        first_insight = html.unescape(re.sub(r'<[^>]+>', '', insights[0]))
+                                        preview_text = first_insight[:100] + "..." if len(first_insight) > 100 else first_insight
                                 
-                                # Try to extract title from the HTML
-                                title_match = re.search(r'<h1>(.*?)</h1>', content)
-                                if title_match:
-                                    raw_title = title_match.group(1)
-                                    # Clean up the title
-                                    raw_title = html.unescape(raw_title)
-                                    raw_title = raw_title.replace("Trade Rumors Front Office Subscriber ", "")
-                                    if raw_title and raw_title != "":
-                                        title = raw_title
+                                # Generate standardized title
+                                date_obj = dt.datetime.strptime(day_dir.name, "%Y-%m-%d").date()
+                                formatted_date = date_obj.strftime("%b %d")
+                                title = f"{post_type.name}: {formatted_date}"
                     except:
-                        pass
+                        # Fallback title for any errors
+                        try:
+                            date_obj = dt.datetime.strptime(day_dir.name, "%Y-%m-%d").date()
+                            formatted_date = date_obj.strftime("%b %d")
+                            title = f"{post_type.name}: {formatted_date}"
+                        except:
+                            title = f"{post_type.name} Summary"
                     
                     all_posts.append({
                         'date': day_dir.name,
