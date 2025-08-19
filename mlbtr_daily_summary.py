@@ -66,7 +66,7 @@ class PostType:
 POST_TYPES: Dict[str, PostType] = {
     "chat": PostType(
         name="Chat",
-        match_keywords=["chat transcript", "live chat"],
+        match_keywords=["chat transcript", "live chat", "subscriber chat"],
         prompt=(
             "Distill this MLB chat transcript into comprehensive topic bullets, capturing all substantive Q&A content with faithful clarity. "
             "One bullet per distinct topic. Use 🔴 for Red Sox/Yankees/AL East/Cubs topics, • for others. "
