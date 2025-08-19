@@ -73,9 +73,10 @@ Critical prompting includes explicit date preservation instructions to prevent t
 ### UI Design System
 - **Main Index**: Blog-style list with JavaScript filtering and date-based sorting
 - **Individual Pages**: Two-column layout with insights panel (left) and scrollable transcript (right)
-- **Responsive**: CSS Grid with mobile-first breakpoints at 768px
+- **Responsive**: CSS Grid with mobile-first breakpoints at 768px, single-column layout on mobile
 - **Typography**: Inter font with consistent spacing and color hierarchy
 - **Navigation**: Breadcrumb navigation and footer links between pages
+- **Mobile Optimizations**: Viewport meta tag, improved touch targets, reduced font sizes, better spacing
 
 ### File Structure
 ```
@@ -98,8 +99,12 @@ Modify `KEYWORDS_PRIMARY` set in `mlbtr_daily_summary.py` to change which teams 
 
 ### Post Type Configuration
 The `POST_TYPES` dictionary defines content matching patterns and LLM prompts for each content type. Each post type includes:
-- `match_keywords`: RSS title patterns for content detection
+- `match_keywords`: RSS title patterns for content detection (e.g., `["chat transcript", "live chat", "subscriber chat"]`)
 - `prompt`: Specific LLM instructions for that content type
+
+Current keywords:
+- **Chat**: `["chat transcript", "live chat", "subscriber chat"]`
+- **Mailbag**: `["mailbag"]`
 
 ### Environment Variables
 - `CLAUDE_API_KEY`: Primary LLM for summarization
@@ -123,3 +128,28 @@ The `POST_TYPES` dictionary defines content matching patterns and LLM prompts fo
 - Main index template is generated dynamically in `build_main_index()`
 - Individual page template is in `HEAD_TEMPLATE` and `write_html()` function
 - CSS is embedded in templates for performance and simplicity
+
+## Content Management
+
+### Title Standardization
+All articles use consistent title format:
+- **Chat articles**: `"Chat: Aug 18"` (MMM DD format)
+- **Mailbag articles**: `"Mailbag: Aug 13"` (MMM DD format)
+
+### Preview Generation
+The system automatically generates intelligent previews by:
+1. Extracting player names using regex pattern `\b[A-Z][a-z]+ [A-Z][a-z]+\b`
+2. Identifying team mentions from comprehensive team list (30 MLB teams)
+3. Combining up to 2 players and 1 team per insight for concise previews
+4. Fallback to first insight text if no names/teams found
+
+Examples:
+- `"Red Sox, Tanner Houck, Trent Grisham, Yankees"`
+- `"Spencer Jones, Mason Miller, Yankees"`
+- `"Jarren Duran, Mitch Keller, Pirates"`
+
+### Automation Status
+- **Daily Pipeline**: Runs at 10 PM UTC via GitHub Actions
+- **Content Detection**: Enhanced with "subscriber chat" keyword for broader coverage
+- **Title/Preview System**: Automatically applied to all new and regenerated content
+- **Mobile Layout**: Fully responsive with dedicated mobile breakpoints
