@@ -1,0 +1,231 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Aug 19</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2025-08-19</span><span class="post-type chat">chat</span></div><h1>Chat: Aug 19</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight">Good morning! We’ll get going at 1:00 CT, give or take a couple minutes, but feel free to begin sending in questions ahead of time if you prefer</li><li class="insight">The player option is guaranteed money</li><li class="insight">I do think he’ll be traded this offseason (or perhaps just non-tendered if he really struggles down the stretch, but he’s hitting well since returning from the IL anyhow)</li><li class="insight">KBO and NPB teams have scouts watching MLB and MiLB games</li><li class="insight">Mitch Garver is the only free agent position player Dipoto has signed to a multi-year deal since taking over the Mariners a decade ago</li><li class="insight">Little to none, provided it’s not due to an injury or anything</li><li class="insight">Ohtani in the NL, and I’ve probably flipped to Raleigh in the AL</li><li class="insight">The Phillies have a $9MM club option that comes with a $500K buyout</li><li class="insight">Had he been healthy, yeah — but with the lat/back injuries and now back surgery clouding some of his offseason, no</li><li class="insight">I think a two-year term is pretty reasonable — he’s not going to get more than that for ages 37 and 38 — but the $21MM AAV feels a little steep to me</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Steve Adams:</strong> Good morning! We’ll get going at 1:00 CT, give or take a couple minutes, but feel free to begin sending in questions ahead of time if you prefer. Greetings! Let’s get going</p>
+<p><strong>Doug Sisk:</strong> What happens to Frankie Montas’ 2026 player option if the Mets release him before the end of the 2025 season?</p>
+<p><strong>Steve Adams:</strong> The player option is guaranteed money. He’d make next year’s $17MM and count against the luxury tax whether he’s on the roster or not.</p>
+<p><strong>OsKnows:</strong> Mountcastle’s time as an O almost over?</p>
+<p><strong>Steve Adams:</strong> I do think he’ll be traded this offseason (or perhaps just non-tendered if he really struggles down the stretch, but he’s hitting well since returning from the IL anyhow). I’d expect first base to primarily be a combination of Mayo and Basallo next year. Mountcastle only has one year of club control left and will probably make more than $8MM. O’s can move him and put that money toward pitching instead.</p>
+<p><strong>Guarded Indian:</strong> When a player is released to pursue an opportunity overseas, does that generally happen because the players agent is looking for better financial opportunities for their client or is it because the foreign team reaches out?  I’m trying to figure out how a AAAA player is identified as a good fit for a Korean baseball team etc.</p>
+<p><strong>Steve Adams:</strong> KBO and NPB teams have scouts watching MLB and MiLB games. They’ll identify guys they like, get in touch with the agent, and if there’s reciprocal interest you can then pull in the player’s current organization and discuss some kind of release fee.By the time a player is getting released to pursue a foreign opportunity, the contract and any release fee have typically already been sorted out.</p>
+<p><strong>Jerry Dipoto:</strong> Am I going to re-sign Josh Naylor to be my 1B next year? Or is there a different external options I should be looking at? I don’t see the player in house.</p>
+<p><strong>Steve Adams:</strong> I lean toward no. Mitch Garver is the only free agent position player Dipoto has signed to a multi-year deal since taking over the Mariners a decade ago.</p>
+<p><strong>TennesseeMG:</strong> Do you think Kyle Tucker’s monster slump will have a major impact, moderate impact or little to no impact on the deal he gets in free agency?</p>
+<p><strong>Steve Adams:</strong> Little to none, provided it’s not due to an injury or anything. We have like 5 years of telling us this guy’s an amazing hitter… that’s not going to get overshadowed by a few weeks of struggles. I mean, if he hits like .150/.225/.250 down the stretch, maybe it starts to impact, but as of right now, it’s not a factor really.</p>
+<p><strong>Steve Cohen:</strong> Who do you think wins the MVP in each league?</p>
+<p><strong>Steve Adams:</strong> Ohtani in the NL, and I’ve probably flipped to Raleigh in the AL. I could go either way at this moment, but it increasingly seems like Judge is going to be limited or a total nonfactor on defense for the rest of the season, and he’s in a pretty rough stretch at the plate which seems attributable to the injury.</p>
+<p><strong>Jose Alvarado:</strong> I’m coming off the restricted list today… My contract is done at the end of 2025…  but if I perform down the stretch similar to what I did before my PED suspension – do you think the Phillies will try to re-sign me? Or did a door close in Philly after I screwed up.</p>
+<p><strong>Steve Adams:</strong> The Phillies have a $9MM club option that comes with a $500K buyout. A net $8.5MM option is a pretty easy call for them on Alvarado. He’ll be back.</p>
+<p><strong>Effin Eflin:</strong> Does Zach Eflin get a QO from the Orioles this off season?</p>
+<p><strong>Steve Adams:</strong> Had he been healthy, yeah — but with the lat/back injuries and now back surgery clouding some of his offseason, no. The O’s aren’t risking around $22MM on day one of the offseason when he’ll only be a couple months into the rehab process.</p>
+<p><strong>Jays in 43 parks:</strong> Bassitt is having a decent season. Would a 2 yr ext at same AAV be smart for the Jays. Would Bassitt accept?</p>
+<p><strong>Steve Adams:</strong> I think a two-year term is pretty reasonable — he’s not going to get more than that for ages 37 and 38 — but the $21MM AAV feels a little steep to me. Bassitt is still effective, and he’s consistent, but his velo is down more than a mile per hour from last year and nearly two miles per hour from the point at which he signed the contract. I don’t think teams are going to excited about $20MM+ for a 37-year-old who’s sitting 91 mph with his heater. I’d probably guess like $15-16MM per year over two.</p>
+<p><strong>Walter:</strong> How much longer before the Clase and Ortiz situation is resolved?</p>
+<p style="text-align: center; color: #999; font-style: italic;">... and 65 more exchanges</p></div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>
