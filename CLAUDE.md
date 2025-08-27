@@ -12,7 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Force regenerate today's articles (useful during development)
 .venv/bin/python3 mlbtr_daily_summary.py --force
 
-# Regenerate all articles with updated prompts
+# Regenerate all articles with updated prompts (RSS feed only)
 .venv/bin/python3 mlbtr_daily_summary.py --regenerate-all
 
 # Process articles since a specific date
@@ -27,20 +27,56 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+### Agent Validation Commands
+```bash
+# Run with full agent validation enabled (recommended for production)
+ENABLE_AGENT_VALIDATION=true AGENT_VALIDATION_PERCENTAGE=100 GEMINI_API_KEY=your_key .venv/bin/python3 mlbtr_daily_summary.py
+
+# Test agent system in shadow mode (validation runs but doesn't affect output)
+ENABLE_AGENT_VALIDATION=true AGENT_SHADOW_MODE=true GEMINI_API_KEY=your_key .venv/bin/python3 mlbtr_daily_summary.py
+
+# Run agents on specific percentage of content (gradual rollout)
+ENABLE_AGENT_VALIDATION=true AGENT_VALIDATION_PERCENTAGE=50 GEMINI_API_KEY=your_key .venv/bin/python3 mlbtr_daily_summary.py
+
+# Emergency: Disable agents if issues arise
+ENABLE_AGENT_VALIDATION=false .venv/bin/python3 mlbtr_daily_summary.py
+```
+
 ### Deployment
 The site uses GitHub Pages for hosting. Files from `out/` directory are automatically synced to the root by GitHub Actions for GitHub Pages compatibility.
+
+**CRITICAL DEPLOYMENT NOTE**: GitHub Pages serves from the repository root directory, NOT from `out/`. The GitHub Action at `.github/workflows/update_digest.yml` handles syncing content from `out/` to root. When making manual changes:
+
+1. Always update content in `out/` directory first
+2. Copy changes to root directory: `cp out/index.html index.html` and `cp -r out/chat/* chat/` etc.
+3. Commit both `out/` and root directory changes
+4. Otherwise GitHub Pages will serve stale content from root
+
+**Emergency Content Reset**:
+```bash
+# Clean everything and start fresh with agent validation
+rm -rf out/chat/* out/mailbag/* chat/* mailbag/*
+ENABLE_AGENT_VALIDATION=true AGENT_VALIDATION_PERCENTAGE=100 GEMINI_API_KEY=your_key .venv/bin/python3 mlbtr_daily_summary.py --regenerate-all --force
+cp out/index.html index.html && mkdir -p chat mailbag && cp -r out/chat/* chat/ 2>/dev/null && cp -r out/mailbag/* mailbag/ 2>/dev/null
+git add . && git commit -m "Fresh start with agent validation" && git push
+```
 
 ## Architecture Overview
 
 ### Core Application Flow
-The system operates as a content aggregation and summarization pipeline:
+The system operates as a content aggregation and summarization pipeline with multi-agent validation:
 
 1. **RSS Feed Monitoring** (`fetch_new_articles()`) - Scans MLB Trade Rumors RSS for new chat transcripts and mailbags
 2. **Content Extraction** (`extract_transcript()`, `extract_mailbag_content()`) - Parses HTML to extract speaker-text pairs from chat transcripts and full content from mailbags
 3. **Content Processing** (`prioritise_pairs()`) - Identifies priority content based on team keywords (Red Sox, Yankees, AL East, Cubs)
 4. **Summarization** (`build_summary()`) - Uses Claude 3.5 Sonnet API to generate structured insights, with fallback to keyword-based extraction
-5. **HTML Generation** (`write_html()`) - Creates summary pages with two-column layout (insights + transcript)
-6. **Index Generation** (`build_main_index()`) - Maintains central index with JavaScript-driven filtering
+5. **🤖 Agent Validation Pipeline** (`agent_validation.py`) - Multi-agent system validates and improves content quality:
+   - **Extraction Agent**: Validates raw content extraction and formatting
+   - **Editorial Agent**: Fixes content quality, team assignments, and title formatting  
+   - **Preview Agent**: Generates intelligent previews with player/team extraction
+   - **Publisher Agent**: Final validation before publication
+6. **HTML Generation** (`write_html()`) - Creates summary pages with two-column layout (insights + transcript)
+7. **Index Generation** (`build_main_index()`) - Maintains central index with JavaScript-driven filtering
 
 ### Data Processing Pipeline
 - **Input**: MLB Trade Rumors RSS feed entries
@@ -109,7 +145,10 @@ Current keywords:
 ### Environment Variables
 - `CLAUDE_API_KEY`: Primary LLM for summarization
 - `OPENAI_API_KEY`: Secondary LLM fallback  
-- `GEMINI_API_KEY`: Tertiary LLM fallback
+- `GEMINI_API_KEY`: Tertiary LLM fallback + Agent validation system
+- `ENABLE_AGENT_VALIDATION`: Enable/disable agent validation system (true/false)
+- `AGENT_VALIDATION_PERCENTAGE`: Percentage of content to validate with agents (0-100)
+- `AGENT_SHADOW_MODE`: Run agents without affecting output for testing (true/false)
 
 ## Common Development Patterns
 
@@ -149,7 +188,53 @@ Examples:
 - `"Jarren Duran, Mitch Keller, Pirates"`
 
 ### Automation Status
-- **Daily Pipeline**: Runs at 10 PM UTC via GitHub Actions
+- **Daily Pipeline**: Runs at 10 PM UTC via GitHub Actions with full agent validation
 - **Content Detection**: Enhanced with "subscriber chat" keyword for broader coverage
-- **Title/Preview System**: Automatically applied to all new and regenerated content
+- **Title/Preview System**: Automatically applied to all new and regenerated content via agents
 - **Mobile Layout**: Fully responsive with dedicated mobile breakpoints
+- **Agent Validation**: 100% of new content processed through 4-agent quality pipeline
+
+## Agent Validation System
+
+### Overview
+The multi-agent validation system (`agent_validation.py`) ensures content quality through a sequential 4-agent pipeline using Google Gemini. The system follows a "never-block-publication" philosophy with graceful degradation.
+
+### Agent Pipeline
+1. **Extraction Agent**: Validates raw content extraction, fixes encoding issues, ensures proper formatting
+2. **Editorial Agent**: Improves content quality, validates team assignments (e.g., prevents "Red Sox catcher Ben Rice" errors), standardizes titles
+3. **Preview Agent**: Generates intelligent previews by extracting player names and team mentions using regex and MLB team database
+4. **Publisher Agent**: Final content validation, ensures consistency and publication readiness
+
+### Quality Improvements
+- **Title Standardization**: "Front Office Subscriber Chat Transcript" → "Chat: Aug 15"
+- **Intelligent Previews**: "Summary generation in progress..." → "Red Sox, Tanner Houck, Trent Grisham, Yankees"  
+- **Team Validation**: Prevents incorrect team assignments using MLB roster data
+- **Content Analysis**: Enhanced insight generation with priority flagging (→ vs •)
+
+### Production Safety Features
+- **Circuit Breaker**: Disables agents after 3 consecutive failures to prevent cascading issues
+- **Graceful Degradation**: If agents fail, content still publishes with original processing
+- **Shadow Mode**: Test agents without affecting production output
+- **Percentage Rollout**: Gradual deployment (e.g., 50% of content uses agents)
+- **Emergency Disable**: `ENABLE_AGENT_VALIDATION=false` immediately disables all agents
+
+### Configuration
+```bash
+# Full production deployment
+ENABLE_AGENT_VALIDATION=true
+AGENT_VALIDATION_PERCENTAGE=100
+AGENT_SHADOW_MODE=false
+
+# Testing/development  
+ENABLE_AGENT_VALIDATION=true
+AGENT_VALIDATION_PERCENTAGE=50
+AGENT_SHADOW_MODE=true
+
+# Emergency disable
+ENABLE_AGENT_VALIDATION=false
+```
+
+### Monitoring
+- **Circuit Breaker Status**: Tracked in logs as "Circuit breaker OPEN/CLOSED"
+- **Agent Performance**: Each agent reports fixes applied (e.g., "editorial_agent: 1 fixes applied")
+- **Validation Statistics**: Available in console output during processing
