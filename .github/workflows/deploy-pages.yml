@@ -30,11 +30,19 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Create web files directory
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp -r chat _site/ 2>/dev/null || true
+          cp -r mailbag _site/ 2>/dev/null || true
+          echo "Web files prepared for deployment"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository root (since our content is synced there)
-          path: '.'
+          # Upload only web files
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
