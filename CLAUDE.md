@@ -238,3 +238,47 @@ ENABLE_AGENT_VALIDATION=false
 - **Circuit Breaker Status**: Tracked in logs as "Circuit breaker OPEN/CLOSED"
 - **Agent Performance**: Each agent reports fixes applied (e.g., "editorial_agent: 1 fixes applied")
 - **Validation Statistics**: Available in console output during processing
+
+## Common Issues and Troubleshooting
+
+### GitHub Pages Not Showing Latest Content
+
+**Problem**: Site displays old content or shows "0 CHATS, 0 MAILBAGS" despite successful GitHub Actions runs.
+
+**Root Causes and Solutions**:
+
+1. **Missing GitHub Pages Deployment Workflow**
+   - GitHub Pages configured for "workflow" deployment but no deployment workflow exists
+   - Solution: Ensure `.github/workflows/deploy-pages.yml` exists and runs on push to main branch
+
+2. **JavaScript Syntax Errors Preventing Posts Display**
+   - Most common issue: Missing commas in posts JSON data structure
+   - Symptoms: Browser console shows "Uncaught SyntaxError: Unexpected string" 
+   - Solution: Validate JavaScript syntax with `node -c` on extracted script content
+
+3. **Inline Event Handler Issues**
+   - Problematic: `onclick="filterPosts('all', event)"` causes syntax errors
+   - Solution: Use `data-filter="all"` attributes with proper event listeners
+
+**Debugging Steps**:
+```bash
+# 1. Check if GitHub Pages deployment workflow exists
+ls -la .github/workflows/deploy-pages.yml
+
+# 2. Verify JavaScript syntax in index.html
+sed -n '/<script>/,/<\/script>/p' index.html | sed '1d;$d' > temp_script.js
+node -c temp_script.js
+
+# 3. Check browser console for JavaScript errors
+# Open Developer Tools > Console tab in browser
+
+# 4. Verify content was synced to root directories  
+ls -la chat/*/summary.html mailbag/*/summary.html
+```
+
+**GitHub Pages Deployment Workflow Template**:
+The system requires a GitHub Pages deployment workflow that:
+- Triggers on push to main branch
+- Creates clean `_site` directory with only web files
+- Avoids deploying entire repository (prevents conflicts)
+- Uses `actions/upload-pages-artifact@v3` and `actions/deploy-pages@v4`
