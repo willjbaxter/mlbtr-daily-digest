@@ -205,9 +205,9 @@ body {
 </div>
 
 <div class="nav-tabs">
-<a href="#all" class="nav-tab active" data-filter="all">All Posts</a>
-<a href="#chat" class="nav-tab" data-filter="chat">Chats</a>
-<a href="#mailbag" class="nav-tab" data-filter="mailbag">Mailbags</a>
+<a href="#all" class="nav-tab active" onclick="filterPosts('all', event)">All Posts</a>
+<a href="#chat" class="nav-tab" onclick="filterPosts('chat', event)">Chats</a>
+<a href="#mailbag" class="nav-tab" onclick="filterPosts('mailbag', event)">Mailbags</a>
 </div>
 
 <div class="posts-list" id="posts-list">
@@ -225,13 +225,20 @@ body {
 <div class="stat-label">Mailbags</div>
 </div>
 </div>
-<div>MLB Trade Rumors Daily Digest &middot; Auto-updated &middot; Last updated: Sept 4, 2025</div>
+<div>MLB Trade Rumors Daily Digest &middot; Auto-updated</div>
 </div>
 </div>
 
 <script>
 // Data structure for all posts
 const posts = [
+  {
+    "date": "2025-09-05",
+    "type": "chat",
+    "title": "Chat: Sep 05",
+    "preview": "Brewers Rotation, Brewers, Salazar Incident, Roki Sasaki, Performance Issues",
+    "url": "chat/2025-09-05/summary.html"
+  },
   {
     "date": "2025-09-04",
     "type": "chat",
@@ -316,16 +323,6 @@ function filterPosts(type, event) {
     renderPosts(type);
 }
 
-// Add event listeners to navigation tabs
-function setupNavigation() {
-    document.querySelectorAll('.nav-tab').forEach(tab => {
-        tab.addEventListener('click', function(event) {
-            const filterType = this.getAttribute('data-filter');
-            filterPosts(filterType, event);
-        });
-    });
-}
-
 // Update stats
 function updateStats() {
     const chatCount = posts.filter(p => p.type === 'chat').length;
@@ -336,13 +333,8 @@ function updateStats() {
 }
 
 // Initialize
-console.log('Starting to initialize...');
-console.log('Posts data:', posts);
-console.log('Posts count:', posts.length);
-setupNavigation();
 renderPosts();
 updateStats();
-console.log('Initialization complete');
 </script>
 </body>
 </html>
