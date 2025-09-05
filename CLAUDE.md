@@ -241,7 +241,7 @@ ENABLE_AGENT_VALIDATION=false
 
 ## Common Issues and Troubleshooting
 
-### GitHub Pages Not Showing Latest Content
+### GitHub Pages Not Showing Latest Content (Issue encountered: September 4, 2025)
 
 **Problem**: Site displays old content or shows "0 CHATS, 0 MAILBAGS" despite successful GitHub Actions runs.
 
