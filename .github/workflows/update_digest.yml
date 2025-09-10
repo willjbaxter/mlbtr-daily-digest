@@ -54,6 +54,67 @@ jobs:
             echo "Synced mailbag files to root"
           fi
 
+      - name: Validate generated content
+        id: validate
+        run: |
+          echo "Validating generated content..."
+          VALIDATION_PASSED=true
+          
+          # Check for any new HTML files generated today
+          TODAY=$(date -u +%Y-%m-%d)
+          NEW_FILES_COUNT=0
+          
+          # Check chat files
+          if [ -f "out/chat/${TODAY}/summary.html" ]; then
+            CHAT_FILE="out/chat/${TODAY}/summary.html"
+            CHAT_SIZE=$(wc -c < "$CHAT_FILE" 2>/dev/null || echo "0")
+            echo "Chat file size: $CHAT_SIZE bytes"
+            
+            # Check for failure indicators
+            if grep -q "I don't see any transcript" "$CHAT_FILE" 2>/dev/null; then
+              echo "❌ Chat content validation failed: Error message detected"
+              VALIDATION_PASSED=false
+            elif [ "$CHAT_SIZE" -lt 8000 ]; then
+              echo "❌ Chat content validation failed: File too small ($CHAT_SIZE bytes)"
+              VALIDATION_PASSED=false
+            else
+              echo "✅ Chat content validation passed"
+              NEW_FILES_COUNT=$((NEW_FILES_COUNT + 1))
+            fi
+          fi
+          
+          # Check mailbag files
+          if [ -f "out/mailbag/${TODAY}/summary.html" ]; then
+            MAILBAG_FILE="out/mailbag/${TODAY}/summary.html"
+            MAILBAG_SIZE=$(wc -c < "$MAILBAG_FILE" 2>/dev/null || echo "0")
+            echo "Mailbag file size: $MAILBAG_SIZE bytes"
+            
+            # Check for failure indicators
+            if grep -q "I don't see any transcript\|Please share the MLB" "$MAILBAG_FILE" 2>/dev/null; then
+              echo "❌ Mailbag content validation failed: Error message detected"
+              VALIDATION_PASSED=false
+            elif [ "$MAILBAG_SIZE" -lt 8000 ]; then
+              echo "❌ Mailbag content validation failed: File too small ($MAILBAG_SIZE bytes)"
+              VALIDATION_PASSED=false
+            else
+              echo "✅ Mailbag content validation passed"
+              NEW_FILES_COUNT=$((NEW_FILES_COUNT + 1))
+            fi
+          fi
+          
+          # Set outputs
+          echo "validation_passed=$VALIDATION_PASSED" >> $GITHUB_OUTPUT
+          echo "new_files_count=$NEW_FILES_COUNT" >> $GITHUB_OUTPUT
+          
+          if [ "$VALIDATION_PASSED" = "true" ] && [ "$NEW_FILES_COUNT" -gt 0 ]; then
+            echo "🎉 Content validation passed with $NEW_FILES_COUNT new files"
+          elif [ "$NEW_FILES_COUNT" -eq 0 ]; then
+            echo "ℹ️ No new content generated today"
+          else
+            echo "🚫 Content validation failed - will not commit/deploy"
+            exit 1
+          fi
+
       - name: Upload run log as artifact
         if: always()
         uses: actions/upload-artifact@v4
@@ -63,6 +124,7 @@ jobs:
           retention-days: 30
 
       - name: Commit and push changes
+        if: steps.validate.outputs.validation_passed == 'true' && steps.validate.outputs.new_files_count > 0
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "📰 Automated Daily Digest Update"

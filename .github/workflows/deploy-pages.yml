@@ -1,7 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Update MLBTR Daily Digest"]
+    types:
+      - completed
     branches: [ main ]
   workflow_dispatch:
 
@@ -19,6 +22,8 @@ concurrency:
 
 jobs:
   deploy:
+    # Only run if the digest workflow completed successfully
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
