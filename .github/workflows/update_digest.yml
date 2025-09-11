@@ -56,7 +56,9 @@ jobs:
 
       - name: Validate generated content
         id: validate
+        continue-on-error: true
         run: |
+          set -euo pipefail
           echo "Validating generated content..."
           VALIDATION_PASSED=true
           
@@ -102,9 +104,11 @@ jobs:
             fi
           fi
           
-          # Set outputs
-          echo "validation_passed=$VALIDATION_PASSED" >> $GITHUB_OUTPUT
-          echo "new_files_count=$NEW_FILES_COUNT" >> $GITHUB_OUTPUT
+          # Set outputs with proper variable expansion
+          echo "validation_passed=$VALIDATION_PASSED" >> "$GITHUB_OUTPUT"
+          echo "new_files_count=$NEW_FILES_COUNT" >> "$GITHUB_OUTPUT"
+          
+          echo "DEBUG: VALIDATION_PASSED=$VALIDATION_PASSED, NEW_FILES_COUNT=$NEW_FILES_COUNT"
           
           if [ "$VALIDATION_PASSED" = "true" ] && [ "$NEW_FILES_COUNT" -gt 0 ]; then
             echo "🎉 Content validation passed with $NEW_FILES_COUNT new files"
@@ -124,7 +128,7 @@ jobs:
           retention-days: 30
 
       - name: Commit and push changes
-        if: steps.validate.outputs.validation_passed == 'true' && steps.validate.outputs.new_files_count > 0
+        if: steps.validate.outputs.validation_passed == 'true' && fromJson(steps.validate.outputs.new_files_count) > 0
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "📰 Automated Daily Digest Update"
