@@ -7,12 +7,15 @@ on:
 
 # Prevent concurrent runs that could cause race conditions
 concurrency:
-  group: mlbtr-digest-${{ github.ref }}
+  group: mlbtr-digest-${{ github.ref }}-${{ github.event.inputs.date || 'today' }}
   cancel-in-progress: true
 
 jobs:
   update-digest:
     runs-on: ubuntu-latest
+    outputs:
+      digest_sha: ${{ steps.set_sha.outputs.sha }}
+      content_date: ${{ steps.set_date.outputs.date }}
     permissions:
       contents: write # Needed to commit changes back to the repo
       actions: read
@@ -20,10 +23,19 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        
+      - name: Set content date and SHA
+        id: set_date
+        run: |
+          # Use UTC consistently to avoid timezone issues
+          CONTENT_DATE=$(date -u +%Y-%m-%d)
+          echo "date=$CONTENT_DATE" >> "$GITHUB_OUTPUT"
+          echo "sha=$GITHUB_SHA" >> "$GITHUB_OUTPUT"
+          echo "Processing content for UTC date: $CONTENT_DATE"
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
         with:
           python-version: '3.9'
 
@@ -211,10 +223,11 @@ jobs:
             VALIDATION_PASSED=true
           fi
           
-          # CRITICAL: Always write outputs with safe defaults
-          echo "validation_passed=$VALIDATION_PASSED" >> "$GITHUB_OUTPUT"
+          # CRITICAL: Always write outputs with safe defaults - never empty strings
+          echo "validation_passed=${VALIDATION_PASSED:-false}" >> "$GITHUB_OUTPUT"
           echo "new_files_count=${NEW_FILES_COUNT:-0}" >> "$GITHUB_OUTPUT"
           echo "failure_reason=${FAILURE_REASON:-none}" >> "$GITHUB_OUTPUT"
+          echo "content_date=${TODAY}" >> "$GITHUB_OUTPUT"
           
           # Create validation report artifact
           mkdir -p validation_report
@@ -244,7 +257,7 @@ jobs:
 
       - name: Upload validation report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
         with:
           name: validation-report-${{ github.run_id }}
           path: validation_report/
@@ -252,15 +265,15 @@ jobs:
           
       - name: Upload run log as artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
         with:
           name: summary-run-log-${{ github.run_id }}
           path: summary_run.log
           retention-days: 30
 
       - name: Commit and push changes
-        if: steps.sync.outputs.sync_success == 'true' && steps.validate.outputs.validation_passed == 'true' && fromJson(steps.validate.outputs.new_files_count) > 0
-        uses: stefanzweifel/git-auto-commit-action@v5
+        if: steps.sync.outputs.sync_success == 'true' && steps.validate.outputs.validation_passed == 'true' && fromJson(steps.validate.outputs.new_files_count || '0') > 0
+        uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 # v5.0.1
         with:
           commit_message: "📰 Automated Daily Digest Update"
           # Commit both out/ directory and synced root files
@@ -276,17 +289,23 @@ jobs:
           ## MLB Trade Rumors Digest Update Summary
           
           **Date**: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+          **Content Date (UTC)**: ${{ steps.validate.outputs.content_date }}
           **Run ID**: ${{ github.run_id }}
+          **Commit SHA**: ${{ github.sha }}
           
           ### Validation Results
-          - **Validation Passed**: ${{ steps.validate.outputs.validation_passed }}
-          - **New Files Count**: ${{ steps.validate.outputs.new_files_count }}
-          - **Failure Reason**: ${{ steps.validate.outputs.failure_reason }}
-          - **Sync Success**: ${{ steps.sync.outputs.sync_success }}
+          - **Validation Passed**: ${{ steps.validate.outputs.validation_passed || 'false' }}
+          - **New Files Count**: ${{ steps.validate.outputs.new_files_count || '0' }}
+          - **Failure Reason**: ${{ steps.validate.outputs.failure_reason || 'none' }}
+          - **Sync Success**: ${{ steps.sync.outputs.sync_success || 'false' }}
           
           ### Actions Taken
           - Commit Created: ${{ steps.validate.outputs.validation_passed == 'true' && 'Yes' || 'No' }}
           - Pages Deployment Expected: ${{ steps.validate.outputs.validation_passed == 'true' && 'Yes' || 'No' }}
+          
+          ### Concurrency Info
+          - Group: mlbtr-digest-${{ github.ref }}-${{ github.event.inputs.date || 'today' }}
+          - Cancel in Progress: true
           
           EOF
       

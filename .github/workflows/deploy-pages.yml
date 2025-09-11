@@ -29,11 +29,29 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Verify deployment SHA correctness
+        run: |
+          echo "Digest workflow SHA: ${{ github.event.workflow_run.head_sha }}"
+          echo "Trigger event: ${{ github.event_name }}"
+          
+          # For workflow_run triggers, ensure we're deploying the exact SHA that passed validation
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            EXPECTED_SHA="${{ github.event.workflow_run.head_sha }}"
+            echo "Expected SHA from digest workflow: $EXPECTED_SHA"
+            echo "deploy_sha=$EXPECTED_SHA" >> "$GITHUB_OUTPUT"
+          else
+            # For manual dispatch, use current SHA
+            echo "deploy_sha=$GITHUB_SHA" >> "$GITHUB_OUTPUT"
+          fi
+        id: verify_sha
+        
+      - name: Checkout at validated SHA
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          ref: ${{ steps.verify_sha.outputs.deploy_sha }}
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
 
       - name: Create web files directory
         run: |
@@ -44,11 +62,11 @@ jobs:
           echo "Web files prepared for deployment"
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
           # Upload only web files
           path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
