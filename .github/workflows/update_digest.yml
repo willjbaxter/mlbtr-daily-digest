@@ -5,11 +5,18 @@ on:
   schedule:
     - cron: '0 22 * * *' # Runs daily at 10 PM UTC (6 PM ET / 3 PM PT)
 
+# Prevent concurrent runs that could cause race conditions
+concurrency:
+  group: mlbtr-digest-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   update-digest:
     runs-on: ubuntu-latest
     permissions:
       contents: write # Needed to commit changes back to the repo
+      actions: read
+      pages: read
 
     steps:
       - name: Checkout repo
@@ -32,27 +39,75 @@ jobs:
           echo "Summary script completed at $(date)"
           echo "Exit code: ${PIPESTATUS[0]}"
 
-      - name: Sync files from out/ to root for GitHub Pages
+      - name: Atomic sync files from out/ to root for GitHub Pages
+        id: sync
         run: |
-          # Copy index.html from out/ to root
+          set -euo pipefail
+          
+          echo "Starting atomic file sync..."
+          
+          # Create temporary staging directory
+          rm -rf .site_staging && mkdir -p .site_staging
+          
+          # Stage all web content atomically
           if [ -f "out/index.html" ]; then
-            cp out/index.html index.html
-            echo "Copied out/index.html to root"
+            cp out/index.html .site_staging/
+            echo "Staged index.html"
+          else
+            echo "WARNING: No index.html found in out/"
+            exit 1
           fi
           
-          # Copy chat directories from out/ to root
+          # Stage chat content
           if [ -d "out/chat" ]; then
-            mkdir -p chat
-            cp -r out/chat/* chat/ 2>/dev/null || true
-            echo "Synced chat files to root"
+            mkdir -p .site_staging/chat
+            cp -r out/chat/* .site_staging/chat/ 2>/dev/null || true
+            echo "Staged chat files: $(find .site_staging/chat -name "*.html" | wc -l) files"
           fi
           
-          # Copy mailbag directories from out/ to root
+          # Stage mailbag content  
           if [ -d "out/mailbag" ]; then
-            mkdir -p mailbag
-            cp -r out/mailbag/* mailbag/ 2>/dev/null || true
-            echo "Synced mailbag files to root"
+            mkdir -p .site_staging/mailbag
+            cp -r out/mailbag/* .site_staging/mailbag/ 2>/dev/null || true
+            echo "Staged mailbag files: $(find .site_staging/mailbag -name "*.html" | wc -l) files"
           fi
+          
+          # Verify critical files exist in staging
+          TODAY=$(date -u +%Y-%m-%d)
+          STAGING_VALID=true
+          
+          if [ ! -f ".site_staging/index.html" ]; then
+            echo "ERROR: Staged index.html missing"
+            STAGING_VALID=false
+          fi
+          
+          # Only proceed with atomic swap if staging is valid
+          if [ "$STAGING_VALID" = "true" ]; then
+            # Atomic move from staging to production locations
+            cp -f .site_staging/index.html index.html
+            
+            # Ensure target directories exist
+            mkdir -p chat mailbag
+            
+            # Use rsync for atomic directory updates (--delete removes old files)
+            if [ -d ".site_staging/chat" ]; then
+              rsync -a --delete .site_staging/chat/ chat/
+            fi
+            
+            if [ -d ".site_staging/mailbag" ]; then
+              rsync -a --delete .site_staging/mailbag/ mailbag/
+            fi
+            
+            echo "✅ Atomic sync completed successfully"
+            echo "sync_success=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "❌ Atomic sync failed - staging validation failed"
+            echo "sync_success=false" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
+          
+          # Cleanup staging directory
+          rm -rf .site_staging
 
       - name: Validate generated content
         id: validate
@@ -61,61 +116,121 @@ jobs:
         run: |
           set -euo pipefail
           
-          # Initialize variables with defaults to avoid unbound var errors
+          # Initialize variables with safe defaults
           NEW_FILES_COUNT="${NEW_FILES_COUNT:-0}"
-          VALIDATION_PASSED="${VALIDATION_PASSED:-true}"
+          VALIDATION_PASSED="${VALIDATION_PASSED:-false}"
+          FAILURE_REASON=""
           
-          echo "Validating generated content..."
+          echo "Starting multi-signal content validation..."
           
           # Check for any new HTML files generated today
           TODAY=$(date -u +%Y-%m-%d)
           NEW_FILES_COUNT=0
           
+          # Function for multi-signal validation
+          validate_file() {
+            local file="$1"
+            local type="$2"
+            local min_size="${3:-8000}"
+            
+            if [ ! -f "$file" ]; then
+              return 1
+            fi
+            
+            local file_size=$(wc -c < "$file" 2>/dev/null || echo "0")
+            echo "  File size: $file_size bytes (minimum: $min_size)"
+            
+            # Multi-signal validation checks
+            local validation_errors=0
+            
+            # 1. Size check
+            if [ "$file_size" -lt "$min_size" ]; then
+              echo "  ❌ Size validation failed: Too small"
+              ((validation_errors++))
+            fi
+            
+            # 2. Error message detection (negative signals)
+            if grep -q "I don't see any transcript\|Please share the MLB\|Error\|Exception\|Failed to" "$file" 2>/dev/null; then
+              echo "  ❌ Content validation failed: Error messages detected"
+              ((validation_errors++))
+            fi
+            
+            # 3. Required content structure (positive signals)
+            if [ "$type" = "chat" ]; then
+              # Chat should have insights and transcript sections
+              if ! grep -q "insights-list" "$file" 2>/dev/null; then
+                echo "  ❌ Structure validation failed: Missing insights section"
+                ((validation_errors++))
+              fi
+              if ! grep -q "transcript-content" "$file" 2>/dev/null; then
+                echo "  ❌ Structure validation failed: Missing transcript section"
+                ((validation_errors++))
+              fi
+            fi
+            
+            # 4. Check for minimum content indicators
+            local content_count=$(grep -c "<li class=\"insight\">" "$file" 2>/dev/null || echo "0")
+            if [ "$content_count" -lt 2 ]; then
+              echo "  ❌ Content validation failed: Insufficient insights (found: $content_count)"
+              ((validation_errors++))
+            fi
+            
+            return $validation_errors
+          }
+          
           # Check chat files
+          echo "Validating chat content..."
           if [ -f "out/chat/${TODAY}/summary.html" ]; then
             CHAT_FILE="out/chat/${TODAY}/summary.html"
-            CHAT_SIZE=$(wc -c < "$CHAT_FILE" 2>/dev/null || echo "0")
-            echo "Chat file size: $CHAT_SIZE bytes"
-            
-            # Check for failure indicators
-            if grep -q "I don't see any transcript" "$CHAT_FILE" 2>/dev/null; then
-              echo "❌ Chat content validation failed: Error message detected"
-              VALIDATION_PASSED=false
-            elif [ "$CHAT_SIZE" -lt 8000 ]; then
-              echo "❌ Chat content validation failed: File too small ($CHAT_SIZE bytes)"
-              VALIDATION_PASSED=false
-            else
-              echo "✅ Chat content validation passed"
+            if validate_file "$CHAT_FILE" "chat" 8000; then
+              echo "✅ Chat content validation passed all checks"
               NEW_FILES_COUNT=$((NEW_FILES_COUNT + 1))
+            else
+              echo "❌ Chat content validation failed"
+              VALIDATION_PASSED=false
+              FAILURE_REASON="${FAILURE_REASON}chat:failed "
             fi
           fi
           
           # Check mailbag files
+          echo "Validating mailbag content..."
           if [ -f "out/mailbag/${TODAY}/summary.html" ]; then
             MAILBAG_FILE="out/mailbag/${TODAY}/summary.html"
-            MAILBAG_SIZE=$(wc -c < "$MAILBAG_FILE" 2>/dev/null || echo "0")
-            echo "Mailbag file size: $MAILBAG_SIZE bytes"
-            
-            # Check for failure indicators
-            if grep -q "I don't see any transcript\|Please share the MLB" "$MAILBAG_FILE" 2>/dev/null; then
-              echo "❌ Mailbag content validation failed: Error message detected"
-              VALIDATION_PASSED=false
-            elif [ "$MAILBAG_SIZE" -lt 8000 ]; then
-              echo "❌ Mailbag content validation failed: File too small ($MAILBAG_SIZE bytes)"
-              VALIDATION_PASSED=false
-            else
-              echo "✅ Mailbag content validation passed"
+            if validate_file "$MAILBAG_FILE" "mailbag" 8000; then
+              echo "✅ Mailbag content validation passed all checks"
               NEW_FILES_COUNT=$((NEW_FILES_COUNT + 1))
+            else
+              echo "❌ Mailbag content validation failed"
+              VALIDATION_PASSED=false
+              FAILURE_REASON="${FAILURE_REASON}mailbag:failed "
             fi
           fi
           
-          # CRITICAL: Write outputs BEFORE any exit statements
+          # Set VALIDATION_PASSED to true only if we have valid files
+          if [ "$NEW_FILES_COUNT" -gt 0 ] && [ "$VALIDATION_PASSED" != "false" ]; then
+            VALIDATION_PASSED=true
+          fi
+          
+          # CRITICAL: Always write outputs with safe defaults
           echo "validation_passed=$VALIDATION_PASSED" >> "$GITHUB_OUTPUT"
-          echo "new_files_count=$NEW_FILES_COUNT" >> "$GITHUB_OUTPUT"
+          echo "new_files_count=${NEW_FILES_COUNT:-0}" >> "$GITHUB_OUTPUT"
+          echo "failure_reason=${FAILURE_REASON:-none}" >> "$GITHUB_OUTPUT"
           
-          echo "DEBUG: VALIDATION_PASSED=$VALIDATION_PASSED, NEW_FILES_COUNT=$NEW_FILES_COUNT"
+          # Create validation report artifact
+          mkdir -p validation_report
+          cat > validation_report/results.json <<EOF
+          {
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "validation_passed": $VALIDATION_PASSED,
+            "new_files_count": $NEW_FILES_COUNT,
+            "failure_reason": "${FAILURE_REASON:-none}",
+            "date_checked": "$TODAY"
+          }
+          EOF
           
-          # Now evaluate and exit accordingly
+          echo "VALIDATION SUMMARY: passed=$VALIDATION_PASSED, files=$NEW_FILES_COUNT, failures=${FAILURE_REASON:-none}"
+          
+          # Exit with appropriate code
           if [ "$VALIDATION_PASSED" = "true" ] && [ "$NEW_FILES_COUNT" -gt 0 ]; then
             echo "🎉 Content validation passed with $NEW_FILES_COUNT new files"
             exit 0
@@ -123,20 +238,28 @@ jobs:
             echo "ℹ️ No new content generated today"
             exit 0
           else
-            echo "🚫 Content validation failed - will not commit/deploy"
+            echo "🚫 Content validation failed: ${FAILURE_REASON}"
             exit 1
           fi
 
+      - name: Upload validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-report-${{ github.run_id }}
+          path: validation_report/
+          retention-days: 30
+          
       - name: Upload run log as artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: summary-run-log
+          name: summary-run-log-${{ github.run_id }}
           path: summary_run.log
           retention-days: 30
 
       - name: Commit and push changes
-        if: steps.validate.outputs.validation_passed == 'true' && fromJson(steps.validate.outputs.new_files_count) > 0
+        if: steps.sync.outputs.sync_success == 'true' && steps.validate.outputs.validation_passed == 'true' && fromJson(steps.validate.outputs.new_files_count) > 0
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "📰 Automated Daily Digest Update"
@@ -146,6 +269,27 @@ jobs:
           commit_user_email: "actions@github.com"
           commit_author: "GitHub Actions Bot <actions@github.com>" 
 
+      - name: Generate workflow summary
+        if: always()
+        run: |
+          cat >> $GITHUB_STEP_SUMMARY <<EOF
+          ## MLB Trade Rumors Digest Update Summary
+          
+          **Date**: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+          **Run ID**: ${{ github.run_id }}
+          
+          ### Validation Results
+          - **Validation Passed**: ${{ steps.validate.outputs.validation_passed }}
+          - **New Files Count**: ${{ steps.validate.outputs.new_files_count }}
+          - **Failure Reason**: ${{ steps.validate.outputs.failure_reason }}
+          - **Sync Success**: ${{ steps.sync.outputs.sync_success }}
+          
+          ### Actions Taken
+          - Commit Created: ${{ steps.validate.outputs.validation_passed == 'true' && 'Yes' || 'No' }}
+          - Pages Deployment Expected: ${{ steps.validate.outputs.validation_passed == 'true' && 'Yes' || 'No' }}
+          
+          EOF
+      
       - name: Fail workflow if validation failed
         if: steps.validate.outputs.validation_passed != 'true' && steps.validate.outcome == 'failure'
         run: |
