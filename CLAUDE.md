@@ -4,12 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 🚀 Quick Start for New Claude Instances
 
-### Current System Status (as of September 11, 2025)
-- **Production Status**: ✅ Fully operational with production-hardened validation
+### Current System Status (as of September 15, 2025)
+- **Production Status**: 🔧 Fix in progress - validation logic updated
 - **Agent System**: Disabled by default (enable with `ENABLE_AGENT_VALIDATION=true`)
-- **Last Major Fix**: Content validation and deployment pipeline (Sept 11, 2025)
+- **Last Major Fix**: Validation counting logic (Sept 15, 2025) - Fixed `grep -c` to `grep -o | wc -l` for proper insight counting
 - **Deployment**: GitHub Pages via automated workflows
-- **Known Issues**: None currently
+- **Known Issues**: Manual workflow run still failing - needs investigation
 
 ### First Time Setup Check
 ```bash
@@ -362,4 +362,17 @@ ls -la out/mailbag/ | wc -l  # Total mailbag days
 
 ---
 
-*Last updated: September 11, 2025 - Production-hardened implementation complete*
+## 📜 Recent Changes
+
+### September 15, 2025
+- **Fixed validation bug**: Changed insight counting from `grep -c` (counts lines) to `grep -o | wc -l` (counts occurrences)
+  - Issue: Valid content with 10+ insights was failing validation because all insights were on one HTML line
+  - Impact: Today's chat transcript was blocked despite having valid content
+  - Status: Fix committed, manual workflow still needs investigation
+
+### September 11, 2025
+- **Production-hardened implementation**: Multi-signal validation, atomic operations, SHA verification
+
+---
+
+*Last updated: September 15, 2025 - Validation counting fix applied*
