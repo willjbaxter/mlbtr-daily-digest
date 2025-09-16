@@ -181,7 +181,7 @@ jobs:
             fi
             
             # 4. Check for minimum content indicators
-            local content_count=$(grep -o "<li class=\"insight\">" "$file" 2>/dev/null | wc -l | tr -d ' ')
+            local content_count=$(grep -o "<li class=\"insight\">" "$file" 2>/dev/null | wc -l | tr -d ' ' || true)
             if [ "$content_count" -lt 2 ]; then
               echo "  ❌ Content validation failed: Insufficient insights (found: $content_count)"
               ((validation_errors++))
