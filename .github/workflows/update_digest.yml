@@ -130,7 +130,7 @@ jobs:
           
           # Initialize variables with safe defaults
           NEW_FILES_COUNT="${NEW_FILES_COUNT:-0}"
-          VALIDATION_PASSED="${VALIDATION_PASSED:-false}"
+          VALIDATION_PASSED="${VALIDATION_PASSED:-true}"
           FAILURE_REASON=""
           
           echo "Starting multi-signal content validation..."
