@@ -1,0 +1,231 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Sep 16</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2025-09-16</span><span class="post-type chat">chat</span></div><h1>Chat: Sep 16</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight priority">Bellinger&#x27;s next contract after opt-out estimated at $120-140MM over 5-6 years</li><li class="insight priority">Cubs unlikely to pay record contract needed to sign Tucker; would need to exceed franchise record by $200MM+</li><li class="insight priority">Yankees&#x27; handling of Volpe&#x27;s torn labrum injury criticized for lack of transparency</li><li class="insight">Harrison Bader&#x27;s next contract projected slightly below 2/$30MM range</li><li class="insight">Cardinals projected to have over $100MM but not much more on books for 2026, including Arenado and Gray contracts</li><li class="insight">A&#x27;s projected as potential playoff contenders by 2027, with possible Wild Card mix in 2026</li><li class="insight">White Sox likely to pick up Luis Robert Jr.&#x27;s option and gauge trade interest again</li><li class="insight">Framber Valdez expected to receive substantial contract despite late-season issues</li><li class="insight">Alex Bregman&#x27;s free agent value estimated at $175-200MM range</li><li class="insight">Brandon Woodruff expected to decline mutual option with Brewers and sign larger deal elsewhere</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Steve Adams:</strong> Good afternoon! Sorry for the lack of advance notice. Schedule has been a bit wonky this week. We’ll go from noon CT until around 1:00 CT or so, however. I’ll give the queue a few minutes to start loading up here while I run and grab a snack, then we’ll get underway. And we’re off</p>
+<p><strong>Harry the K:</strong> What kind of contract is Bader looking at? 2/30?  He’s been amazing for the Phillies, offensively and defensively.</p>
+<p><strong>Steve Adams:</strong> I’d probably come in a touch lighter on the AAV but yeah, that general range doesn’t seem outlandish</p>
+<p><strong>Reds GM:</strong> You guys should publish an article about who could qualify for arbitration for the first time this fall! Also when will the offseason outlook posts begin?</p>
+<p><strong>Steve Adams:</strong> Our arbitration projections are in the works as we speak and will check that box for you. Offseason Outlooks probably will get underway late this month and run through the end of October (maybe into early November). We’ll be writing them while also prepping for our Top 50 Free Agent list/predictions and our top offseason trade candidate list, so a lot of balls in the air at once</p>
+<p><strong>David:</strong> I don’t think the Ricketts will pay for Tucker after this year.</p>
+<p><strong>Steve Adams:</strong> This has pretty steadily been my stance all season. The Cubs would need to exceed their franchise record contract by $200MM+ to re-sign Tucker. I just don’t see it.</p>
+<p><strong>Chaim Bloom:</strong> Is my payroll going to be below $100 million for 2026?</p>
+<p><strong>Steve Adams:</strong> The Cardinals only have $75MM on the books for 2026, and that’s including Nolan Arenado and Sonny Gray, both of whom will be trade candidates (although STL would have to eat a fair bit of money in either case — especially Arenado). Then you have arb raises for guys like JoJo Romero, Alec Burleson, Lars Nootbaar, Brendan Donovan, etc.Some of those guys could be traded, but the Cards will probably bring in some short-term free agent vets. I’d say over $100MM but not by a large margin.</p>
+<p><strong>Nick Kurtz:</strong> Do you believe service time manipulation has gotten better or worse under this CBA?</p>
+<p><strong>Steve Adams:</strong> It’s just changed. Bubba Chandler probably would’ve been up months sooner, for instance, whereas guys like Drake Baldwin, Cam Smith, Jacob Wilson etc. just landed in the majors from the jump. Teams are always going to game the agreed-upon rules to some extent in the name of good business.</p>
+<p><strong>SFGigantes:</strong> Thoughts on Verlander getting another 1/15 from SFG for 2026?</p>
+<p><strong>Steve Adams:</strong> He’s been solid. It the two parties want to run it back, I think that deal would make sense</p>
+<p><strong>Still an A:</strong> When do you see the A’s as legit playoff contenders?</p>
+<p><strong>Steve Adams:</strong> I don’t think it’s out of the question that they could be in the Wild Card mix next year. I’d take 2027 as the safer bet, but I like a lot of their young hitters. If they can get a couple surprise rotation performances, be it via offseason additions or in-house strides from a Gage Jump, Braden Nett etc. — it’s not outrageous to me to think they could be a ’26 sleeper.</p>
+<p><strong>Yordan Ankle:</strong> Do you have an update on my ankle</p>
+<p><strong>Steve Adams:</strong> If I did, it’d be on the site!</p>
+<p><strong>Ellis:</strong> What do the White Sox do with Robert Jr. this off-season? Almost seems like it’s come full circle to keep him around with his diminished trade value in case this team takes big strides next year</p>
+<p><strong>Steve Adams:</strong> They’ll pick up his option and gauge trade interest again. I think they should’ve eaten all his remaining contract and moved him at the deadline, but  they’re obviously comfortable gambling on the woeful health track record.</p>
+<p><strong>Mike Ellias:</strong> What does my promotion mean for the O’s  off-season?</p>
+<p style="text-align: center; color: #999; font-style: italic;">... and 84 more exchanges</p></div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>
