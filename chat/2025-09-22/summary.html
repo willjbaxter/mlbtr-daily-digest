@@ -1,0 +1,231 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Sep 22</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2025-09-22</span><span class="post-type chat">chat</span></div><h1>Chat: Sep 22</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight priority">Red Sox likely to extend qualifying offer to Giolito only; other potential candidates either ineligible or non-candidates</li><li class="insight priority">Yankees unlikely to shop McMahon despite offensive limitations, given his strong defense</li><li class="insight">Dodgers expected to retain at least one of Rojas/Hernandez, likely pick up Vesia&#x27;s club option and probably Muncy&#x27;s option; Kershaw retiring</li><li class="insight">Mariners positioned well for playoffs, considered legitimate threat to win it all</li><li class="insight">Marlins showing surprising late-season surge, going 10-1 in last 11 games after poor early September</li><li class="insight">Giants reportedly have Sonny Gray on their offseason trade radar</li><li class="insight">Astros unlikely to retain Framber Valdez beyond 2025</li><li class="insight">Phillies&#x27; Schwarber likely to stay with team; Tucker almost definitely leaving Chicago</li><li class="insight">Nationals GM search ongoing, with Josh Byrnes having met with Lerner family</li><li class="insight">Angels likely to retain Ron Washington as manager for another season</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Mark P:</strong> It’s the second-last Weekend Chat of the regular season, so get those questions in now!</p>
+<p><strong>Yosef:</strong> Out of the dodgers free agents. Realistically who do you think they’ll keep ?</p>
+<p><strong>Mark P:</strong> At least one of Rojas/Hernandez, Vesia’s club option is likely being picked up, and Muncy’s club option will still probably be exercised (though I wouldn’t be totally shocked if it isn’t).Beyond that, the other FAs will be let go, and Kershaw is retiring.</p>
+<p><strong>Hot Stove:</strong> With this hot streak do the reds squeak their way into the playoffs?</p>
+<p><strong>Mark P:</strong> Cincinnati is in a wild card spot right now, by dint of holding the tiebreaker over the Mets. The Reds’ final six games are against the Pirates, and against a Brewers team that will probably be resting guys.  So, the Reds’ fate is in their own hands, and it helps that the Mets have just been spiraling.I think I wrote just in last week’s chat that the Reds had really missed an opportunity to take hold of the wild card race.  Clearly they read the Weekend Chat and were so enraged that they went on this winning streak!</p>
+<p><strong>Austin Hays:</strong> Will my option be picked up by the reds this year?</p>
+<p><strong>Mark P:</strong> It’s a $12MM mutual option with a $1MM buyout.  Mutual options are virtually never exercised by both sides, so Hays will head to free agency again.</p>
+<p><strong>Dan:</strong> Will Sonny Gray agree to waive his no trade clause with a rebuild coming?</p>
+<p><strong>Mark P:</strong> He wasn’t willing to waive it last year when it also seemed like a rebuild was coming, so I’d lean towards Gray returning.  If he indicated he was willing to be moved, I can see the Cards exploring deals.  Susan Slusser recently reported that the Giants have Gray on their offseason trade radar, and laid out some plausible reasons why Gray might be willing to approve a deal to San Francisco in particular.</p>
+<p><strong>Tim:</strong> Did you think Morton and Paddock were big movies at the trade deadline?    Morton over 7 era for the tigers.  Paddock over 6.</p>
+<p><strong>Mark P:</strong> I didn’t mind either at the time, and to be fair other moves (most notably Kyle Finnegan) have really worked out.At the time of the deadline, the Tigers clearly felt they just needed final touches rather than any major additions.  Hindsight is obviously 20-20 on that, but if they do end up collapsing entirely and missing the playoffs, you’ve got to believe the front office will finally get more aggressive with bigger moves this winter</p>
+<p><strong>Yesavage Fan:</strong> Will Trey Yesavage get a spot in the bullpen or perhaps even the rotation for the playoffs. He is electric on the mound as I had the pleasure of knowing him since middle school and graduating with him.</p>
+<p><strong>Mark P:</strong> It’s cool that you have such longtime ties to a big leaguer!  Well, maybe not “long time” since middle school wasn’t too long ago for Yesavage.  lol, man, do I ever feel old in seeing all these players debut who are so young.Toronto’s rotation is a total question mark after Gausman and Bieber.  Yesavage might end up getting a start almost by default, if Bassitt is hurt, Scherzer can’t get on track, and if the Jays stick to the plan of having Berrios as a reliever.  It’s a real roll of the dice asking a rookie to make a high-pressure playoff start so early into his career, yet it’s may not that different from having be, say, a multi-inning guy in a similar role Frankly, I think the likeliest scenario is Gausman, Bieber, then “pitching chaos” based on matchups and availability</p>
+<p><strong>M:</strong> do we think the Astros or the tigers miss the playoffs?</p>
+<p><strong>Mark P:</strong> Will the Astros or Tigers miss the playoffs?Both are in(24.8% | 126 votes)Astros make, Tigers miss(23.0% | 117 votes)Tigers make, Astros miss(52.1% | 265 votes)Total Votes: 508 I opted to leave out the “both miss” answer since the Rangers’ collapse has erased that possibility</p>
+<p><strong>Fish Fan:</strong> Are the Marlins for real? Only 4 games out with a week left in the season? Who saw that coming? Is Clayton the manager of the year?</p>
+<p><strong>Mark P:</strong> I wonder how many people read this comment, thought “wait, what?” and then did a double take at the standings.  After losing seven of their first eight September games, Miami is now 10-1 in its last 11 games.The math is by no means in their favor to actually make the postseason, but the fact that we’re having this conversation is a testament to the Marlins’ underrated year.</p>
+<p><strong>Charleston Chew:</strong> How far can the Mariners make provided they get in?</p>
+<p><strong>Mark P:</strong> There’s basically no doubt at this point that Seattle is at least getting in, and they’re really putting an iron grip on the division title.  The Mariners should worry every single opponent they face in October, and are a legit threat to win it all.</p>
+<p><strong>Cleveland:</strong> Manzardo looks unplayable as a 1B, which is saying something. Could Alonso be in the Guardians budget? A lot of money freed up.</p>
+<p style="text-align: center; color: #999; font-style: italic;">... and 77 more exchanges</p></div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>
