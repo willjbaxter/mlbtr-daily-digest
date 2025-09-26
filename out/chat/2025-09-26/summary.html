@@ -1,0 +1,228 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Sep 26</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2025-09-26</span><span class="post-type chat">chat</span></div><h1>Chat: Sep 26</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight">Playoff rosters revert to 26 players with 13-pitcher maximum for postseason; teams have flexibility on pitcher/position player split but most will maximize pitchers</li><li class="insight">Most playoff contenders holding off on naming weekend starters, likely due to uncertainty around must-win scenarios and potential short-rest situations</li><li class="insight">Seattle viewed as most complete team in AL and slight World Series favorite when compared to Milwaukee and Philadelphia</li><li class="insight">Playoff pitching discussion: Wade Miley/Colin Rea/Adrian Houser competing for Brewers&#x27; #3 starter role if Brandon Woodruff is out for NLDS</li><li class="insight">Logan Webb (Giants) identified as likely candidate to pitch 7+ innings in final weekend, facing Rockies</li><li class="insight">Tigers managerial situation: Steven Vogt gaining Manager of the Year consideration for late-season performance</li><li class="insight priority">Padres free agent outlook: Ramon Laureano likely to return via club option; Michael King possible on opt-out deal; others like Blake Snell, Hector Suarez, Jorge Soler likely departing</li><li class="insight priority">Braves roster discussion: Ozzie Albies&#x27; option viewed as clear pickup despite hamate injury; Vaughn Grissom likely trade candidate for pitching help</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Unclemike1526:</strong> What is the total number of players for a Playoff rosters? Does it revert back to 26 or does it stay at 27? If so does Ballesteros even make the team if Tucker is back? Does it have to be 13-13? Thanks</p>
+<p><strong>Anthony Franco:</strong> It reverts to 26 with a 13-pitcher maximum. Doesn&#x27;t necessity need to be 13-13 and maybe for the Wild Card round you&#x27;ll see a team go with 12 pitchers because it&#x27;s a short series, but most teams will want as many pitchers as they can carry as it goes along Either way, they need to find room for Ballesteros. I&#x27;d probably drop Turner (and Santana, who&#x27;s already out) but any of Turner, Castro or Alcantara seems plausible to me Willi hasn&#x27;t hit at all. Alcantara&#x27;s only really on hand in case PCA gets hurt and they need someone to step into CF. Turner&#x27;s been a little better lately and provides a right-handed bat off the bench but they don&#x27;t have that many LHH for whom they&#x27;d pinch hit anyway (it&#x27;s basically just Busch) so I don&#x27;t know that they really need one</p>
+<p><strong>this little piggyback cried oui oui all the way:</strong> Most of the playoff contenders haven&#x27;t even named their starters for Saturday and Sunday. Is this a new trend?</p>
+<p><strong>Anthony Franco:</strong> Probably? The borderline playoff teams don&#x27;t know yet if Sunday will be a must-win and they&#x27;ll need to bring their best pitchers back on short rest Tigers would love to clinch by Saturday and have Skubal for Game 1 but they may not have that luxury. Astros are almost certainly going to need to bring Brown back on short rest as well</p>
+<p><strong>World Series Victor:</strong> Is anyone going to topple Seattle? Or will we finally get to hoist the trophy?</p>
+<p><strong>Anthony Franco:</strong> Obviously the odds are stacked heavily in favor of the field over any individual team but Seattle feels like the most complete team in the American League, at least. Tougher call when you pit them against Milwaukee and Philly but yeah, I&#x27;d probably have them as slight World Series favorites</p>
+<p><strong>The Knuder:</strong> Which free agents, if any, do you see the Padres bringing back?</p>
+<p><strong>Anthony Franco:</strong> Don&#x27;t think it&#x27;s all that likely they&#x27;re keeping any of them besides Laureano, who has the easy yes on the club option Beyond that, King&#x27;s the only one that I really see a path for, but it probably requires his market not materializing as hoped and turning to an opt-out situation Cease, Suarez, Arraez, ROH and Nestor all feel like they&#x27;re gone. Diaz, Hart and Iglesias are minor league deal guys</p>
+<p><strong>Arise, Sir Loin of Beef:</strong> Mets make the playoffs, yes or no? I&#x27;m guessing no.</p>
+<p><strong>Anthony Franco:</strong> I still expect them to get in, though I&#x27;ll admit that I&#x27;m kind of pulling for the Reds just to shake up the field</p>
+<p><strong>Dirt:</strong> Thanks for the chat! Despite the broken hamate, Ozzie&#x27;s option with the Braves next season is a no-brainer, right? If so, where does that leave Nacho? Utility infielder or trade bait? Is Nick Allen the odd man out?</p>
+<p><strong>Anthony Franco:</strong> Agreed. $3M difference between the option price and the buyout gets you Kevin Newman or Luis Urías. Even with the downward trend and the injuries, Ozzie&#x27;s better than those guys I think they&#x27;ll trade Alvarez in a deal for some kind of pitching help. Nacho&#x27;s not going to get you Joe Ryan or MacKenzie Gore but there&#x27;ll be teams that&#x27;d like him in return for a back-end starter. Allen&#x27;s glove-only profile fits better in a utility capacity. Probably need to work out a multi-year deal with HSK to keep him from opting out at that point</p>
+<p><strong>pitching chaos for everyone:</strong> Will anyone pitch 7+ innings in one game this weekend?</p>
+<p><strong>Anthony Franco:</strong> Haha Logan Webb goes Sunday at home against the Rockies. Might set the O/U at 8.2</p>
+<p><strong>john:</strong> If Woodruff is out of the NLDS who takes the #3 start?  Quintana/Miz/Patrick all come with high risk.</p>
+<p><strong>Anthony Franco:</strong> I think it&#x27;s Patrick, maybe after an opener. In any case, not extending that third &quot;starter&quot; to go more than 3-4 innings. Get to the bullpen at the first sign of trouble</p>
+<p><strong>TheBeatlesShow:</strong> Hey, Anthony.  Hope all is well.  Remind me, weren&#x27;t the Tigers called &#x27;the best team in baseball&#x27; around the middle of the season?  But the real questions:  If they do lose the division, where does that stack up against the greatest collapses of all time?  And, over the last month or so...or less than that, has Steven Vogt gotten himself a lot of votes for AL Mgr of the Year?</p>
+</div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>
