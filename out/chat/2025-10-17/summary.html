@@ -1,0 +1,225 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Oct 17</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2025-10-17</span><span class="post-type chat">chat</span></div><h1>Chat: Oct 17</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight priority">Cubs/Skubal Trade Scenario</li><li class="insight">Tigers unlikely to trade Skubal before 2025; would require larger return than Soto trade due to lower arbitration salary and playoff value</li><li class="insight">Tigers positioned to contend after consecutive playoff appearances</li><li class="insight priority">Twins Rebuild Discussion</li><li class="insight">Joe Ryan and Pablo López likely to be traded by deadline</li><li class="insight">Ryan&#x27;s trade value comparable to Crochet deal (Teel/Montgomery package)</li><li class="insight">Mets First Base Situation</li><li class="insight">Christian Walker not recommended as Alonso replacement</li><li class="insight">Concerns about Walker&#x27;s defensive decline and contact rates</li><li class="insight">Giants Prospect Evaluation</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Anthony Franco:</strong> Good evening everyone, hope you&#x27;ve enjoyed your week! Looking forward to another of these, let&#x27;s get it started</p>
+<p><strong>Twins:</strong> They can say its not a rebuild all they want but what we&#x27;re seeing seems clear. Why not just rip the band aid off, trade Pablo and Joe Ryan for a ton, and start over?</p>
+<p><strong>Bradke Hrbek:</strong> Imagine a world where the Twins aren&#x27;t inclined to continue their trade deadline fire sale this offseason... what kind of trade offer would convince them to give up Joe Ryan anyway?</p>
+<p><strong>Anthony Franco:</strong> Yeah I expect both Ryan and Pablo to go by the deadline at the latest. Two years on each and even if they&#x27;re hoping for an accelerated rebuild, the bullpen and bottom part of the lineup are in such bad shape that it&#x27;s not fixable in one offseason As far as Ryan goes, I assume it looks pretty similar to the Crochet deal. I was a little lower on that one for the White Sox because I&#x27;m not a huge Braden Montgomery fan. But I assume Chicago viewed that as two of the 50-60 best prospects in MLB with Teel/Montgomery, a solid third piece in Meidroth, and then a lottery ticket reliever in Gonzalez Ryan&#x27;s not as good as Crochet is now but I think it&#x27;s debatable whether he&#x27;s as valuable as Crochet was then. Higher ceiling with the lefty working in the upper 90s with huge strikeout rates, but Crochet had yet to show he could hold that level over a full season with an ace workload</p>
+<p><strong>Astros fan:</strong> If Alonso leaves, do you think the Mets would have any interest in Christian Walker? How much of his salary do you think they would be willing to pay?</p>
+<p><strong>Anthony Franco:</strong> I&#x27;d rather just see what Vientos can do there, but I&#x27;m probably lower on Walker than the rest of the MLBTR staff. I&#x27;d need the Astros to pay him into the $8-10M range annually to consider it, and only after I&#x27;ve exhausted other options on the FA market The defensive grades collapsed. He was essentially unplayable in the first half, very good in July and August, then pretty bad again in September. Chase up a little bit, contact way down. The trend lines are rough</p>
+<p><strong>Guarded Indian:</strong> Not so much a question as a statement, but I really hope you guys are wrong about Nick C. coming to Cleveland.  I&#x27;d rather run it with Kwan, Delauter, Valera in the OF, Manzardo at DH with Kayfus at first.  Unfortunately, this does seem exactly like the kind of move my Guards would do.</p>
+<p><strong>Anthony Franco:</strong> I agree, don&#x27;t love the fit there and would rather have Kayfus/Manzardo split 1B/DH. Seems like Nick feels differently (though he&#x27;s also just highlighting a few possibilities for a low-stakes poll) and it&#x27;s true that they need better out of right field, but I assume DeLauter&#x27;s going to end up there. I wouldn&#x27;t want Castellanos playing the outfield every day</p>
+<p><strong>Omar Minaya:</strong> Seems to be increasing smoke around a potential Skubal trade. How would you rank the potential suitors?</p>
+<p><strong>Alex:</strong> For so many reasons, I don&#x27;t think it particularly likely from either side, but out of curiosity, if the Tigers were to make Skubal available, what sort of cost would teams be looking at? For my frame of reference, let&#x27;s say it&#x27;s the Cubs inquiring. It seems like something that would be so astronomical that no team would consider it, but to reference the Yankees/Soto trade a few years ago (which feels like a similar situation) it&#x27;s not like that set the Yankees back too much. Is Skubal in another tier than Soto, or would we be looking at something similar?</p>
+<p><strong>Anthony Franco:</strong> I disagree that there&#x27;s increased smoke about Skubal getting traded. They lowballed him on an old extension offer. It doesn&#x27;t look great, but it&#x27;s not like it impacted his 2025 performance Doubt they&#x27;re getting an extension done but I never expected them to. I&#x27;d be floored if they didn&#x27;t hold him into next season and be prepared to QO him after what they hope is a long playoff run If they did trade him, I think it&#x27;s a better return than what San Diego got for Soto. He&#x27;s making half the arbitration salary that Soto was and top-end pitchers take on an increased importance in the playoffs. A team is only trading for Skubal if they think they&#x27;re inner circle contenders But the Tigers are coming off consecutive playoff berths. They have an elite farm system already. They just squandered the division in part because they were too conservative at the deadline, and they&#x27;re not under any short-term financial constraints with Skubal/Baez as their only notable contracts. If they trade Skubal now, at what point are they actually trying to win?</p>
+<p><strong>Tony Torcato:</strong> Should the Giants pull the plug on Marco Luciano, and possibly even Luis Matos? Heliot Ramos might also be on the bubble for his subpar defense in LF and regression at the plate, would you agree/disagree? Giants need to remake their outfield, and concentrate on pitching and defense to get back to a championship level, imo.</p>
+<p><strong>Anthony Franco:</strong> Pretty close to it. I probably wouldn&#x27;t keep Luciano on the 40 all offseason, it&#x27;s just not going to work. I still have a semblance of hope for Matos as a decent role player but he&#x27;s out of options so he might get squeezed out during Spring Training They&#x27;re not cutting Ramos though. Even if they wanted to focus on outfield defense, they could trade him</p>
+<p><strong>Dan S.:</strong> Trent Grisham and Harrison Bader are coming off very good platform years, but both looked more like second-division regulars or part-time/platoon guys in recent seasons. Grisham&#x27;s offensive breakout came with an alarming defensive drop and Bader&#x27;s wOBA outperformed is xwOBA by a massive .043 points. What kind of contracts are they looking at this winter?</p>
+</div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>
