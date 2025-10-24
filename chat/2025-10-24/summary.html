@@ -1,0 +1,226 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Oct 24</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2025-10-24</span><span class="post-type chat">chat</span></div><h1>Chat: Oct 24</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight">Toronto Blue Jays playoff outlook vs Dodgers rated as competitive (55-45 odds favoring LA), with discussion of Bo Bichette&#x27;s potential usage at 2B vs pinch hitting role</li><li class="insight">Japanese pitcher Imai projected to get largest contract among Japanese pitchers this offseason, likely exceeding $130M, with discussion of past NPB pitcher success (Yamamoto, Tanaka, Imanaga)</li><li class="insight">Angels offseason strategy - unlikely to pursue top starter like Valdez, more likely to target Gallen or innings-eater like Littell while addressing CF, 3B and bullpen needs</li><li class="insight">Okamoto contract projections estimated at 3 years, $33-45M range, compared to Candelario/Profar market level</li><li class="insight">Dillon Dingler&#x27;s development showing improved hit tool beyond previous 30-grade evaluations, projecting as 50-grade hitter with strong defense</li><li class="insight">Mike Yastrzemski&#x27;s free agency outlook - Royals reunion likely at $10-12M/1 year, with Phillies, Pirates, Cleveland as alternative fits</li><li class="insight">The chat maintained focus on current player evaluations and near-term free agency/trade scenarios without speculating beyond established timelines.</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Anthony Franco:</strong> Good afternoon, hope you&#x27;re all well! Looking forward to another of these Busy week for us with offseason prep so I&#x27;m going to keep this one at an hour. Let&#x27;s get going</p>
+<p><strong>Bo nose:</strong> I sure hope Bichette&#x27;s addition to the Jays&#x27; roster is not a sentimental move nor one anticipating contributions defensively. Ordinarily a plus bat, the area where, arguably, the Blue Jays are strongest as a team right now, he has been feeble against L.A. over the past two years. That&#x27;s only six games but, combined with the lay-off, is his best usage more likely to be as a super-sub PH than in any starting defender capacity? I think the noise about using him at 2nd is just that, noise.</p>
+<p><strong>Duffy Scliff:</strong> Does Toronto realistically have a shot in this series? Does the fact that LAD hasn’t played in awhile hurt them?</p>
+<p><strong>Anthony Franco:</strong> Dodgers are favorites but it&#x27;s like 55-45, they&#x27;ve definitely got a shot. L.A.&#x27;s bullpen still feels like a weakness and the Jays should put up a much better fight against the rotation than Milwaukee did We&#x27;ll see on Bo. Obviously if he can move at all, then playing him at second would be ideal. Use Clement at third with Barger in RF and IKF as a defensive sub late in games. If he&#x27;s so hobbled that he can&#x27;t field a ground-ball, well he&#x27;s at least a better pinch-hitting option than Loperfido would&#x27;ve been</p>
+<p><strong>Hopeful Halo:</strong> What do you think the angels chances are to land a top starter like Valdez?</p>
+<p><strong>Anthony Franco:</strong> Would be out of character for Moreno and they&#x27;ve got so many other needs that I don&#x27;t think using most of the budget on one top starter would be the wisest choice anyway I could see them more in on Gallen or a boring innings eater like Littell. They&#x27;ll need to spend something on a center fielder and a third baseman and should at least bring Kenley back to solidify the back of the bullpen</p>
+<p><strong>Japanese Players:</strong> Who do you think gets the highest contract for Japanese pitchers coming over this year? Imai seems to be the one getting most of the conversation now. I do wonder if he might be getting a little to hyped now? It does seem sometimes we get hyped for a player and they struggle coming over.</p>
+<p><strong>Anthony Franco:</strong> Yeah it&#x27;ll be Imai. He&#x27;s a bit of split camp guy but I&#x27;d be surprised if he signs for less than $130M I think the recent track record for the top NPB starters is pretty good actually. Yamamoto&#x27;s phenomenal. Tanaka worked out really well, Imanaga was excellent value at 4/53. Jury&#x27;s still out on Sasaki but for even if he&#x27;s only a late-inning reliever, that&#x27;s well worth what the Dodgers paid with the hard capped bonuses</p>
+<p><strong>Rangers13:</strong> How much do you expect Okamoto to cost?</p>
+<p><strong>Anthony Franco:</strong> We all landed at three years and between $33-45MM but there&#x27;s a really wide error bar on the predictions for players (especially hitters) coming over from foreign leagues Seems like he&#x27;s at least equally interesting as Jeimer Candelario or Jurickson Profar were though</p>
+<p><strong>Ding a ling:</strong> HasDillon Dinglerreally changed his hit tool? Both FanGraphs and MLB gave him a 30 as a prospect, but this past season, he hit for a respectable average. Who&#x27;s the real Dillon Dingler?</p>
+<p><strong>Anthony Franco:</strong> Yeah definitely think he&#x27;s better than a 30 hit tool. Big step forward in his in-zone contact rate, fewer chases. Hits the ball hard enough to post decent results on balls in play, even if he&#x27;s probably not turning in a .345 BABIP every year Feels like a 50 hitter with average pop who plays really strong defense behind the plate. Good player</p>
+<p><strong>Mike Yastrzemski:</strong> Please find me a home?</p>
+<p><strong>Anthony Franco:</strong> I fully expect the Royals to bring him back on a one-year deal for $10-12M. He hit well there and it&#x27;s obviously an ongoing need If they go elsewhere, Philly, Pittsburgh or Cleveland would work. Wouldn&#x27;t pick the Giants to do it after they traded him but it&#x27;s not like Luis Matos/Drew Gilbert seized the RF job. If they focus most of their resources on the rotation and Yaz is out for $8M in February, I don&#x27;t see why they wouldn&#x27;t be willing to circle back</p>
+<p><strong>Arthur Dent:</strong> Any chance the Guardians will entertain offers in Steven Kwan? If so, what would Cleveland be looking for in return?</p>
+</div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>
