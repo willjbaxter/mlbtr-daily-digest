@@ -1,0 +1,231 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Oct 26</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2025-10-26</span><span class="post-type chat">chat</span></div><h1>Chat: Oct 26</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight priority">Red Sox not likely to pursue Kyle Tucker given their outfield depth; more likely to trade one OF for pitching</li><li class="insight priority">Yankees unlikely to pursue Miguel Andujar reunion; team still believes in Volpe despite fan skepticism</li><li class="insight priority">Cubs probably won&#x27;t trade Ian Happ ($18MM salary) as he&#x27;s coming off solid year and has no-trade protection</li><li class="insight priority">Red Sox unlikely to pursue J.T. Realmuto given satisfaction with Narvez as primary catcher</li><li class="insight">Phillies likely to re-sign Schwarber and Realmuto, let Suarez depart, and seek significant OF replacement for Castellanos</li><li class="insight">Braves managerial search pointing toward Danny Lehmann as potential candidate, with Ross/DeRosa/Gibbons not in consideration</li><li class="insight">Pirates hypothetical $210M payroll scenario for 2026 would enable pursuit of major free agents like Tucker/Schwarber</li><li class="insight">Rays likely to trade Fairbanks but may retain Lowe (2026 club option) and Diaz (contracted for 2026, 2027 club option)</li><li class="insight">Cardinals likely targeting veterans on one-year deals that could be flipped at deadline</li><li class="insight">Mariners considering re-signing Polanco with Colt Emerson expected to take 2B/3B role in 2026</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Mark P:</strong> The Weekend Chat is upon us!  We’ll wait a minute for the questions to start piling up, then get cracking….</p>
+<p><strong>Guest:</strong> Reds trading front of line pitcher this off-season?</p>
+<p><strong>Mark P:</strong> If by “front of the line” you mean Greene, Abbott, or Lodolo, probably not.  Petty and Burns likely aren’t going anywhere either, so Singer might be the most realistic starter Cincinnati would deal to obtain some real hitting help</p>
+<p><strong>Angela:</strong> Want do you see the phillies  doing this off-season</p>
+<p><strong>Mark P:</strong> Well, my outlook on the Phillies offseason could be summed up as….https://www.mlbtraderumors.com/2025/10/offseason-outlook-philadelphia-… The TL;DR version is that my guess is that the Phils re-sign Schwarber and Realmuto, Suarez departs, Bohm is non-tendered or traded, and the team brings in a significant everyday outfielder to replace Castellanos (who will probably be released, in lieu of a salary-dump trade) Now, whether or not this “significant everyday outfielder” is more of a stopgap or, say, Kyle Tucker or someone more eye-opening remains to be seen</p>
+<p><strong>Guest:</strong> Does Luis Arraez make more or less than 12 million AAV in free agency?</p>
+<p><strong>Mark P:</strong> Less.  I admit that Arraez is a tricky player to evaluate, but most modern front offices will look at his lack of defensive utility and lack of overall offensive production rather than just his batting averages</p>
+<p><strong>Jonny Venters:</strong> You’re the GM of the Pirates, and Bob Nutting has told you he intends to raise the payroll as high as $210 million in 2026(don’t laugh!).  What moves do you make this offseason to put PIT in contention?</p>
+<p><strong>Mark P:</strong> First I get up off the ground, since that news would’ve caused me to faint.Then, heck, sign Tucker, sign Schwarber, go all out on bats.</p>
+<p><strong>Dan:</strong> Who do you believe is the favorite to be the next Braves manager?</p>
+<p><strong>Mark P:</strong> The Braves are purposely keeping news quiet, but Mark Bowman of MLB.com had an interesting report the other day pointing towards Danny Lehmann as a name under increasingly serious consideration.Hard to call Lehmann the “favorite,” per se, but given the lack of other names, I guess it’s maybe him by default?  Just as notably, Bowman reported that guys like Ross, DeRosa, and Gibbons weren’t being considered</p>
+<p><strong>Doug:</strong> Should the Mets be engaging the Rays in trade talks this offseason? The Rays can offer short-term bullpen help (Fairbanks), as well as offense at 2B (Lowe) and/or 1B (Yandy Diaz) that wouldn’t require Stearns to go long-term on any of those players (and likely not impact the top of the farm system prospects). What would be a framework of a potential deal between the Mets and Rays?</p>
+<p><strong>Mark P:</strong> The Rays tend to want at least one MLB-ready player in such a notable trade, so they’d ask for one of the Mets’ young starters.  This might not necessarily work for a NYM team that needs rotation depth anyway, but to your point, Tampa combining two of their trade chips into a single deal might be intriguing on this front.</p>
+<p><strong>Guest:</strong> What routes do you see the Red Sox taking? I feel there are a million different ways they could go. I feel signing Tucker then trading both Duran and Abreu in two different trades for pitching is the way to go.</p>
+<p><strong>Mark P:</strong> This seems a touch complicated when the Sox could just trade one OF for a pitcher, and then perhaps sign another arm.  Tucker probably won’t be on Boston’s radar when the Sox already have so much in the outfield pipeline.</p>
+<p><strong>C-Daddy:</strong> Stress level out of 10 with your beloved Blue Jays in the playoffs.</p>
+<p><strong>Mark P:</strong> Oh man, I’ve been a borderline nervous wreck all October, lol.  Playoff baseball is both the best and kinda the worst!My stress level is somewhat mitigated by my amazement that the Blue Jays actually won the pennant and are battling it out in the WS.  Obviously it would be disappointing to get this close and then fall short, but this whole season has been such an unexpected joy that it’s all gravy at this point.</p>
+<p><strong>Mark:</strong> Do you think that Mike Trout is going to be traded?</p>
+<p><strong>Mark P:</strong> No</p>
+<p><strong>Chaim Bloom:</strong> Who should I go after in free agency, but also remain in rebuild territory?</p>
+<p style="text-align: center; color: #999; font-style: italic;">... and 80 more exchanges</p></div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>
