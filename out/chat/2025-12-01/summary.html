@@ -1,0 +1,231 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Dec 01</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2025-12-01</span><span class="post-type chat">chat</span></div><h1>Chat: Dec 01</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight">It’s Sunday night and time to chat! We’ll launch things after the queue starts to fill up…</li><li class="insight">I’d be surprised to see New York spend to quite that level in bringing in two top-level guys</li><li class="insight">Am I eligible for rookie of the year? I am under the innings limit but have over a year of service time on the 60 day IL</li><li class="insight">Seems like a reasonable fit</li><li class="insight">How can the Phillies be both prioritizing re-signing Schwarber  AND be far apart on years and money? He’s seen this organization wildly overpay Trea Turner and Aaron Nola</li><li class="insight">Todd Zolecki’s report from the other day didn’t say anything about Schwarber and the Phillies being “far apart” in anything, necessarily</li><li class="insight">Could we re-sign Polanco and Geno? Which of the 2 is more likely</li><li class="insight">Polanco seems a lot more likely, as a fit for what the Mariners want to achieve</li><li class="insight">Interesting question, since haven’t heard much of anything about Seattle’s offseason targets apart from their own guys (i</li><li class="insight">Beavers is probably the likelier candidate for an extension, since Rogers is close enough to free agency that he’d probably want to check out the open market</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Mark P:</strong> It’s Sunday night and time to chat! We’ll launch things after the queue starts to fill up…</p>
+<p><strong>Anthony:</strong> Tucker and Imai for the Yanks?</p>
+<p><strong>Mark P:</strong> I’d be surprised to see New York spend to quite that level in bringing in two top-level guys.  Bellinger and Imai seem like a more reasonable duo, if the Yankees make two big purchases</p>
+<p><strong>Rhett lowder:</strong> Am I eligible for rookie of the year? I am under the innings limit but have over a year of service time on the 60 day IL.</p>
+<p><strong>Mark P:</strong> Lowder is no longer considered a rookie</p>
+<p><strong>AstroFAN:</strong> Could Tyler Mahle go to Houston?</p>
+<p><strong>Mark P:</strong> Seems like a reasonable fit.  Bringing in another guy with a recent injury history might not be entirely ideal for an Astros team that wants to cover innings, but Mahle on a one-year works with the budget</p>
+<p><strong>Chase:</strong> How can the Phillies be both prioritizing re-signing Schwarber  AND be far apart on years and money? He’s seen this organization wildly overpay Trea Turner and Aaron Nola. Why shouldn’t he get the same? Pay the man.</p>
+<p><strong>Mark P:</strong> Todd Zolecki’s report from the other day didn’t say anything about Schwarber and the Phillies being “far apart” in anything, necessarily.  He said that they’re “not close to a deal,’ which would relate to some kind of a gap in negotiations, or maybe just a timing issue. Consider this scenario…..Dave Dombrowski says “Kyle, you know how much we want you back.  Take your time looking around the market, and all we ask is that you give us a chance to match any offer.”</p>
+<p><strong>Jerry Dipoto:</strong> Could we re-sign Polanco and Geno? Which of the 2 is more likely</p>
+<p><strong>Mark P:</strong> Polanco seems a lot more likely, as a fit for what the Mariners want to achieve</p>
+<p><strong>Ms Fan:</strong> I read the MLBTR piece on internal infield options for the Mariners. Other than potentially reuniting with Suarez or Polanco, what realistic external options exist for the team?</p>
+<p><strong>Mark P:</strong> Interesting question, since haven’t heard much of anything about Seattle’s offseason targets apart from their own guys (i.e. Naylor and Polanco).  Obviously Dipoto and his staff haven’t been idle in checking around for other options, but chances are Polanco is the top priority, and other infield adds won’t be explored more deeply until Polanco is off the board</p>
+<p><strong>Jeremy:</strong> Could the orioles extend Dylan beavers or Trevor Rogers?</p>
+<p><strong>Mark P:</strong> Beavers is probably the likelier candidate for an extension, since Rogers is close enough to free agency that he’d probably want to check out the open market.  If he duplicates his 2025 numbers, he’ll be in for a big payday next winter</p>
+<p><strong>Brewers Fan:</strong> Was very surprised that a Miz extension would even be mentioned, what do you think an extension like that would look like? Seems a little risky for the Brewers no?</p>
+<p><strong>Mark P:</strong> Locking up a young potential ace is a very logical tactic for a lower-payroll team.  If the Brewers feel as strongly about the Miz’s future as they did Chourio, they could explore another long-term deal that extends the team’s control over the hurler</p>
+<p><strong>fprex:</strong> What is the market for the Braves’ Sean Murphy? I’d imagine SD would be interested and Texas should be as well. Could the Braves get Seager to waive his no-trade clause and work a deal around Murphy?</p>
+<p><strong>Mark P:</strong> Despite Murphy’s recent numbers, he would get interest if Atlanta shopped him, just because the catching market is so thin.  But having Murphy as any kind of a centerpiece of a potential Seager trade is a real reach.</p>
+<p><strong>Redbeard:</strong> Pirates actually gonna spend money or all bluster?</p>
+<p style="text-align: center; color: #999; font-style: italic;">... and 93 more exchanges</p></div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>
