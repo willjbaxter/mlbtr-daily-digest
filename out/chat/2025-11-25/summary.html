@@ -1,0 +1,231 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Nov 25</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2025-11-25</span><span class="post-type chat">chat</span></div><h1>Chat: Nov 25</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight">Good morning! We’ll get going at 1pm CT today, but feel free to ask questions ahead of time, as always</li><li class="insight">They’re paying Gray $21MM</li><li class="insight">Qualifying offer rules clarified for players with contract options and opt-out clauses</li><li class="insight">Fully expect them to spend some money this winter</li><li class="insight">I’d be shocked if the Braves deviated from their typical MO and spent that heavily on a free agent, but the fit works</li><li class="insight">He’s a minor league deal guy for me (not that like, a year and $2</li><li class="insight">They’d just have to take the remaining $5MM</li><li class="insight">I wouldn’t give up Duran alone for Lodolo, let alone Duran + Whitlock</li><li class="insight">I think it’s silly to definitively grade a trade that’ll take years to play out mere minutes after it happened</li><li class="insight">I wouldn’t want that arm at third base, personally, but I can see some teams being open to the idea</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Steve Adams:</strong> Good morning! We’ll get going at 1pm CT today, but feel free to ask questions ahead of time, as always.</p>
+<p><strong>Sonny in Boston:</strong> Was this a wise move by the Red Sox?  Will it help make the playoffs or hurt in taking up too much money?</p>
+<p><strong>Steve Adams:</strong> They’re paying Gray $21MM. That’s not much for Boston. I think they overpaid a bit in terms of the talent they gave up but don’t consider it like an egregious, “what are they thinking?!” style of move. In general, I think teams are too reluctant to trade prospects, so it’s kind of nice to see a trade where it actually feels like the buying club gave up a bit too much. In general, I think teams are too reluctant to trade prospects, so it’s kind of nice to see a trade where it actually feels like the buying club gave up a bit too much. Boston is better with Gray than without. Hard stop. It helps them in 2026… maybe hurts down the line if Clarke ever develops even below-average command.</p>
+<p><strong>Transaction Thinker:</strong> The Sonny Gray article mentioned that it’s been years since a mutual option was exercised by both sides; I was wondering which player/team was involved.</p>
+<p><strong>Steve Adams:</strong> Aramis Ramirez and the Brewers in the final season of Ramirez’s career The offseason prior, Matt Belisle and the Rockies both picked up their ends of a mutual option I’ve been with MLBTR full-time since 2013 (which is insane to think about, jeez) — and those are the only two times a mutual option has been exercised in my entire time here.</p>
+<p><strong>Ben:</strong> Are the stories about the Piratss being aggressive legit or pr?</p>
+<p><strong>Steve Adams:</strong> Fully expect them to spend some money this winter. I’ll be stunned if they actually sign Schwarber, but I do think they’ll add an actual bat or two.</p>
+<p><strong>Braves fan:</strong> I can see the braves signing bichette, use him as SS until our minor options are ready or albies declines even more then expected, is there any other options viable to be our SS if we dont kim?</p>
+<p><strong>Steve Adams:</strong> I’d be shocked if the Braves deviated from their typical MO and spent that heavily on a free agent, but the fit works. I imagine Dubon gets the nod at SS if they can’t bring Kim back or find an outside-the-box option on the trade market. Beyond Kim and Bichette, there’s just not much for shortstop help.</p>
+<p><strong>C. Morel:</strong> Am I going to have to accept a minor league deal, or will I get a 1 year prove it?</p>
+<p><strong>Steve Adams:</strong> He’s a minor league deal guy for me (not that like, a year and $2.5MM would stun me or anything… but I’m not putting him on my nonexistent 40-man roster haha)</p>
+<p><strong>BrewerFan:</strong> If the Cardinals were offering to eat all but say 5mm of Arenado’s deal, what would the Brewers have to surrender to get him?</p>
+<p><strong>Steve Adams:</strong> They’d just have to take the remaining $5MM. Maybe give up a low-level prospect you’ve never heard of and would never hear of again after the trade.I’m not convinced every team would even put Arenado on the 40-man roster right now, even with the Cardinals eating the whole contract. He was so bad at the plate last year, and his glove is more good than elite at this point.</p>
+<p><strong>Cincinnati kid.:</strong> How about reds trading Nick Lodolo to Boston for Jarren Duran and Garrett Whitlock. Fair for both sides</p>
+<p><strong>Steve Adams:</strong> I wouldn’t give up Duran alone for Lodolo, let alone Duran + Whitlock.I like Lodolo, but he has less remaining club control than Duran and has all of one healthy season on his résumé.</p>
+<p><strong>Cardinals:</strong> This a good trade for them? Why are your grades for each side?</p>
+<p><strong>Steve Adams:</strong> I think it’s silly to definitively grade a trade that’ll take years to play out mere minutes after it happened. I do prefer the Cardinals’ side of things, but I get why the Red Sox made the move and it could easily work out great for them if Fitts is like a garden-variety fourth/fifth starter and Clarke never develops any semblance of command.</p>
+<p><strong>Mrs. Met:</strong> Bichette at 3B?</p>
+<p><strong>Steve Adams:</strong> I wouldn’t want that arm at third base, personally, but I can see some teams being open to the idea.</p>
+<p><strong>Chris Young:</strong> What am I up to next? Do you think I should trade Seager?</p>
+<p style="text-align: center; color: #999; font-style: italic;">... and 63 more exchanges</p></div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>

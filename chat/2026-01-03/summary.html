@@ -1,0 +1,231 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Jan 03</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2026-01-03</span><span class="post-type chat">chat</span></div><h1>Chat: Jan 03</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight">Earlier edition of The Weekend Chat this time, but hopefully with no shortage of questions and hot takes filing in from our readers</li><li class="insight">Qualifying offer rules clarified for players with contract options and opt-out clauses</li><li class="insight">Has the Cardinals trade stuff stalled? It’s been a while since any updates</li><li class="insight">Not surprising that things slowed down over the holidays</li><li class="insight">Probably, though Suarez and the re-signed Iglesias solve a couple of big question marks</li><li class="insight">Who signs first?Ranger Suarez(51</li><li class="insight">Their projected payroll is $191</li><li class="insight">Maybe they are in on him, and this’ll be another outta-nowhere signing like Murakami to the ChiSox and Imai to Houston</li><li class="insight">I think I’m higher on most on Suarez, since in my view, he was the clear choice as the best starter on this year’s FA market</li><li class="insight">It always felt likelier that Milwaukee would just keep Peralta, since they’d need a ton in return to say yes to a trade</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Mark P:</strong> Earlier edition of The Weekend Chat this time, but hopefully with no shortage of questions and hot takes filing in from our readers.  Let’s see what’s up….</p>
+<p><strong>Luca:</strong> Are the Rays still in on Ketel Marte? Anyone else there targeting?</p>
+<p><strong>Mark P:</strong> In all likelihood, the Rays are targeting players much less expensive than Marte.  He’d be a huge help for their lineup, of course, but with a remaining price tag that wouldn’t seem to fit Tampa’s budget.Hindsight being 50-50, if the Rays had exercised Fairbanks’ option, I wonder if he might’ve been part of a hypothetical Marte trade package — both as salary offset, and because Arizona needs ninth-inning help</p>
+<p><strong>Kwallington:</strong> Has the Cardinals trade stuff stalled? It’s been a while since any updates.</p>
+<p><strong>Mark P:</strong> Not surprising that things slowed down over the holidays.  The Cards have already moved Gray and Contreras, leaving Arenado as the last big contract remaining, and Donovan/JoJo/maybe Gorman or Nootbaar as less-expensive but more sought-after trade chips. The Cardinals certainly aren’t done with their swaps yet, and it feels like Donovan, Romero, and Arenado will all be elsewhere by Opening Day</p>
+<p><strong>Cj james:</strong> The Braves should worry about the bullpen more than the starters. Do you agree?</p>
+<p><strong>Mark P:</strong> Probably, though Suarez and the re-signed Iglesias solve a couple of big question marks.</p>
+<p><strong>Steve:</strong> Who is more likely to be in a different uniform next year, Duran or Casas?</p>
+<p><strong>Mark P:</strong> Casas</p>
+<p><strong>Mark P:</strong> Who signs first?Ranger Suarez(51.3% | 641 votes)Framber Valdez(48.6% | 607 votes)Total Votes: 1248</p>
+<p><strong>secret souse:</strong> What is the easiest path for Red Sox to dump money</p>
+<p><strong>Mark P:</strong> Their projected payroll is $191.1MM, and their tax number is around $240MM.  Not huge figures considering this is the Red Sox we’re talking about, so my answer is “they don’t need to dump money to make any further notable moves.”However, it seems ownership feels differently.  The easiest path in terms of pure simplicity is to attach a prospect (either a pitcher or Casas) to Yoshida or Hicks, perhaps to a team like Colorado that needs all the young help it can get.  But, clubs are increasingly loath to give away young talent as sweeteners in salary dumps.</p>
+<p><strong>RedsHopeful:</strong> What’s stopping the Reds from being in on Okamoto?  Seems like a great fit at 1B/DH along with Sal Stewart and have Steer as super utility again?</p>
+<p><strong>Mark P:</strong> Good question. Maybe they are in on him, and this’ll be another outta-nowhere signing like Murakami to the ChiSox and Imai to Houston</p>
+<p><strong>Matt:</strong> Okamoto going to sign during the chat?</p>
+<p><strong>Mark P:</strong> Don’t jinx it!</p>
+<p><strong>Norbert:</strong> Are you concerned with Ranger Suarez’s loss of velocity, or do you think he has the type of command that will allow him to continue getting weak contact for a few more years?</p>
+<p><strong>Mark P:</strong> I think I’m higher on most on Suarez, since in my view, he was the clear choice as the best starter on this year’s FA market. He wasn’t exactly a high-velo guy to begin with, so a drop shouldn’t (in theory) impact his bread and butter abilities of generating grounders and soft contact.</p>
+<p><strong>Peralta:</strong> The rumor mill quieted on Peralta. You think that picks back up now that the holidays are over or do you think the Brewers are more likely to give the season a go with him?</p>
+<p><strong>Mark P:</strong> It always felt likelier that Milwaukee would just keep Peralta, since they’d need a ton in return to say yes to a trade.  It could be things get rolling a bit now that Imai is off the board, though it’s interesting to remember that the Astros were one of the teams reportedly interested in Peralta.  That may no longer be the case now that Imai and Burrows are on board.</p>
+<p style="text-align: center; color: #999; font-style: italic;">... and 94 more exchanges</p></div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>

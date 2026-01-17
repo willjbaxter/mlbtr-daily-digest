@@ -1,0 +1,228 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Oct 10</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2025-10-10</span><span class="post-type chat">chat</span></div><h1>Chat: Oct 10</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight priority">Red Sox/Japanese Market: Discussion of Munetaka Murakami as potential target, though specific landing spots weren&#x27;t detailed</li><li class="insight priority">Cubs/Brewers Playoff Discussion: Analysis of matchup with Dodgers, including speculation about Game 5 with Imanaga and Misirowski starting</li><li class="insight">Mariners First Base Plans: Team likely to pursue Naylor if contract stays in low-mid 70s range for 4 years; Ryan O&#x27;Hearn mentioned as fallback</li><li class="insight">MLBTR Top 50 Free Agents: Confirmed to release 5 days after World Series ends, with separate trade candidates list (20-30 players) coming morning after World Series</li><li class="insight">Angels Third Base Plans: Team likely to pursue Geno Suarez, with Moncada as backup option; Alec Bohm mentioned as trade possibility</li><li class="insight">Diamondbacks Roster Planning: Team likely to consider trading Lawlar for pitching; outfield needs include potential platoon addition; mentioned potential interest in Austin Hays</li><li class="insight">Blue Jays Playoff Matchup: Analysis of Detroit vs Seattle preference, with note about Skubal&#x27;s potential Game 3 availability</li><li class="insight">Mets Trade Discussion: Analysis of potential Nick Lodolo trade, with Benge mentioned as possible centerpiece; Zach Littell discussed as secondary rotation option</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Anthony Franco:</strong> Good afternoon everyone, hope you&#x27;re well! Looking forward to another of these, let&#x27;s get going</p>
+<p><strong>NY Reds:</strong> Would Benge Or Jett Williams be enough to get Lodolo? Mets must be in on Zach Littel right?</p>
+<p><strong>Anthony Franco:</strong> I think Benge would at least get their attention. Doubt the Reds would be super keen on moving Lodolo for a prospect but unless they&#x27;re way down on him because he had a bad few weeks in Triple-A, Benge seems like the kind of talent who&#x27;d get their attention. Not as convinced on Williams, whose offensive ceiling seems lower Littell for the Mets? Sure. He&#x27;s kind of boring though, that&#x27;d need to be their second of two rotation acquisitions</p>
+<p><strong>RJ:</strong> Do the Angels bring back Moncada to play 3rd next season? Or do they look elsewhere?</p>
+<p><strong>Anthony Franco:</strong> Moncada has to be like Plan F. If he&#x27;s the only option available in February for $5M again, sure. They&#x27;ll probably make a run at Geno, could trade for Alec Bohm or wait and see if the Phils non-tender him</p>
+<p><strong>Glenn inSeattle:</strong> How are the Mariners going to fill their openings at 1st and 3rd?</p>
+<p><strong>Anthony Franco:</strong> I buy that they&#x27;re going to try to keep Naylor. If he ends up at four years in the low-mid 70s, I could see them doing that. If it gets to five years and closer to $100M, not so much. I&#x27;d probably put them on a Ryan O&#x27;Hearn type fallback at that point Not sure they need to as big at third. Emerson&#x27;s not far off, Williamson can handle the position defensively if nothing else. If they bring Polanco back to rotate between 2B/3B/DH and still have Bliss and Young in the mix at second, I feel like that&#x27;s enough to at least bide their time to see if Emerson can take the job in the second half</p>
+<p><strong>Dan S.:</strong> When will the MLBTR Top 50 come out? One of my favorite bookmarks every off-season.</p>
+<p><strong>Anthony Franco:</strong> Five days after the end of the World Series That&#x27;s the cutoff point for teams/players to make option decisions and teams to decide whether to issue qualifying offers. There aren&#x27;t many guys who&#x27;ll make the Top 50 if the team declines a club option (Imanaga this year would be the main candidate) but player option/QO decisions have a big impact on the market, so we wait until those are in Also planning to do a top offseason trade candidates list (probably not 50 but at least 20-30) that we expect to drop the morning after the World Series ends</p>
+<p><strong>Baseball been very, very good to me.:</strong> Who do you think matches up better with the Dodgers in a seven game series, Cubs or Brewers and why? Who do you think will win tomorrow nights game 5, assuming the starters are Imanaga and Misirowski? Obviously, the starters are sppeculative and both would be on super sjhort leashes.</p>
+<p><strong>Hope:</strong> Any teams that have a good shot of beating the Dodgers? I am so worried by how they are ruining baseball. They are gonna go back to back</p>
+<p><strong>Anthony Franco:</strong> I&#x27;ll still take Milwaukee but predicting any single MLB postseason game is 55-45 at best I do think the Brewers have a better shot at beating the Dodgers. I&#x27;d consider L.A. the favorite over either of them but it&#x27;s not like they&#x27;re unbeatable with that bullpen Sasaki being a lights out reliever has been huge so far. Their actual relievers aside from Vesia are pretty bad</p>
+<p><strong>Cat_Herder:</strong> You&#x27;re Toronto.  Would you rather Detroit or Seattle win tonight?</p>
+<p><strong>Anthony Franco:</strong> Detroit. I think Seattle&#x27;s a deeper overall team and the Jays wouldn&#x27;t see Skubal until Game 3 Non-zero chance that they&#x27;d only have to face him once in the series, especially if they take the first two at home</p>
+<p><strong>Stockholm, AZ:</strong> Hey Anthony! I know pitching is top priority, but who will play the outfield for the Diamondbacks next year? Hard to believe they won’t at least try to trade McCarthy or Thomas. And who will be on the infield corners? Lawlar has looked lost so far.</p>
+<p><strong>Anthony Franco:</strong> Yeah I&#x27;m coming increasingly around on the idea that they&#x27;ll dangle Lawlar for pitching. Another team that&#x27;d probably need to be in on Bohm or Josh Jung if they do that. Blaze Alexander&#x27;s a utility guy Agree that they also need to add an outfielder, though I think it&#x27;ll probably be a lower-cost platoon type given the expected payroll rollback and their pitching needs Carroll, Thomas and an Austin Hays type. Hope for Lourdes to make it back around the All-Star Break and/or that Ryan Waldschmidt hits his way to the majors quickly</p>
+<p><strong>Duffy S Cliff:</strong> What are potential landing spots for Munetaka Murakami? Could my Red Sox go after him? What do you think his ceiling is in MLB?</p>
+</div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>

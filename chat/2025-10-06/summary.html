@@ -1,0 +1,231 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Oct 06</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2025-10-06</span><span class="post-type chat">chat</span></div><h1>Chat: Oct 06</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight priority">Red Sox/Yankees/AL East:</li><li class="insight">- Story likely to stay with Red Sox rather than opt out of remaining $55M through 2027</li><li class="insight">- Wells expected to be Yankees&#x27; primary catcher, with Rice moving to first base</li><li class="insight">- Blue Jays&#x27; bullpen concerns highlighted as major weakness in Yankees series</li><li class="insight priority">Cubs:</li><li class="insight">- PCA (Pete Crow-Armstrong) not likely to be traded despite second half struggles</li><li class="insight">- Cubs less likely to trade outfield prospects with Happ/Seiya approaching free agency</li><li class="insight">Phillies:</li><li class="insight">- Rob Thomson&#x27;s job likely safe but could be changed to shake things up</li><li class="insight">- Would likely find another managing job quickly if let go</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Mark P:</strong> The Weekend Chat (postseason edition) is here! We’ll take a minute for some questions to stack up, and then pitter patter, let’s get at ’er</p>
+<p><strong>Phillie Phanatic:</strong> If Phils lose does Thomson get fired?</p>
+<p><strong>Mark P:</strong> I’m not sure there’s anything that be pointed at as Thomson’s fault, in relation to why the Phillies aren’t able to get over the hump and win a title.  But, with relatively little roster flexibility, it’s possible a managerial change might be viewed as a step that can be taken to try and shake things up.If Thomson wanted to continue managing, I suspect he might find another job as early as this offseason, given his track record and how many teams are looking for new dugout bosses</p>
+<p><strong>Ca$hman:</strong> Did Devin Williams late season resurgence get him into qualifying offer territory and if so does he accept it?</p>
+<p><strong>Mark P:</strong> He would absolutely accept it, but there’s no chance the Yankees would float $22MM to a reliever coming off such an inconsistent season.</p>
+<p><strong>Joe:</strong> Do the Reds trade for a middle of the order bat or sign one? What would they have to trade?</p>
+<p><strong>Mark P:</strong> Given their payroll limitations, a trade seems more likely, though the Reds should or could be able to find a decent hitter at a reasonable price.  Martinez and Pagan both coming off the books frees up a big chunk of payroll space that Cincinnati can re-invest towards a big bat.On the trade front, the Reds technically have a pitching surplus.  But, like I say about any team that seemingly has “too much” pitching, trading one arm and then running into an injury or two can very quickly put a team into a rotation hole.  So, if the Reds go this route, they’ll have to be very careful about who they’d trade.</p>
+<p><strong>Boomington:</strong> Christian Walker a good fit for Reds?</p>
+<p><strong>Mark P:</strong> If the Reds are going to trade for someone, probably not the guy entering his age-35 season, who is owed $40MM over the next two seasons, and is coming off a 99 wRC+ year</p>
+<p><strong>Jim:</strong> When do the Arb projections drop?</p>
+<p><strong>Mark P:</strong> I believe they’re coming this week, and possibly as early as tomorrow. Stay tuned!</p>
+<p><strong>Mariners:</strong> I’m both nervous and confident…. which one wins out versus the tigers?</p>
+<p><strong>Mark P:</strong> Losing Game 1 was a real blow to the Mariners with Skubal going tonight.  If the Tigers are up 2-0 with the series going back to Detroit and Skubal on tap again for a hypothetical Game 5, the M’s are in major hot water.</p>
+<p><strong>Ang T:</strong> Is it a given that Vientos replaces Alonso if Pete leaves in free agency?</p>
+<p><strong>Mark P:</strong> In my Mets offseason outlook from the other day (self-promotion, woo hoo!), I suggested that the Mets could sign a veteran left-handed bat to platoon with Vientos.  Someone like a Cody Bellinger who can play both 1B and the outfielder would be ideal, though Bellinger is a nice fit on a lot of teams.Vientos’ offense was so lackluster in 2025 that if you’re the Mets, I’m not sure how confident you can be in just handing him the first base job outright.</p>
+<p><strong>Dylan beavers:</strong> Do I get extended this off-season</p>
+<p><strong>Mark P:</strong> /checks MLBTR Agency Database/sees Beavers is repped by someone other than Scott BorasYes, it’s possibility!  Now that Basallo has been extended, you wonder if that breaks the seal on the Orioles locking up more players from this second wave of the young core.  Beavers is repped by the Beverly Hills Sports Council, who has negotiated other early-career extensions for the likes of Jackson Chourio and Kristian Campbell</p>
+<p><strong>Mets fan:</strong> Should I expect the mets to have the same coaching staff layout with a pitching and hitting coach with an asst for each or is it possible we get an associate manager, offensive coordinator, field coordinator, etc?</p>
+<p><strong>Mets shakeup:</strong> Were you surprised to see to the Mets fire so many coaches? Hefner had a pretty good reputation as a pitching coach before this year and Stearns didn’t do a good job of giving him much to work with this year.</p>
+<p><strong>Mark P:</strong> Speaking of people who won’t be unemployed for long, I expect Hefner to quickly land on another MLB staff for 2026.  I agree with the assessment that the Mets’ pitching struggles were more due to personnel and a flawed approach to the rotation more than anything Hefner did.  (That said, there’s also the caveat that I don’t know what was happening within the Mets clubhouse.)As to the team’s coaching titles, it’s possible they might switch up some titles and responsibilities, perhaps to more directly specify coaches into specific duties.  Probably depends on who they end up hiring.</p>
+<p style="text-align: center; color: #999; font-style: italic;">... and 81 more exchanges</p></div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>

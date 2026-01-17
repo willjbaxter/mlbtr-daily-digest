@@ -1,0 +1,212 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Mailbag: Oct 01</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2025-10-01</span><span class="post-type mailbag">mailbag</span></div><h1>Mailbag: Oct 01</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight priority">Cubs 2026 Payroll Commitments &amp; Space:</li><li class="insight">- Confirmed contracts: Swanson ($25.3M), Happ ($20.3M), Suzuki ($17M), Taillon ($17M), Boyd ($14.5M), Hoerner ($11.7M), Kelly ($5.75M)</li><li class="insight">- Expected options: Kittredge ($9M), Rea ($6M), Imanaga (3yr/$57M with ~$19M CBT hit)</li><li class="insight">- Key arbitration projections: Justin Steele ($6.55M), Javier Assad ($1.9M)</li><li class="insight">- Total CBT payroll estimate: $176M, leaving ~$68M space under $244M threshold for 2026-27</li><li class="insight priority">Cubs Roster/Contract Situation:</li><li class="insight">- Team stayed under CBT from 2021-23, exceeded slightly in 2024</li><li class="insight">- Attendance up 3.7% this year plus playoff revenue</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Mailbag Content:</strong> This week&#x27;s mailbag gets into offseason possibilities for the Cubs and Mets and also includes questions on the Angels, Guardians, and A&#x27;s. Walter asks: With the Cubs probably not getting serious on Tucker, how much money will the Cubs have to spend and what are the likely targets to hopefully build a champion next year? Starting pitching? Bullpen? Colin asks: How should the Cubs replace Kyle Tucker ? It feels like keeping it internal with a combo of Seiya and Caissie and Alcantara in RF and the first two and Ballesteros at DH won&#x27;t make up for Tucker&#x27;s production. Curious if there are any good targets out there for them to pursue. Kelly asks: The Cubs have several players going into next season in their final year. What do you predict will happen with Boyd, Suzuki, Happ and Hoerner? I know some of it is predicated on Tucker, but which are the priorities in your opinion to extend or trade this off-season? Where do Ballesteros, Amaya, Cassie and Long factor into their decision? Nick asks: Tucker leaves, Caissie in right, and sign Bregman. Can the Cubs package Happ and Shaw together for a controllable starter? Anybody come to mind? It seems odd to get into the Cubs&#x27; offseason as they host the Padres in the Wild Card Series, but I received many of these questions and I aim to please with this mailbag. The Cubs will easily come in below the $241MM competitive balance tax this year, after going a little bit over in 2024.  They were also under the CBT from 2021-23. Regular season attendance was up 3.7% this year, plus at least a few playoff games are taking place at Wrigley Field.  In theory, the Cubs could get into the range of the $244MM threshold, if president of baseball operations Jed Hoyer sees reasonable ways to spend that money.  So what do the 2026 commitments look like? Dansby Swanson - $25.3MM Ian Happ - $20.3MM Seiya Suzuki - $17MM Jameson Taillon - $17MM Matthew Boyd - $14.5MM Nico Hoerner - $11.7MM Carson Kelly - $5.75MM I&#x27;ll also make a few option assumptions: Cubs will pick up Andrew Kittredge &#x27;s $9MM club option Cubs will pick up Colin Rea &#x27;s $6MM club option Cubs will pick up Shota Imanaga &#x27;s three-year, $57MM club option.  I&#x27;m not entirely sure on the CBT hit in this case, but $19MM should be close enough for our purposes. There is a case to be made for declining Imanaga&#x27;s three-year option, but we can get into that another time. I dared to enter Matt Swartz&#x27;s top-secret arbitration lab, in the basement of the MLB Trade Rumors building, to beg for some early numbers.  But the Cubs&#x27; class is only Justin Steele , Javier Assad , Reese McGuire , and Eli Morgan .  We can just worry about Steele and Assad, who have respective projections of $6.55MM and $1.9MM. These 12 players, plus other stuff such as player benefits, brings the team&#x27;s estimated CBT payroll to $176MM.  If these estimates are generally correct, the Cubs will enter the 2026-27 offseason about $68MM shy of the $244MM CBT threshold.  There&#x27;s space to spend some serious money this winter! Assessing potential Cubs targets will require a team breakdown!</p>
+</div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>

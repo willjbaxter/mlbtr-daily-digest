@@ -1,0 +1,231 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Sep 23</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2025-09-23</span><span class="post-type chat">chat</span></div><h1>Chat: Sep 23</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight priority">Red Sox rotation outlook for next year includes Crochet, Bello, Tolle, Early, Harrison; likely to pursue Joe Ryan again and add another starter like Kelly, Mahle, or Eflin</li><li class="insight priority">Cubs offense struggles continue each September; potential upgrades could include Alex Bregman at 3B with Matt Shaw uncertain</li><li class="insight priority">Yankees&#x27; Bellinger re-signing complicated by Grisham&#x27;s qualifying offer situation and outfield depth including Judge, Dominguez, Stanton</li><li class="insight">Phillies could re-sign Harrison Bader with Marsh regressing and Rojas struggling to hit; price likely beyond initial 2/$25M expectation</li><li class="insight">Kyle Schwarber&#x27;s next contract projected at $120-130M range over 4 years, higher than previous 3/$90M estimates</li><li class="insight">Cleveland Guardians&#x27; surge and Detroit Tigers&#x27; collapse in AL Central both surprising developments</li><li class="insight">Dylan Crews showing promise as Nationals prospect despite early career struggles</li><li class="insight">Reds rotation looks promising for postseason with Hunter Greene and Chase Burns, though lineup remains a concern</li><li class="insight">Automated Ball-Strike (ABS) system implementation viewed positively by analyst</li><li class="insight">Nolan Arenado&#x27;s trade value severely limited by .236/.290/.365 slash line and large contract</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Steve Adams:</strong> Good morning! I’ll get going at 1pm CT, give or take a couple minutes. As always, feel free to ask a question(s) in advance if you prefer! Let’s begin!</p>
+<p><strong>Kevin:</strong> Should the Phillies re-sign Harrison Bader? Brandon Marsh has regressed heavily in CF, Johan Rojas has not shown any ability to hit, and top prospect Justin Crawford is getting billed by scouts as a better fit in LF. Not many quality CF options out there.</p>
+<p><strong>Steve Adams:</strong> It’s a fine fit, and I don’t anticipate him being especially expensive — at least not by the Phillies’ standards. I do think he’s been so good in Philly that he’s started to price himself well beyond what my initial expectations were (something like 2/25). But even if he’s pushed firmly into three-year deal territory or beyond by now, the Phils can afford that, and at minimum you know you’ve got a plus-plus defender who can hit lefties, while his 2025 has shown he can be substantially more than that.</p>
+<p><strong>Cincinnati kid.:</strong> With the reds not resigning Nick Martinez, Gavin Lux and Emilio Pagan for the 2026 season is it realistic to try to bring Kyle Schwarber on a 3 year $90 million dollar deal to be designated hitter in Cincinnati</p>
+<p><strong>Steve Adams:</strong> Back in April, I’d have said 3/90 for Schwarber seemed right. Heck, I shouldn’t say “I *would* have said that.” Ididsay that. But he’s way beyond that now, lack of defensive value notwithstanding. He’s got four years for me, probably at or even a bit north of that $30MM AAV. (Or slightly below, if someone goes nuts and stretches to like 5/140).I think somewhere in the $120-130MM range overall though. And that will shatter precedent for a player at this age and with this lack of defensive utility, but I still expect it. Contractual precedents all fall eventually.</p>
+<p><strong>Meow:</strong> 2-3 months back I asked what could possibly stop the run that the Tigers were on for the AL Central. You answered “The Cleveland Guardians” which seemed laughable at the time. So 1) I apologize for laughing and 2) which do you think has been more remarkable, the Tigers plummeting downwards or the Guardians surging upwards?</p>
+<p><strong>Steve Adams:</strong> Maybe Anthony or Mark answered that way, but I will be the first to say I did not have this type of foresight and that I’m as amazed/impressed/dumbfounded as anyone else, ha I don’t know that I’d have been completely stunned if you told me Detroit slowed down in the second half. I found their deadline astonishingly underwhelming. But the sheer magnitude of the collapse is still a surprise, so I have to give it to them</p>
+<p><strong>Natitude:</strong> What’s your take on Dylan Crews?  A universally highly regarded prospect with a difficult beginning to his career.  Cornerstone foundation piece or no?</p>
+<p><strong>Steve Adams:</strong> Toss out his first two weeks of the season and he’s an above-average hitter with good batted-ball metrics and a lower-than-average strikeout rate. I think he’s an everyday outfielder for Washington, and a pretty good one (health-permitting, but you can say that about any prospect)</p>
+<p><strong>Hunt for Reds October:</strong> You have to give the Reds kids credit for playing their hearts out even though they got no help from the front office.  That starting rotation may make it interesting if they make the postseason, don’t you agree?</p>
+<p><strong>Steve Adams:</strong> Love their rotation and would be really excited to watch them in a postseason setting. Hunter Greene is just so good, and while Chase Burns is pitching in relief right now, that looks like such a fun 1-2 combo for the foreseeable future.The lineup is underwhelming, though, and gives me plenty of concern for how they’d fare in a postseason setting where the baked-in off-days allow their opponents to more heavily lean on their top power arms.</p>
+<p><strong>Sox:</strong> Red Sox have some good young arms – Tolle, Early, Harrison. How does the rotation shake out next year? I assume Giolito will walk. Crochet and Bello at the top followed by the young guys. Do they add Valdez or someone else in free agency? Take a swing at Joe Ryan again?</p>
+<p><strong>Steve Adams:</strong> I think they’ll take a swing at Ryan again, yes, and more broadly just be focused on adding at least one starting pitcher. Tolle, Early and Harrison (especially the former two) are a nice trio to dream on. Crochet is an ace. Bello has been very good. Patrick Sandoval will hopefully be healthy. But so much of the rest of their depth has gone down with major injuries, and you simply can’t bank on a group as small as the one we just ran through staying healthy all year.Even if they add a starter of some note — say they sign one of Merrill Kelly, Tyler Mahle, Zach Eflin, etc. — you can probably still get 100+ innings for each of Tolle, Early and Harrison if they all earn it with their performance. Inevitably, someone’s going to need a month for a hamstring or oblique strain, or for shoulder fatigue, or something. And there’s the obvious risk every team runs of something more severe wiping out a whole season for one or more of those arms.</p>
+<p><strong>Stevie &amp; The Sterns:</strong> Our repeat of the “sign a value SP who will over achieve” experiment didnt prove successful the second time around. Will we finally spend on a premium arm (who’s also not 45 years old)?</p>
+<p><strong>Steve Adams:</strong> Kodai Senga, Nolan McLean, David Peterson, Brandon Sproat, Sean Manaea, Jonah Tong, Christian Scott and Tylor Megill all still in the rotation mix for next year (maybe not Megill, depending on how the elbow progresses). David Stearns has never shelled out a long-term deal for a starting pitcher, either in Milwaukee or in two offseasons in Queens.I won’t be surprised at all if they add another starter, but I don’t think they’re going to throw five years at Ranger Suarez, Framber Valdez, Dylan Cease, etc.</p>
+<p><strong>Guest:</strong> *insert generic question here asking about your personal feelings about the ABS system being implemented*</p>
+<p><strong>Steve Adams:</strong> Good with me. Some of the changes the game has implemented over the years still irk me (free runner in extra innings, barf) — but pitch clock, ABS, sign me up. It’s frustrating watching umps get the calls wrong, and the technology to correct it is there.</p>
+<p><strong>Sir Nerdlington:</strong> Ever since Theo put the ’our offense broke’ into the universe the Cubs offense has proven him correct every September. With the near given that Tucker lands elsewhere, where can they upgrade? Lots of very good, not great players on the offensive side of the ball.</p>
+<p><strong>Steve Adams:</strong> I don’t think Matt Shaw has done enough to cement himself as the 3B of the future. Alex Bregman will be out there and in the Cubs’ price range. Easy enough to find room for an outfielder, too. They have Happ, PCA and Suzuki heading into 2026, but Happ and Suzuki are free agents in the 2026-27 offseason and PCA’s showing over the past couple months shows there’s still room for improvement there, talented as he is.</p>
+<p><strong>MVP:</strong> End of season MVP check, Judge or Cal?</p>
+<p style="text-align: center; color: #999; font-style: italic;">... and 43 more exchanges</p></div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>

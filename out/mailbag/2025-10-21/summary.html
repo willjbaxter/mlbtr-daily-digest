@@ -1,0 +1,212 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Mailbag: Oct 21</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2025-10-21</span><span class="post-type mailbag">mailbag</span></div><h1>Mailbag: Oct 21</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight priority">Tarik Skubal Trade Analysis (Tigers-Mets Speculation):</li><li class="insight">- No indication of progress between Tigers and Skubal on contract extension</li><li class="insight">- Divergent expert opinions on trade likelihood: Steve Adams projects 0.25% chance of winter trade, while other analysis suggests 5-10% probability</li><li class="insight">- Skubal currently considered &quot;best pitcher in baseball&quot; (ahead of prospect Paul Skenes)</li><li class="insight">- Tigers&#x27; competitive window through 2026 makes trading Skubal potentially counterproductive</li><li class="insight">Historical Precedent for Pre-Walk Year Superstar Trades:</li><li class="insight">- Notable examples include Kyle Tucker, Mookie Betts, Juan Soto, and Corbin Burnes</li><li class="insight">- Owner philosophy plays crucial role in such decisions</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Mailbag Content:</strong> This week&#x27;s mailbag includes questions on Tarik Skubal , Nick Castellanos , Ian Happ , Pablo Lopez , and much more. Abner asks: The Tarik Skubal trade rumors dominated the news during the past weekend. The NY Mets has been mentioned as a possible destination for the Detroit Tigers&#x27; ace. But what would be a realistic prospect capital cost the Mets will have to live with if they really want to get a guy as talented as Skubal (even for just 1 year of team control)? Now, Freddy Peralta could also be available in the trade market, and he for sure should be a more affordable option than Skubal. Knowing the way David Stearns values the farm system of the team and his connection with the Brewers, which trade has more probability to get done , a trade for Peralta or a trade for Skubal? Thanks in advance. There&#x27;s never been any indication Skubal and the Tigers were close on a contract extension, nor is there a sign the team&#x27;s willingness to trade him has changed.  Steve Adams and I differ on the likelihood of an offseason trade happening.  In a discussion last week, Steve pegged the chances of a Skubal trade this winter at 0.25%.  I&#x27;m more in the range of 5-10%. Steve wrote in his live chat yesterday , &quot;I think the Tigers would be crazy to truly make Skubal available. They’re just not going to be better in 2026 without him, regardless of the return, unless you’re just banking on Skubal getting hurt. He’s the best pitcher in baseball (sorry, Paul Skenes , but you can be No. 2 for now). I would absolutely just ride out the year and try to sign him in free agency. The draft pick after the first round isn’t nothing, and if the Tigers are earnest about being in a World Series window right now, then trading Skubal isn’t something I’d spend much time entertaining. Let teams make the crazy offers, sure, but they’d have to be offered something outrageous to consider it.&quot; My stance is that I can&#x27;t peer into the mind of Tigers owner Christopher Ilitch.  Some owners do trade superstar players in the offseason before their walk year if they determine they cannot sign him.  We&#x27;ve seen it with Kyle Tucker , Mookie Betts , Juan Soto , Corbin Burnes , and others.  I think Steve might say that Skubal is different from those players, the teams are in somewhat different spots, and/or their owners had different philosophies. I find Skubal unlikely to be traded this winter, but it wouldn&#x27;t shock me.</p>
+</div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>
