@@ -1,0 +1,231 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Jan 25</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2026-01-25</span><span class="post-type chat">chat</span></div><h1>Chat: Jan 25</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight">Welcome to the Weekend Chat! We’ll take a minute for some questions to pile up, then get rolling…</li><li class="insight">You’ll likely see at least some lower-level stuff (i</li><li class="insight">The deferred money involved in J-Ram’s new deal certainly would seem to mean the Guards have something in the realm of $6MM extra to suddenly work with</li><li class="insight">Any market on Danny Coulombe? He’s very good but I let him walk last offseason due to age/injury concerns</li><li class="insight">Boston’s been the only team publicly linked to Coulombe, but surely multiple teams could use more LHP bullpen help</li><li class="insight">Reports indicated that Toboni really liked Fien in particular, dating back to last year’s draft when Toboni was still with the BoSox</li><li class="insight">Ramirez is the exception that breaks Cleveland’s usual rule about extensions, which is that the Guards only extend guys early in their careers</li><li class="insight">It would be that Darvish’s situation is the answer for why the Padres’ offseason has been relatively quiet</li><li class="insight">Who’s broadcasting Cincinnati reds games this year mlb or another entity</li><li class="insight">Of the nine teams that ended their contracts with Main Street Sports, some (including the Reds) could re-up for a temporary one-year deal, or perhaps they just sign on to let MLB handle their broadcasts</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Mark P:</strong> Welcome to the Weekend Chat! We’ll take a minute for some questions to pile up, then get rolling….</p>
+<p><strong>Luca:</strong> Do the Rays have any more moves in store ? Will they add another catcher ?</p>
+<p><strong>Mark P:</strong> You’ll likely see at least some lower-level stuff (i.e. minor league deals) take place before Spring Training, but in terms of truly big stuff, probably not.  The Rays plan to give Matz a look as a starter again, but signing someone like Littell would seem like a more stable move in my view.  Littell was linked to the Rays earlier this offseason and he remains unsigned, whereas other known Tampa targets like Eflin or Houser are off the board.Tampa Bay has been looking for a catcher almost as long as they’ve been looking for a better ballpark.  They might add someone else on a minors deal or something, but the chances of them finally landing that “catcher of the future” type in the limited time remaining this winter is pretty slim</p>
+<p><strong>Kevin:</strong> Guardians find money to extend Rameriz, does this mean there is money to add help to roster?</p>
+<p><strong>Mark P:</strong> The deferred money involved in J-Ram’s new deal certainly would seem to mean the Guards have something in the realm of $6MM extra to suddenly work with.  They might spend this before the offseason ends, or maybe it goes towards trade deadline reinforcements.  Given that their lineup is still in need of help now, I’d argue they should get to adding a bat sooner rather than later</p>
+<p><strong>Elias:</strong> Any market on Danny Coulombe? He’s very good but I let him walk last offseason due to age/injury concerns.</p>
+<p><strong>Mark P:</strong> Boston’s been the only team publicly linked to Coulombe, but surely multiple teams could use more LHP bullpen help.</p>
+<p><strong>Natitude:</strong> Light return for the Nats In the Gore trade?  Doesn’t seem like a surefire big league prospect in the group of 5 players coming from TEX.  Too harsh?</p>
+<p><strong>Mark P:</strong> Reports indicated that Toboni really liked Fien in particular, dating back to last year’s draft when Toboni was still with the BoSox.  So it seems like Fien is viewed as the prize of the trade package, and the other four are varying degrees of lottery ticket.I’ve written multiple times in these chats that the Nationals would likely be retaining Gore unless they got a particularly huge offer, so I made the wrong call on that one.  This doesn’t fit what I had in mind of a huge prospect haul, but we’ll see how things plan out.  If any one of these five players ends up being a significant piece for Washington, it’ll go down as a win for the team</p>
+<p><strong>Guards4Life:</strong> Does Jose signing mean a Kwan extension is near?</p>
+<p><strong>Mark P:</strong> Unlikely.  Ramirez is the exception that breaks Cleveland’s usual rule about extensions, which is that the Guards only extend guys early in their careers.  Kwan being two years away from free agency mean he’s missed that window, and is likely a year away from being dealt.</p>
+<p><strong>I love Yu:</strong> If some/all of Yu’s contract comes off the books. What could the Padres do to upgrade the offense/starting pitching? Could they move a bullpen arm (Estrada) for a bat?</p>
+<p><strong>Mark P:</strong> It would be that Darvish’s situation is the answer for why the Padres’ offseason has been relatively quiet.  If the team is seeing if he’ll retire or take some kind of buyout with deferred money, suddenly the Padres have some extra cash to work with in making signings or trades.Someone like a Bassitt or a Verlander would be a big help in their rotation, and neither of those two would be particularly expensive.  You’d think either of those pitchers would be a signing SD could afford right now with or without clarity on Darvish, but only the Padres know exactly what their budget is</p>
+<p><strong>Datdude:</strong> Who’s broadcasting Cincinnati reds games this year mlb or another entity</p>
+<p><strong>Mark P:</strong> Unclear for now.  Of the nine teams that ended their contracts with Main Street Sports, some (including the Reds) could re-up for a temporary one-year deal, or perhaps they just sign on to let MLB handle their broadcasts.  Having the league do the broadcasts at least brings more stability in the short term, lest teams go through this whole thing again down the road with MSS.</p>
+<p><strong>Reid:</strong> The Giants reported interest in CJ Abrams seems a little fishy. I don’t doubt they inquired, or possibly brought up a few names they might discuss, but it came across as a PR move to say hey we tried to do this. I feel like they have the pieces to get that trade done if they really wanted to. Your thoughts?</p>
+<p><strong>Mark P:</strong> I think it might’ve been a tactical move except not in the way you’re thinking.  It might’ve been a hint to the Cardinals in the vein of “hey, we can explore other 2B options, so stop dragging your feet on our Donovan offers.”</p>
+<p><strong>Angels:</strong> Typical off-season but really would have liked to see them lock up Neto.</p>
+<p><strong>Mark P:</strong> Most extension business doesn’t start until March, when teams have their offseason work completed and turn their attention elsewhere.  So there’s still plenty of time for Neto to be extended, if that’s something the Halos have on their radar</p>
+<p><strong>Glenn:</strong> Garcia in the 6th, Rogers 7th, Hoffman 8th, Tiedemann 9th? Possible Jays lock down bullpen? Hope you are enjoying a Typical CDN winter day!</p>
+<p style="text-align: center; color: #999; font-style: italic;">... and 94 more exchanges</p></div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>
