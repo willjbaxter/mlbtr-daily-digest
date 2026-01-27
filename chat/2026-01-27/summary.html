@@ -1,0 +1,231 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Jan 27</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2026-01-27</span><span class="post-type chat">chat</span></div><h1>Chat: Jan 27</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight">They’re pretty comparable returns — two top prospects on the back-end of most top-100 lists</li><li class="insight">No, I think if there’s an addition at this point it feels much likelier to be a second baseman</li><li class="insight">I like David Peterson, but I’m not giving up four years of Estrada for one of Peterson if I’m the Padres</li><li class="insight">As things stand, Jake Cronenworth</li><li class="insight">No reason that adding Bader at a reasonable rate would take them out of the running for Donovan</li><li class="insight">I don’t think that does much for the Cardinals</li><li class="insight">He might be, but you’ve got an elite defensive middle infield tandem right now</li><li class="insight">He’s 27, out of minor league options, hasn’t hit in the majors and didn’t hit in AAA last year</li><li class="insight">I think Abrams is a great fit in Seattle, sure</li><li class="insight">There are top-tier free agents in this spot every offseason</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Steve Adams:</strong> Good morning! We’ll get going at 1pm CT today, but feel free to submit questions ahead of time. Good afternoon and happy Tuesday — let’s get going</p>
+<p><strong>Not my job to win a World Series:</strong> Peralta return higher than the Burnes return?  Any moves left for the Brewers this offseason?</p>
+<p><strong>Steve Adams:</strong> They’re pretty comparable returns — two top prospects on the back-end of most top-100 lists. I think the prospects themselves here are a bit more interesting than the Hall/Ortiz combo they got from Burnes, but they also got a Competitive Balance draft pick for Burnes, which has plenty of value itself.I imagine the Brewers will still look into some low-cost bullpen/bench additions as guys who are lingering on the market bring their demands down and accept lesser deals just to get into camp somewhere.</p>
+<p><strong>Pedro4eva:</strong> Do you see the Red Sox making a move for Suarez at 3rd? If not do they just give it to Meyer?</p>
+<p><strong>Steve Adams:</strong> No, I think if there’s an addition at this point it feels much likelier to be a second baseman. Mayer at third base feels like it could be the plan at this point.</p>
+<p><strong>Guest:</strong> David Peterson for Jeremiah Estrada. Who says no?</p>
+<p><strong>Steve Adams:</strong> I like David Peterson, but I’m not giving up four years of Estrada for one of Peterson if I’m the Padres.</p>
+<p><strong>Brewer Fan:</strong> Jett Williams and Josh Knoth for CJ Abrams. Who says no?</p>
+<p><strong>Steve Adams:</strong> Washington, pretty easily.</p>
+<p><strong>Guest:</strong> Who do you think will play first base for the Padres ?</p>
+<p><strong>Steve Adams:</strong> As things stand, Jake Cronenworth. But they could move Crone back to 2B and bounce Song around the diamond a bit if they wind up signing someone like Hoskins, Ozuna, etc. on the cheap. Gavin Sheets can spend time at 1B or DH. Cronenworth can play 1B or 2B. Seems like they’ll get Song looks in the infield and outfield alike. So … plenty of opportunity to add a cheap bat if they find a deal to their liking.</p>
+<p><strong>Sf giants:</strong> Are we still engaged with Brendan Donovan after signing Bader?</p>
+<p><strong>Steve Adams:</strong> No reason that adding Bader at a reasonable rate would take them out of the running for Donovan. If anything, Bader made the team better, which gives them more of an impetus to punt some future value to get their hands on Donovan.</p>
+<p><strong>Mike Elias:</strong> Mountcastle and a low level prospect for JoJo</p>
+<p><strong>Steve Adams:</strong> I don’t think that does much for the Cardinals. Mountcastle is a buy-low veteran who can be kept through 2027 via a club option. There’s no real long-term value there unless he bounces back and becomes a trade chip himself this summer, but acquiring him runs the risk of him continuing to struggle while also cutting into the playing time of someone like Alec Burleson. He’s also more expensive than Romero.If/when the Cardinals move Romero, I expect it’ll just be for a prospect or two.</p>
+<p><strong>Leo:</strong> Feel like Semien would be better at 3B than Bichette, right?</p>
+<p><strong>Steve Adams:</strong> He might be, but you’ve got an elite defensive middle infield tandem right now. Bichette’s not going to be a lock to be a good 2B, either. I’m with the Mets that I’d rather only play one guy “out of position” and maintain the awesome up-the-middle glovework.</p>
+<p><strong>docgreedo:</strong> What can Korey Lee bring back for a catcher hungry team (like the Rays)?</p>
+<p><strong>Steve Adams:</strong> He’s 27, out of minor league options, hasn’t hit in the majors and didn’t hit in AAA last year. I don’t think there’s a ton of trade value there. He’d probably get claimed off waivers… maybe someone tosses the White Sox a nominal PTBNL or unranked, low-level minor leaguer in return, but he just feels like someone who’s being squeezed off the 40-man to me — not a genuine trade chip.</p>
+<p><strong>PIVOT!:</strong> Seattle should pivot to a CJ Abrams or Nico Hoerner or Matt Shaw and avoid Brendan Donovan… If possible… The value seems FAR better for what they’d seemingly be giving up.</p>
+<p style="text-align: center; color: #999; font-style: italic;">... and 90 more exchanges</p></div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>
