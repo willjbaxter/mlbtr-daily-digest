@@ -1,0 +1,221 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Feb 20</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2026-02-20</span><span class="post-type chat">chat</span></div><h1>Chat: Feb 20</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight">Greetings! Anthony and I flipped the Monday/Friday chats this week since I was off for the holiday, so you&#x27;re stuck with me today</li><li class="insight">It&#x27;s pretty inexplicable</li><li class="insight">Lots and lots of Twins questions post-Pablo For starters, no they&#x27;re not going to trade Ryan now</li><li class="insight">Guys make crazy improvements all the time, but Ramirez would need seismic gains behind the plate to stay at catcher</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Steve Adams:</strong> Greetings! Anthony and I flipped the Monday/Friday chats this week since I was off for the holiday, so you&#x27;re stuck with me today. Apologies in advance!We&#x27;ll get going around 3pm CT, but feel free to submit a question(s) ahead of time if you prefer! We&#x27;ll get started a few minutes early today and go til a bit after 4</p>
+<p><strong>BaseballRadio:</strong> Curious as to how the Cleveland Ownership can justify doing literally nothing to upgrade the offense, while dropping to around 70 million in payroll, pending the Clase/Ortiz situation… literally dead last in MLB ?</p>
+<p><strong>Steve Adams:</strong> It&#x27;s pretty inexplicable. The only significant move they made this winter was extending Ramirez on a deal that saved them $10MM in 2026. They re-signed Austin Hedges and bought a few cheap, one-year relievers.For me, they had far and away the worst offseason in baseball. There are so many glaring holes in that lineup, and they&#x27;re content to just hope a club that produced an AL-worst .226/.296/.373 batting line (87 wRC+) will become serviceable from an offensive standpoint based solely on in-house improvement and promotions of Bazzana, DeLauter, etc. It&#x27;s an indefensible offseason, and if I were a Cleveland fan, I&#x27;d be livid. I joked the other day with colleagues that maybe the Dolans are trying to force people to say &quot;Look! See how badly MLB needs a floor!&quot; ... and while I was mostly kidding, I wonder whether there&#x27;s some partial truth to that sentiment.</p>
+<p><strong>Matt:</strong> Now that Pablo Lopez is out any chance the Twins listen to offers for Byron Buxton?</p>
+<p><strong>J. Zoll:</strong> So . . . a lot of Twins fans think trading Joe Ryan ASAP is the right thing to do in the wake of Pablo Lopez&#x27;s need for TJ. This late in the winter, though, I&#x27;m wondering if a guy couldn&#x27;t get more of a return closer to the deadline. Your thoughts?</p>
+<p><strong>Sam:</strong> Hey Steve, thanks as always for the chat! What avenue do you see the Twins taking to address the Pablo replacement while he recovers? Sign Giolito/Littell/Scherzer/another FA, acquire a seasoned innings eater via trade, or work with what they have?</p>
+<p><strong>Steve Adams:</strong> Lots and lots of Twins questions post-Pablo For starters, no they&#x27;re not going to trade Ryan now. Demand is down -- though teams would still want him -- and Tom Pohlad has done nothing but talk about how he wants to be aggressive and win now since he took over the executive chair position. They&#x27;re not going to be good (unless about 15 different things break their way), but it&#x27;s pretty hard for an owner to pull that kind of about-face when his whole schtick so far has been &quot;I&#x27;m going to be accountable, answer tough questions and win back the fans.&quot;I don&#x27;t think that&#x27;s going to happen, but I don&#x27;t see any way they trade Ryan before Opening Day. Deadline? Sure. But not before then. Ditto Buxton on all that I do think there&#x27;s a realistic chance the Twins give a one-year deal to Giolito or Littell. I guess they could throw a year at Tyler Anderson to bring in some cheaper, fairly durable innings as well.There aren&#x27;t many teams left with much budget space, but the Twins made a late run at Framber Valdez, so Pohlad clearly isn&#x27;t married to the payroll staying at its $108MM-ish current level. It wouldn&#x27;t be exciting, but his comments keep saying he wants to show the fans they&#x27;ll try and be aggressive under his watch, well ... Gio/Littell is about the closest he can come at this point. Even before the report on the Jays/Scherzer picking up talks, there was no way Max was signing in Minnesota. He wants a clear win-now contender.</p>
+<p><strong>Tribefan528:</strong> Is it inevitable that Agustin Ramirez moves to 1B? How does his bat project at dh/1b?</p>
+<p><strong>Steve Adams:</strong> Guys make crazy improvements all the time, but Ramirez would need seismic gains behind the plate to stay at catcher. He had one of the worst defensive seasons ever for a catcher... -14 DRS and -12 FRV per Statcast -- in only 605 innings!Even if you don&#x27;t like/trust modern metrics, he had an 8.8% caught-stealing rate and allowed NINETEEN passed balls in 605 frames. Plus 36 wild pitches! He has enough power to be a 1B/DH, but he undercuts that power by chasing too much ... if you&#x27;re going to be a RH 1B/DH, you need more than a 6% walk rate. He&#x27;s only 24, but last season was pretty rough in all aspects, other than ripping 21 homers in 536 PAs.</p>
+<p><strong>john:</strong> Why has Giolito to Atl not happened yet?</p>
+</div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>
