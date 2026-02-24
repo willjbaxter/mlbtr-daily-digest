@@ -1,0 +1,231 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Feb 24</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2026-02-24</span><span class="post-type chat">chat</span></div><h1>Chat: Feb 24</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight">Doubtful with two years and $32MM to go</li><li class="insight">So, Pirates fans really want them to sign another cheap starter</li><li class="insight">One of the ten best pitchers in baseball</li><li class="insight">He wants to pitch for a contender and is in talks about returning to the Jays</li><li class="insight">The only way they trade Skubal is if they’re somehow like 10 games out at the deadline</li><li class="insight">Rebuilding Cardinals aren’t going to want to swap Romero for another one-year rental</li><li class="insight">The player options are guaranteed money</li><li class="insight">I don’t see why they wouldn’t have just signed Hoskins for a year and $2MM or so</li><li class="insight">Our developers are implementing a more uniform design with our other sites, but there are still some tweaks that need to be made</li><li class="insight">I’ll take the under but not by a ton</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Steve Adams:</strong> Good morning! We’ll get going at 1pm CT, give or take a couple minutes, but feel free to start sending questions in anytime. Good afternoon! Let’s get this started up</p>
+<p><strong>Sox Fan:</strong> Could the White Sox just release Benintendi? I think he’s taking up at bats from others</p>
+<p><strong>Steve Adams:</strong> Doubtful with two years and $32MM to go. He was at least a league-average hitter last year. They’ll hope for a decent enough first half to be able to trade him and save a few million bucks. If he really struggles at the plate this season though, I can see it happening midyear.</p>
+<p><strong>Wayward:</strong> The Bucs standing pat now?  Things have gone quiet at 3B, and it seems that they want to see what Urquidy and some of the young arms in Barco and Harrington can give them potentially, especially since it appears Jones could be ready in late May.  I really thought they would have signed Anderson or Corbin.</p>
+<p><strong>Bucco Basement:</strong> What is up with these minor league deals for guys who can still impact a team? Did they just wait around too long to see if they could increase their salary or are they much worse than I’m assuming? I want my Pirates to get Tyler Anderson or Patrick Corbin and I’m wondering if either could be gotten on a MiLB deal.</p>
+<p><strong>Pirates1Fan:</strong> I think the Bucs need another arm – Patrick Corbin a fit?</p>
+<p><strong>Steve Adams:</strong> So, Pirates fans really want them to sign another cheap starter. I feel like they already did this with Urquidy. I get that they’ve signed a cheap lefty pretty much every spring under Cherington (Quintana, Heaney, Martin Perez, Tyler Anderson the first time around) But I don’t think it’s a big need with the depth they have already.You’ve got Skenes, Chandler, Keller, Ashcraft, Urquidy … Jared Jones on the mend and maybe back late April/May. Thomas Harrington, Hunter Barco in Triple-A. Mike Clevinger as a non-roster guy. I do think it’s feasible that either Anderson or Corbin has to settle for a non-roster deal, and if it’s with the Bucs, sure, great. More depth is never bad. But I don’t think it’s super appealing for one of those guys to jump into a rotation mix that has like 8-10 options already — at least not on a non-guaranteed deal.</p>
+<p><strong>Yamama:</strong> Feelings on Yamamoto this year? Back to back deep playoff runs, in the WBC this year, regression on the horizon?</p>
+<p><strong>Steve Adams:</strong> One of the ten best pitchers in baseball. I’m not worried about him</p>
+<p><strong>Jj:</strong> Is there any way that scherzer signs with St. Louis?</p>
+<p><strong>Steve Adams:</strong> He wants to pitch for a contender and is in talks about returning to the Jays. He’s not going to sign in St. Louis, and I don’t think the Cards would have all that much interest in giving those innings to a 41-year-old when they have a bunch of arms to look at (Mizzou connection notwithstanding)</p>
+<p><strong>Trader Phil:</strong> Is there any shot of a Skubal trade midseason? He seems destined to leave in free agency, but are the Tigers really going to let him walk for nothing even if they ‘re contending?</p>
+<p><strong>Steve Adams:</strong> The only way they trade Skubal is if they’re somehow like 10 games out at the deadline</p>
+<p><strong>JeffyM:</strong> Would a Lauer for Romero swap work for the Jays and Cards?</p>
+<p><strong>Steve Adams:</strong> Rebuilding Cardinals aren’t going to want to swap Romero for another one-year rental.</p>
+<p><strong>Pete:</strong> If jays release berrios this season, can he potentially still opt in to 27/28 player options?</p>
+<p><strong>Steve Adams:</strong> The player options are guaranteed money. If they release him, they owe him the entire three years and $66MM. (They won’t release him.)</p>
+<p><strong>Ryan Z:</strong> Who’s the Nats’ opening day 1B? On house option are pretty thin – Andres Chaparro, or slide Luis Garcia over from 2b. Seems like the should have made a buy-low trade or addition.</p>
+<p><strong>Steve Adams:</strong> I tend to agree. I don’t see why they wouldn’t have just signed Hoskins for a year and $2MM or so. I figure it’ll be Garcia sliding over to 1B, but I just wouldn’t have tendered a contract to him. I don’t really get the approach there. I suppose he’ll share time with Chaparro, but this seems like it was an easy area to add a veteran bat to help make the lineup more respectable and maybe flip for a middling prospect at the deadline.</p>
+<p><strong>Brody McBroseph:</strong> What’s with the new fonts on MLBTR? Why are the “writer” names in all caps now? DON’T SHOUT AT ME!</p>
+<p style="text-align: center; color: #999; font-style: italic;">... and 101 more exchanges</p></div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>
