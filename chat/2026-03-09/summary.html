@@ -1,0 +1,231 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Chat: Mar 09</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.65; 
+    color: #1a1a1a; 
+    background: #fff;
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem;
+}
+.nav-bar {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+}
+.nav-bar a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+.header { 
+    padding: 1.5rem 0 2rem;
+}
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+.post-date {
+    font-weight: 500;
+}
+.post-type {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.post-type.mailbag {
+    background: #fce7f3;
+    color: #be185d;
+}
+.header h1 { 
+    font-size: 2.25rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.insights-panel {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    margin-bottom: 1.5rem;
+}
+.insights-list { 
+    list-style: none;
+}
+.insight { 
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333;
+}
+.insight:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+.insight.priority:before { 
+    content: "→";
+    color: #dc2626;
+}
+.transcript-panel {
+    background: white;
+}
+.transcript-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.transcript-content p {
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+.transcript-content p:last-child {
+    margin-bottom: 0;
+}
+.transcript-content strong {
+    color: #059669;
+    font-weight: 600;
+}
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e5e5;
+}
+.footer-nav a {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .nav-bar {
+        padding: 1rem 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .nav-bar a {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+    .header { 
+        padding: 1rem 0 1.5rem;
+    }
+    .header h1 { 
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .insights-panel {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .section-label {
+        margin-bottom: 1rem;
+    }
+    .insight {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .transcript-content {
+        max-height: 400px;
+        padding: 1rem;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+    .transcript-content p {
+        margin-bottom: 1rem;
+    }
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .footer-nav a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+}
+</style></head><body><div class='container'><div class="nav-bar"><a href="../../index.html">← Back to All Posts</a></div><div class="header"><div class="post-meta"><span class="post-date">2026-03-09</span><span class="post-type chat">chat</span></div><h1>Chat: Mar 09</h1></div><div class="main-content"><div class="insights-panel"><div class="section-label">Key Insights</div><ul class="insights-list"><li class="insight">The Weekend Chat is never late, nor is it early…</li><li class="insight">Where do you see the pirates rotation falling in the NL Central? Is it the best</li><li class="insight">A good chunk of the Pirates’ rotation is still operating on potential more than proven MLB results, so I think I’ll still put the Cubs slightly ahead overall</li><li class="insight">I am crazy or can the marlins finish 2nd in the east (who knows who finish first) braves are cursed again, mets relying on a lot of young guys, phils 1 big injury</li><li class="insight">While Miami did finish third in 2025, even matching that this year will be a quality feat</li><li class="insight">Did the Mets overpay for Peralta or did the Orioles underpay for Burnes? Seems like there’s a pretty big disparity in the prospect return</li><li class="insight">Peralta is earning only $8MM in 2026, while Burnes was earning over $15MM in his final year of team control</li><li class="insight">I have the best rotation in the central and it’s not close</li><li class="insight">Hunter Greene’s elbow issue gives me pause about crowning the Reds’ rotation</li><li class="insight">Yastrzemski is already there, so the Braves have another quality everyday-ish type of outfielder who can take over left field</li></ul></div><div class="transcript-panel"><div class="section-label">Full Transcript</div><div class="transcript-content"><p><strong>Mark P:</strong> The Weekend Chat is never late, nor is it early….regardless of daylight savings. We’ll take a minute for some questions to file in (or for you to remember to adjust your clocks) before we get underway.</p>
+<p><strong>Pirates guy:</strong> Where do you see the pirates rotation falling in the NL Central? Is it the best</p>
+<p><strong>Mark P:</strong> A good chunk of the Pirates’ rotation is still operating on potential more than proven MLB results, so I think I’ll still put the Cubs slightly ahead overall.</p>
+<p><strong>Terry Pendeldon:</strong> I am crazy or can the marlins finish 2nd in the east (who knows who finish first) braves are cursed again, mets relying on a lot of young guys, phils 1 big injury. marlins have the bonus of zero pressure</p>
+<p><strong>Mark P:</strong> While Miami did finish third in 2025, even matching that this year will be a quality feat.  The Braves and Mets both had Murphy’s Law years, and even then, New York will finished ahead of the Fish. Not to say that the Marlins couldn’t have another solid season, but their lineup has a lot more question marks than any of their big three NL East rivals</p>
+<p><strong>Silky Johnson:</strong> Did the Mets overpay for Peralta or did the Orioles underpay for Burnes? Seems like there’s a pretty big disparity in the prospect return</p>
+<p><strong>Mark P:</strong> Peralta is earning only $8MM in 2026, while Burnes was earning over $15MM in his final year of team control.  Peralta’s salary meant he had a wider field of possible suitors, since he could’ve fit into any team’s payroll.  An argument can be made that Burnes also could’ve easily fit into payroll for just a one-year commitment, but still, the Brewers probably had a slightly tougher time finding trade partners</p>
+<p><strong>Tito:</strong> I have the best rotation in the central and it’s not close</p>
+<p><strong>Mark P:</strong> Hunter Greene’s elbow issue gives me pause about crowning the Reds’ rotation.  But, it’s a testament to their depth that even if they did lose Greene for any extended amount of time, their rotation wouldn’t be devastated.</p>
+<p><strong>Atl:</strong> What move can the Braves make if any now that Profar has been suspended?</p>
+<p><strong>Mark P:</strong> Yastrzemski is already there, so the Braves have another quality everyday-ish type of outfielder who can take over left field.  White or Mateo can spell Yaz against left-handed pitching if need be.Gamel, Azocar, and Dominic Smith are all in camp on minors deals, so the Braves probably feel they have enough position-player depth for now to fairly account for Profar’s absence.  (Now that I’ve jinxed it, watch AA swing a trade in the next ten minutes.)  But since Atlanta now has a good chunk of payroll freed up by Profar’s suspension, investing that money into rotation depth might not be a bad idea</p>
+<p><strong>Krally:</strong> Should the Reds have traded Greene in the offseason?</p>
+<p><strong>Mark P:</strong> This question might have some 20-20 hindsight attached given what happens with Greene’s elbow, but I agree with the Reds’ decision to hang onto him.Obviously we don’t know what exact offers might’ve been on the table for Greene, but it would’ve had to have a major return (or even a clear overpay) for the Reds to move a guy who has looked like a frontline starter when healthy.  Having rotation depth is one thing, but purposely dipping into that depth to account for trading away your #1 is another thing altogether</p>
+<p><strong>Garrett:</strong> Zack Littell to the Nationals makes sense for both sides and I’m surprised it didn’t happen earlier.</p>
+<p><strong>Mark P:</strong> The Nationals have clearly not wanted to spend much money this winter, and were willing to wait out the market to see if they could land a relative bargain.  No word yet on what Littell is making in his new contract, but it’s probably not a ton.</p>
+<p><strong>Little Texas:</strong> Relief pitcher Alexis Diaz as an example, how much should the Rangers play him in spring training games before knowing if he’s making the cut, 15 innings?</p>
+<p><strong>Mark P:</strong> This question varies from pitcher to pitcher and from team to team.  Basically it comes down to any club’s roster needs, who else is in camp, what pitchers have or don’t have minor league options, what pitchers does a team feel confident they can sneak through waivers, what veterans with outs in their contracts are content to stay put, etc.In Diaz’s case, he signed a guaranteed contract this winter, so he’s basically a lock for the Opening Day roster barring injury.</p>
+<p><strong>A Royal signing:</strong> Starling Marte is the best hitting OF on KC now.  I understand he will likely mostly DH when Perez is catching, but do you envision him getting played in the OF more often if he is hitting well?</p>
+<p><strong>Mark P:</strong> Marte’s health is the biggest factor in his outfield time, not how well he’s hitting.  If he’s doing well at the plate, obviously KC will want to figure out ways to keep him in the lineup, but that also means not over-extending him and perhaps causing an injury.</p>
+<p><strong>Art Rock:</strong> Talking Heads or DEVO?</p>
+<p style="text-align: center; color: #999; font-style: italic;">... and 81 more exchanges</p></div></div></div><div class="footer-nav"><a href="../../index.html">← Back to All Posts</a><a href="#">Top ↑</a></div></div></body></html>
